@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 // import 'dart:ui';
 
 import 'package:spiral_vis/Caculation.dart';
+import 'package:spiral_vis/Loader.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -54,7 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
             width: i[2] * constraints.maxWidth * specialSizeRatio,
             height: i[2] * constraints.maxWidth * specialSizeRatio,
             // color: Colors.black,
-            child: CircleAvatar(),
+            child:
+            CircleAvatar(backgroundColor: Colors.red,),
+            // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
           )
       );
 
@@ -74,7 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    getCoordinatesAndSizes();
+    // getCoordinatesAndSizes();
+
+    loadImages();
 
     return
       Scaffold(
@@ -88,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context, constraints) {
           return
             buildSpiral(constraints);
+
 
             Stack(
             children: [

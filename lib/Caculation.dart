@@ -22,7 +22,6 @@ List<List<double>> getCoordinatesAndSizes() {
       List<double> temp = [x, y, size];
       coordinatesAndSizes.add(temp);
 
-
     }
 
     double topCoordinateX = coordinatesAndSizes.last[0];

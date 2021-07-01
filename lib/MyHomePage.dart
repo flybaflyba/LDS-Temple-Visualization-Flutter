@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // getCoordinatesAndSizes();
 
-    loadImages();
+    loadImages(context);
 
     return
       Scaffold(

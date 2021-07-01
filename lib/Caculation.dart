@@ -19,12 +19,16 @@ List<List<double>> getCoordinatesAndSizes() {
     double topCoordinateX = coordinatesAndSizes.last.first;
     double topCoordinateY = coordinatesAndSizes.last.last;
 
-    for (double i = 0; i < 20; i += 1) {
+    for (double i = 0; i < 70; i += 1) {
       List<double> temp = [];
-      temp.add(topCoordinateX + i * 20);
+      temp.add(topCoordinateX + i * 0.01);
       temp.add(topCoordinateY);
       coordinatesAndSizes.add(temp);
     }
+
+    print('hi');
+
+    print(coordinatesAndSizes.length);
 
     return coordinatesAndSizes;
 

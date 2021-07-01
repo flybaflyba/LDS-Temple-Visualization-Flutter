@@ -47,12 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for(List<double> i in coordinatesAndSizes) {
       Positioned point = Positioned(
-          top: i.first * constraints.maxWidth,
-          left: i.last * constraints.maxWidth,
+          top: i.last * constraints.maxWidth + 100,
+          left: i.first * constraints.maxWidth,
           // left: w/2,
           child: Container(
-            width: 10,
-            height: 10,
+            width: 2,
+            height: 2,
             color: Colors.black,
           )
       );
@@ -72,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    getCoordinatesAndSizes();
 
     return
       Scaffold(

@@ -26,10 +26,6 @@ class _MyHomePageState extends State<MyHomePage> {
   List<List<double>> coordinatesAndSizes =[];
 
 
-
-
-
-
   @override
   void initState() {
     super.initState();
@@ -45,15 +41,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
     List<Positioned> points = [];
 
+    double specialSizeRatio = 1.25;
+
     for(List<double> i in coordinatesAndSizes) {
       Positioned point = Positioned(
-          top: i.last * constraints.maxWidth + 100,
-          left: i.first * constraints.maxWidth,
+          top: i[1] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 + 100,
+          left: i[0] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 ,
+          // top: constraints.maxWidth / 2 + 100,
+          // left: constraints.maxWidth / 2 ,
           // left: w/2,
           child: Container(
-            width: 2,
-            height: 2,
-            color: Colors.black,
+            width: i[2] * constraints.maxWidth * specialSizeRatio,
+            height: i[2] * constraints.maxWidth * specialSizeRatio,
+            // color: Colors.black,
+            child: CircleAvatar(),
           )
       );
 

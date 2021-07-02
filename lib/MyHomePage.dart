@@ -58,6 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+  void spin(int speed){
+    setState(() {
+      theta = (theta + speed * 0.5).toInt();
+      circles = placeCircles(coordinatesAndSizes, circles, theta);
+    });
+  }
+
+
   Stack buildSpiral(BoxConstraints constraints) {
 
     // print(constraints.maxWidth);
@@ -69,11 +77,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // print('circles.length: ' + circles.length.toString());
 
+
+
+
     for(int i = 0; i < circles.length; i++){
       double x = circles[i].x == null ? 0 : circles[i].x;
       double y = circles[i].y == null ? 0 : circles[i].y;
       double size = circles[i].size  == null ? 0 : circles[i].size;
       Image image = circles[i].image  == null ? 0 : circles[i].image;
+      String realName = circles[i].realName  == null ? 'no name' : circles[i].realName;
       // print('$x, $y, $size');
       // print(circles[i].image);
       AnimatedPositioned point = AnimatedPositioned(
@@ -85,12 +97,69 @@ class _MyHomePageState extends State<MyHomePage> {
           // left: w/2,
           width: size * constraints.maxWidth * specialSizeRatio,
           height: size * constraints.maxWidth * specialSizeRatio,
-          child: Container(
-            // color: Colors.black,
-            child:
+          child:
+
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                print('tapped: ' + realName);
+              });
+            },
+            onPanUpdate: (DragUpdateDetails details) {
+              double x = details.globalPosition.dx;
+              double y = details.globalPosition.dy;
+
+              // print(details.globalPosition.dx.toString() + ", " + details.globalPosition.dy.toString());
+
+
+
+              if(x <= constraints.maxWidth * (1/3)) {
+                print('at left');
+                // if(details.delta.dy > 0){
+                //   antiClockwiseSpin();
+                // } else if (details.delta.dy < 0){
+                //   clockwiseSpin();
+                // }
+                spin(-details.delta.dy.toInt());
+              } else if (x >= constraints.maxWidth * (2/3)) {
+                print('at right');
+                // if(details.delta.dy < 0){
+                //   antiClockwiseSpin();
+                // } else if (details.delta.dy > 0){
+                //   clockwiseSpin();
+                // }
+                spin(details.delta.dy.toInt());
+              } else {
+                print('at middle');
+                if(y <= constraints.maxHeight * (1/3)){
+                  print('top');
+                  // if(details.delta.dx < 0){
+                  //   antiClockwiseSpin();
+                  // } else if (details.delta.dx > 0){
+                  //   clockwiseSpin();
+                  // }
+                  spin(details.delta.dx.toInt());
+                } else if(y >= constraints.maxHeight * (2/3)){
+                  print('bottom');
+                  // if(details.delta.dx > 0){
+                  //   antiClockwiseSpin();
+                  // } else if (details.delta.dx < 0){
+                  //   clockwiseSpin();
+                  // }
+                  spin(-details.delta.dx.toInt());
+                }
+              }
+
+            },
+            child: Container(
+              // color: Colors.black,
+              child:
               image,
-            // CircleAvatar(backgroundColor: Colors.red,),
-            // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
+              // CircleAvatar(backgroundColor: Colors.red,),
+
+            ),
+
+          // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
           )
       );
       elements.add(point);
@@ -123,9 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         child: Slider(
           value: theta.toDouble(),
-          min: 0,
-          max: 9000,
-          divisions: 9000,
+          min: 2240,
+          max: 9820,
+          divisions: 9820 - 2240,
           label: theta.toDouble().round().toString(),
           onChanged: (value) {
             theta = value.toInt();
@@ -170,8 +239,10 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Anticlockwise spinning',
         onPressed: () {
           setState(() {
-            theta = theta - 30;
-            circles = placeCircles(coordinatesAndSizes, circles, theta);
+            if(theta >= 2240 + 30) {
+              theta = theta - 30;
+              circles = placeCircles(coordinatesAndSizes, circles, theta);
+            }
           });
         },
       ),
@@ -189,8 +260,10 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Anticlockwise spinning',
         onPressed: () {
           setState(() {
-            theta = theta + 30;
-            circles = placeCircles(coordinatesAndSizes, circles, theta);
+            if(theta <= 9820 - 30) {
+              theta = theta + 30;
+              circles = placeCircles(coordinatesAndSizes, circles, theta);
+            }
           });
         },
       ),

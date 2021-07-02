@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:spiral_vis/Caculation.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Loader.dart';
+import 'package:spiral_vis/SingleView.dart';
 import 'package:spiral_vis/Universals.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -33,8 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> prepareCircles() async {
       await loadImages(context);
   }
-
-
 
   bool showYearsRange = true;
 
@@ -83,13 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
           left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2,
           width: size * constraints.maxWidth * specialSizeRatio,
           height: size * constraints.maxWidth * specialSizeRatio,
-          child:
-
-          GestureDetector(
+          child: GestureDetector(
             onTap: () {
               setState(() {
                 print('tapped $realName');
-                Navigator.pushNamed(context, '/SingleView');
+                // Navigator.pushNamed(context, '/SingleView');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleView(circle: circles[i],)));
               });
             },
             onPanUpdate: (DragUpdateDetails details) {

@@ -15,7 +15,7 @@ class SingleView extends StatefulWidget{
   _SingleViewState createState() => _SingleViewState();
 }
 
-class _SingleViewState extends State<SingleView>{
+class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
   String info = '';
 
@@ -34,7 +34,22 @@ class _SingleViewState extends State<SingleView>{
 
     getFileData(path);
 
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..forward();
+    _animation = Tween<Offset>(
+      begin: const Offset(-0.5, 0.0),
+      end: const Offset(0.5, 0.0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInCubic,
+    ));
+
   }
+
+  AnimationController _controller;
+  Animation<Offset> _animation;
 
   @override
   Widget build(BuildContext context) {
@@ -45,109 +60,145 @@ class _SingleViewState extends State<SingleView>{
         actions: [
         ],
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Center(
-              child: Container(
-                child: widget.circle.image,
-                width: MediaQuery.of(context).size.width * 0.8,
+      body: Center(
+        child: Wrap(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Center(
+                child: Container(
+                  child:
+                  AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      child: Container(
+                        child: widget.circle.image,
+                        key: ValueKey<Circle>(widget.circle),
+                      )
+                  ),
+
+                  // AnimatedSwitcher(
+                  //   duration: const Duration(milliseconds: 500),
+                  //   child: SlideTransition(
+                  //       position: _animation,
+                  //       child: Container(
+                  //         child: widget.circle.image,
+                  //         key: ValueKey<Circle>(widget.circle),
+                  //       )
+                  //   ),
+                  // ),
+
+
+                  width: MediaQuery.of(context).size.width * 0.8,
+                ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Container(
-                    child: Text(
-                      'Mile Stone Dates',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
+            Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Container(
+                      child: Text(
+                        'Mile Stone Dates',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
                       ),
-                    ),
-                  )
-              ),
-
-              Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_left_sharp),
-                          color: Colors.blue,
-                          iconSize: 80,
-                          tooltip: 'Last',
-                          onPressed: () {
-                            int circleIndex = circles.indexOf(widget.circle);
-                            if(circleIndex > 0) {
-                              setState(() {
-                                widget.circle = circles[circleIndex - 1];
-                                String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                getFileData(path);
-                              });
-                            } else {
-                              // show no more image
-                            }
-
-                          },
-                        ),
-
-                        Flexible(
-                          child: Text(
-                            info,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-
-                        IconButton(
-                          icon: const Icon(Icons.arrow_right_sharp),
-                          color: Colors.blue,
-                          iconSize: 80,
-                          tooltip: 'Next',
-                          onPressed: () {
-                            int circleIndex = circles.indexOf(widget.circle);
-                            if(circleIndex < circles.length - 1) {
-                              setState(() {
-                                widget.circle = circles[circleIndex + 1];
-                                String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                getFileData(path);
-                              });
-                            } else {
-                              // show no more image
-                            }
-                          },
-                        ),
-                      ],
                     )
-                  )
-              ),
+                ),
 
-              Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 20),
-                  child: Container(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(16.0),
-                        primary: Colors.blue,
-                        textStyle: const TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {
+                Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.arrow_left_sharp),
+                              color: Colors.blue,
+                              iconSize: 80,
+                              tooltip: 'Last',
+                              onPressed: () {
+                                int circleIndex = circles.indexOf(widget.circle);
+                                if(circleIndex > 0) {
+                                  setState(() {
+                                    widget.circle = circles[circleIndex - 1];
+                                    String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                    getFileData(path);
+                                  });
+                                } else {
+                                  // show no more image
+                                }
 
-                      },
-                      child: const Text('View Official Website'),
-                    ),
-                  )
-              ),
+                              },
+                            ),
 
-            ],
-          )
+                            Flexible(
+                              child:
 
-        ],
+                              Container(
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 0),
+                                  child:
+                                  Text(
+                                    info,
+                                    textAlign: TextAlign.center,
+                                    key: ValueKey<Circle>(widget.circle),
+                                  ),
+
+                                ),
+                                width: MediaQuery.of(context).size.width * 0.8,
+                              ),
+
+                            ),
+
+
+
+                            IconButton(
+                              icon: const Icon(Icons.arrow_right_sharp),
+                              color: Colors.blue,
+                              iconSize: 80,
+                              tooltip: 'Next',
+                              onPressed: () {
+                                int circleIndex = circles.indexOf(widget.circle);
+                                if(circleIndex < circles.length - 1) {
+                                  setState(() {
+                                    widget.circle = circles[circleIndex + 1];
+                                    String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                    getFileData(path);
+                                  });
+                                } else {
+                                  // show no more image
+                                }
+                              },
+                            ),
+                          ],
+                        )
+                    )
+                ),
+
+                // Padding(
+                //     padding: EdgeInsets.only(top: 10, bottom: 20),
+                //     child: Container(
+                //       child: TextButton(
+                //         style: TextButton.styleFrom(
+                //           padding: const EdgeInsets.all(16.0),
+                //           primary: Colors.blue,
+                //           textStyle: const TextStyle(fontSize: 20),
+                //         ),
+                //         onPressed: () {
+                //
+                //         },
+                //         child: const Text('View Official Website'),
+                //       ),
+                //     )
+                // ),
+
+              ],
+            )
+
+          ],
+        ),
       )
     );
   }

@@ -30,13 +30,10 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Circle> circles = [];
 
   Future<void> prepareCircles() async {
-
       circles = await loadImages(context);
-
   }
 
   int theta = 7000;
-
 
   @override
   void initState() {
@@ -44,18 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     coordinatesAndSizes = getCoordinatesAndSizes();
 
-
-      prepareCircles().then((value) {
-        print('finish loading assets');
-        setState(() {
-          circles = placeCircles(coordinatesAndSizes, circles, theta);
-        });
-
+    prepareCircles().then((value) {
+      print('finish loading assets');
+      setState(() {
+        circles = placeCircles(coordinatesAndSizes, circles, theta);
       });
-
-
-
-
+    });
   }
 
   void spin(int speed){
@@ -66,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  Stack buildSpiral(BoxConstraints constraints) {
+  Stack buildLayout(BoxConstraints constraints) {
 
     // print(constraints.maxWidth);
     // print(constraints.maxHeight);
@@ -74,11 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
     List<AnimatedPositioned> elements = [];
 
     double specialSizeRatio = 1.33;
-
-    // print('circles.length: ' + circles.length.toString());
-
-
-
 
     for(int i = 0; i < circles.length; i++){
       double x = circles[i].x == null ? 0 : circles[i].x;
@@ -92,9 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
         duration: Duration(milliseconds: 500),
           top: y * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 + constraints.maxHeight * 0.1,
           left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2,
-          // top: constraints.maxWidth / 2 + 100,
-          // left: constraints.maxWidth / 2 ,
-          // left: w/2,
           width: size * constraints.maxWidth * specialSizeRatio,
           height: size * constraints.maxWidth * specialSizeRatio,
           child:
@@ -102,64 +85,32 @@ class _MyHomePageState extends State<MyHomePage> {
           GestureDetector(
             onTap: () {
               setState(() {
-                print('tapped: ' + realName);
               });
             },
             onPanUpdate: (DragUpdateDetails details) {
               double x = details.globalPosition.dx;
               double y = details.globalPosition.dy;
 
-              // print(details.globalPosition.dx.toString() + ", " + details.globalPosition.dy.toString());
-
-
-
               if(x <= constraints.maxWidth * (1/3)) {
-                print('at left');
-                // if(details.delta.dy > 0){
-                //   antiClockwiseSpin();
-                // } else if (details.delta.dy < 0){
-                //   clockwiseSpin();
-                // }
+                // print('at left');
                 spin(-details.delta.dy.toInt());
               } else if (x >= constraints.maxWidth * (2/3)) {
-                print('at right');
-                // if(details.delta.dy < 0){
-                //   antiClockwiseSpin();
-                // } else if (details.delta.dy > 0){
-                //   clockwiseSpin();
-                // }
+                // print('at right');
                 spin(details.delta.dy.toInt());
               } else {
-                print('at middle');
+                // print('at middle');
                 if(y <= constraints.maxHeight * (1/3)){
-                  print('top');
-                  // if(details.delta.dx < 0){
-                  //   antiClockwiseSpin();
-                  // } else if (details.delta.dx > 0){
-                  //   clockwiseSpin();
-                  // }
+                  // print('top');
                   spin(details.delta.dx.toInt());
                 } else if(y >= constraints.maxHeight * (2/3)){
-                  print('bottom');
-                  // if(details.delta.dx > 0){
-                  //   antiClockwiseSpin();
-                  // } else if (details.delta.dx < 0){
-                  //   clockwiseSpin();
-                  // }
+                  // print('bottom');
                   spin(-details.delta.dx.toInt());
                 }
               }
-
             },
             child: Container(
-              // color: Colors.black,
-              child:
-              image,
-              // CircleAvatar(backgroundColor: Colors.red,),
-
+              child: image,
             ),
-
-          // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
           )
       );
       elements.add(point);
@@ -205,24 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
-
-
-
-      // Slider(
-      //   value: theta.toDouble(),
-      //   min: 0,
-      //   max: 9000,
-      //   divisions: 9000,
-      //   label: theta.toDouble().round().toString(),
-      //   onChanged: (double value) {
-      //     setState(() {
-      //       theta = value.toInt();
-      //       setState(() {
-      //         circles = placeCircles(coordinatesAndSizes, circles, theta);
-      //       });
-      //     });
-      //   },
-      // )
     );
 
     elements.add(slider);
@@ -274,27 +207,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // print('elements.length: ' + elements.length.toString());
 
-    // for(List<Circle> circle in circles) {
-    //   Positioned point = Positioned(
-    //       top: i[1] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 + 100,
-    //       left: i[0] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 ,
-    //       // top: constraints.maxWidth / 2 + 100,
-    //       // left: constraints.maxWidth / 2 ,
-    //       // left: w/2,
-    //       child: Container(
-    //         width: i[2] * constraints.maxWidth * specialSizeRatio,
-    //         height: i[2] * constraints.maxWidth * specialSizeRatio,
-    //         // color: Colors.black,
-    //         child:
-    //         CircleAvatar(backgroundColor: Colors.red,),
-    //         // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
-    //       )
-    //   );
-    //
-    //   elements.add(point);
-    //
-    // }
-
     Stack stack = Stack(children: elements,);
 
     // print('coordinates and sizes length: ' + coordinatesAndSizes.length.toString());
@@ -321,22 +233,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          TextButton(
-            onPressed: () {
-             print('update test');
-             setState(() {
-               theta = theta + 100;
-               circles = placeCircles(coordinatesAndSizes, circles, theta);
-             });
-            },
-            child: const Text('button', style: TextStyle(color: Colors.red),),
-          ),
+
         ],
       ),
       body: LayoutBuilder (
         builder: (context, constraints) {
           return
-            buildSpiral(constraints);
+            buildLayout(constraints);
 
 
             Stack(

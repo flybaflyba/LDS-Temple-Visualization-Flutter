@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
              print('update test');
              setState(() {
-               theta = theta - 100;
+               theta = theta + 1000;
                circles = placeCircles(coordinatesAndSizes, circles, theta);
              });
             },

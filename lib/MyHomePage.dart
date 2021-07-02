@@ -99,66 +99,105 @@ class _MyHomePageState extends State<MyHomePage> {
 
     AnimatedPositioned slider = AnimatedPositioned(
       duration: Duration(milliseconds: 0),
-        bottom: constraints.maxHeight * 0.07,
-        right: 0,
-        left: 0,
-        child:
-
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            activeTrackColor: Colors.blue[700],
-            inactiveTrackColor: Colors.blue[100],
-            trackShape: RoundedRectSliderTrackShape(),
-            trackHeight: 4.0,
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-            thumbColor: Colors.blueAccent,
-            overlayColor: Colors.blue.withAlpha(32),
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-            tickMarkShape: RoundSliderTickMarkShape(),
-            activeTickMarkColor: Colors.blue[700],
-            inactiveTickMarkColor: Colors.blue[100],
-            valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-            valueIndicatorColor: Colors.blueAccent,
-            valueIndicatorTextStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          child: Slider(
-            value: theta.toDouble(),
-            min: 0,
-            max: 9000,
-            divisions: 9000,
-            label: theta.toDouble().round().toString(),
-            onChanged: (value) {
-              theta = value.toInt();
-              setState(() {
-                circles = placeCircles(coordinatesAndSizes, circles, theta);
-              }
-              );
-            },
+      bottom: constraints.maxHeight * 0.07,
+      right: constraints.maxWidth * 0.1,
+      left: constraints.maxWidth * 0.1,
+      child: SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          activeTrackColor: Colors.blue[700],
+          inactiveTrackColor: Colors.blue[100],
+          trackShape: RoundedRectSliderTrackShape(),
+          trackHeight: 4.0,
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+          thumbColor: Colors.blueAccent,
+          overlayColor: Colors.blue.withAlpha(32),
+          overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+          tickMarkShape: RoundSliderTickMarkShape(),
+          activeTickMarkColor: Colors.blue[700],
+          inactiveTickMarkColor: Colors.blue[100],
+          valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+          valueIndicatorColor: Colors.blueAccent,
+          valueIndicatorTextStyle: TextStyle(
+            color: Colors.white,
           ),
         ),
+        child: Slider(
+          value: theta.toDouble(),
+          min: 0,
+          max: 9000,
+          divisions: 9000,
+          label: theta.toDouble().round().toString(),
+          onChanged: (value) {
+            theta = value.toInt();
+            setState(() {
+              circles = placeCircles(coordinatesAndSizes, circles, theta);
+            }
+            );
+          },
+        ),
+      ),
 
 
 
-        // Slider(
-        //   value: theta.toDouble(),
-        //   min: 0,
-        //   max: 9000,
-        //   divisions: 9000,
-        //   label: theta.toDouble().round().toString(),
-        //   onChanged: (double value) {
-        //     setState(() {
-        //       theta = value.toInt();
-        //       setState(() {
-        //         circles = placeCircles(coordinatesAndSizes, circles, theta);
-        //       });
-        //     });
-        //   },
-        // )
+      // Slider(
+      //   value: theta.toDouble(),
+      //   min: 0,
+      //   max: 9000,
+      //   divisions: 9000,
+      //   label: theta.toDouble().round().toString(),
+      //   onChanged: (double value) {
+      //     setState(() {
+      //       theta = value.toInt();
+      //       setState(() {
+      //         circles = placeCircles(coordinatesAndSizes, circles, theta);
+      //       });
+      //     });
+      //   },
+      // )
     );
 
     elements.add(slider);
+
+    AnimatedPositioned leftButton = AnimatedPositioned(
+      duration: Duration(milliseconds: 0),
+      bottom: constraints.maxHeight * 0.07,
+      left: constraints.maxWidth * 0.01,
+      right: constraints.maxWidth * 0.1,
+      child: IconButton(
+        icon: const Icon(Icons.arrow_left_sharp),
+        color: Colors.blue,
+        iconSize: constraints.maxWidth * 0.1,
+        tooltip: 'Anticlockwise spinning',
+        onPressed: () {
+          setState(() {
+            theta = theta - 30;
+            circles = placeCircles(coordinatesAndSizes, circles, theta);
+          });
+        },
+      ),
+    );
+
+    AnimatedPositioned rightButton = AnimatedPositioned(
+      duration: Duration(milliseconds: 0),
+      bottom: constraints.maxHeight * 0.07,
+      left: constraints.maxWidth * 0.1,
+      right: constraints.maxWidth * 0.01,
+      child: IconButton(
+        icon: const Icon(Icons.arrow_right_sharp),
+        color: Colors.blue,
+        iconSize: constraints.maxWidth * 0.1,
+        tooltip: 'Anticlockwise spinning',
+        onPressed: () {
+          setState(() {
+            theta = theta + 30;
+            circles = placeCircles(coordinatesAndSizes, circles, theta);
+          });
+        },
+      ),
+    );
+
+    elements.add(leftButton);
+    elements.add(rightButton);
 
     // print('elements.length: ' + elements.length.toString());
 

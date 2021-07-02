@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // print(constraints.maxWidth);
     // print(constraints.maxHeight);
 
-    List<AnimatedPositioned> points = [];
+    List<AnimatedPositioned> elements = [];
 
     double specialSizeRatio = 1.33;
 
@@ -77,9 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // print('$x, $y, $size');
       // print(circles[i].image);
       AnimatedPositioned point = AnimatedPositioned(
-        duration: Duration(milliseconds: 1000),
-          top: y * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 + 100,
-          left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 ,
+        duration: Duration(milliseconds: 500),
+          top: y * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 + constraints.maxHeight * 0.1,
+          left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2,
           // top: constraints.maxWidth / 2 + 100,
           // left: constraints.maxWidth / 2 ,
           // left: w/2,
@@ -93,10 +93,35 @@ class _MyHomePageState extends State<MyHomePage> {
             // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
           )
       );
-      points.add(point);
+      elements.add(point);
     }
 
-    // print('points.length: ' + points.length.toString());
+
+    AnimatedPositioned slider = AnimatedPositioned(
+      duration: Duration(milliseconds: 0),
+        bottom: constraints.maxHeight * 0.07,
+        right: 0,
+        left: 0,
+        child: Slider(
+          value: theta.toDouble(),
+          min: 0,
+          max: 9000,
+          divisions: 9000,
+          label: theta.toDouble().round().toString(),
+          onChanged: (double value) {
+            setState(() {
+              theta = value.toInt();
+              setState(() {
+                circles = placeCircles(coordinatesAndSizes, circles, theta);
+              });
+            });
+          },
+        )
+    );
+
+    elements.add(slider);
+
+    // print('elements.length: ' + elements.length.toString());
 
     // for(List<Circle> circle in circles) {
     //   Positioned point = Positioned(
@@ -115,11 +140,11 @@ class _MyHomePageState extends State<MyHomePage> {
     //       )
     //   );
     //
-    //   points.add(point);
+    //   elements.add(point);
     //
     // }
 
-    Stack stack = Stack(children: points,);
+    Stack stack = Stack(children: elements,);
 
     // print('coordinates and sizes length: ' + coordinatesAndSizes.length.toString());
     // print('stack children length: ' + stack.children.length.toString());
@@ -149,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
              print('update test');
              setState(() {
-               theta = theta + 1000;
+               theta = theta + 100;
                circles = placeCircles(coordinatesAndSizes, circles, theta);
              });
             },

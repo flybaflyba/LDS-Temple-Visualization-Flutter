@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -62,6 +63,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Stack buildLayout(BoxConstraints constraints) {
 
+    double magicNumber = min(constraints.maxWidth, constraints.maxHeight);
+
+    double magicNumberAnother = magicNumber;
+
+    bool portrait = true;
+
+    if (MediaQuery.of(context).orientation == Orientation.portrait){
+      // is portrait
+      print('portrait');
+      portrait = true;
+    }else{
+      // is landscape
+      print('landscape');
+      portrait = false;
+      magicNumberAnother = max(constraints.maxWidth, constraints.maxHeight);
+    }
+
     // print(constraints.maxWidth);
     // print(constraints.maxHeight);
 
@@ -79,10 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // print(circles[i].image);
       AnimatedPositioned point = AnimatedPositioned(
         duration: Duration(milliseconds: 500),
-          top: y * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 + constraints.maxHeight * 0.1,
-          left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2,
-          width: size * constraints.maxWidth * specialSizeRatio,
-          height: size * constraints.maxWidth * specialSizeRatio,
+          top: y * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + constraints.maxHeight * (portrait ? 0.15 : 0.05),
+          left: x * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + (magicNumberAnother - magicNumber) / 2,
+          width: size * magicNumber * specialSizeRatio,
+          height: size * magicNumber * specialSizeRatio,
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -120,129 +138,155 @@ class _MyHomePageState extends State<MyHomePage> {
       elements.add(point);
     }
 
-
-    AnimatedPositioned slider = AnimatedPositioned(
+    AnimatedPositioned bottom = AnimatedPositioned(
       duration: Duration(milliseconds: 0),
-      bottom: constraints.maxHeight * 0.07,
-      right: constraints.maxWidth * 0.1,
-      left: constraints.maxWidth * 0.1,
-      child: SliderTheme(
-        data: SliderTheme.of(context).copyWith(
-          activeTrackColor: Colors.blue[700],
-          inactiveTrackColor: Colors.blue[100],
-          trackShape: RoundedRectSliderTrackShape(),
-          trackHeight: 4.0,
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-          thumbColor: Colors.blueAccent,
-          overlayColor: Colors.blue.withAlpha(32),
-          overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-          tickMarkShape: RoundSliderTickMarkShape(),
-          activeTickMarkColor: Colors.blue[700],
-          inactiveTickMarkColor: Colors.blue[100],
-          valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-          valueIndicatorColor: Colors.blueAccent,
-          valueIndicatorTextStyle: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        child: Slider(
-          value: theta.toDouble(),
-          min: 2240,
-          max: 9820,
-          divisions: 9820 - 2240,
-          label: '$startYear - $endYear',
-          onChangeStart: (value) {
-            setState(() {
-              showYearsRange = false;
-            });
-          },
-          onChangeEnd: (value) {
-            setState(() {
-              showYearsRange = true;
-            });
-          },
-          onChanged: (value) {
-            theta = value.toInt();
-            setState(() {
-              placeCircles(coordinatesAndSizes, theta);
-            }
-            );
-          },
+      bottom: constraints.maxHeight * 0.08,
+      left: constraints.maxWidth * 0.05,
+      right: constraints.maxWidth * 0.05,
+      child: Center(
+        child: Wrap(
+          children: [
+            Column(
+              children: [
+                Container(
+                  child: AnimatedDefaultTextStyle(
+                    child: Text(portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
+                    style : showYearsRange ? TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                    ) : TextStyle(
+                      color: Colors.grey,
+                      fontSize: 0,
+                    ),
+                    duration: Duration(milliseconds: 500),
+                  ),
+                ),
+                Container(
+                  child:
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          // color: Colors.red,
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(Icons.chevron_left),
+                            color: Colors.blue,
+                            iconSize: constraints.maxWidth * 0.1,
+                            tooltip: 'Anticlockwise spinning',
+                            onPressed: () {
+                              setState(() {
+                                if(theta >= 2240 + 30) {
+                                  theta = theta - 30;
+                                  placeCircles(coordinatesAndSizes, theta);
+                                }
+                              });
+                            },
+                          ),
+
+
+                        ),
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          // color: Colors.green,
+                          child: SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              activeTrackColor: Colors.blue[700],
+                              inactiveTrackColor: Colors.blue[100],
+                              trackShape: RoundedRectSliderTrackShape(),
+                              trackHeight: 4.0,
+                              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                              thumbColor: Colors.blueAccent,
+                              overlayColor: Colors.blue.withAlpha(32),
+                              overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+                              tickMarkShape: RoundSliderTickMarkShape(),
+                              activeTickMarkColor: Colors.blue[700],
+                              inactiveTickMarkColor: Colors.blue[100],
+                              valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                              valueIndicatorColor: Colors.blueAccent,
+                              valueIndicatorTextStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: Slider(
+                              value: theta.toDouble(),
+                              min: 2240,
+                              max: 9820,
+                              divisions: 9820 - 2240,
+                              label: '$startYear - $endYear',
+                              onChangeStart: (value) {
+                                setState(() {
+                                  showYearsRange = false;
+                                });
+                              },
+                              onChangeEnd: (value) {
+                                setState(() {
+                                  showYearsRange = true;
+                                });
+                              },
+                              onChanged: (value) {
+                                theta = value.toInt();
+                                setState(() {
+                                  placeCircles(coordinatesAndSizes, theta);
+                                }
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: Container(
+                            // color: Colors.red,
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: const Icon(Icons.chevron_right),
+                              color: Colors.blue,
+                              iconSize: constraints.maxWidth * 0.1,
+                              tooltip: 'Anticlockwise spinning',
+                              onPressed: () {
+                                setState(() {
+                                  if(theta <= 9820 - 30) {
+                                    theta = theta + 30;
+                                    placeCircles(coordinatesAndSizes, theta);
+                                  }
+                                });
+                              },
+                            ),
+                          )
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Color.fromRGBO(117, 107, 97, 0.5),
+                  child: AnimatedDefaultTextStyle(
+                    child: Text(!portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
+                    style : showYearsRange ? TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                    ) : TextStyle(
+                      color: Colors.grey,
+                      fontSize: 0,
+                    ),
+                    duration: Duration(milliseconds: 500),
+                  ),
+                ),
+              ],
+            )
+
+          ],
         ),
       ),
     );
 
-    elements.add(slider);
-
-    AnimatedPositioned leftButton = AnimatedPositioned(
-      duration: Duration(milliseconds: 0),
-      bottom: constraints.maxHeight * 0.07,
-      left: constraints.maxWidth * 0.01,
-      // right: constraints.maxWidth * 0.9,
-      child: Container(
-        child: IconButton(
-          icon: const Icon(Icons.arrow_left_sharp),
-          color: Colors.blue,
-          iconSize: constraints.maxWidth * 0.1,
-          tooltip: 'Anticlockwise spinning',
-          onPressed: () {
-            setState(() {
-              if(theta >= 2240 + 30) {
-                theta = theta - 30;
-                placeCircles(coordinatesAndSizes, theta);
-              }
-            });
-          },
-        ),
-      )
-    );
-
-    AnimatedPositioned rightButton = AnimatedPositioned(
-      duration: Duration(milliseconds: 0),
-      bottom: constraints.maxHeight * 0.07,
-      // left: constraints.maxWidth * 0.9,
-      right: constraints.maxWidth * 0.01,
-      child: IconButton(
-        icon: const Icon(Icons.arrow_right_sharp),
-        color: Colors.blue,
-        iconSize: constraints.maxWidth * 0.1,
-        tooltip: 'Anticlockwise spinning',
-        onPressed: () {
-          setState(() {
-            if(theta <= 9820 - 30) {
-              theta = theta + 30;
-              placeCircles(coordinatesAndSizes, theta);
-            }
-          });
-        },
-      ),
-    );
-
-    elements.add(leftButton);
-    elements.add(rightButton);
-
-    AnimatedPositioned yearRange = AnimatedPositioned(
-      duration: Duration(milliseconds: 0),
-      bottom: constraints.maxHeight * 0.15,
-      left: constraints.maxWidth * 0.1,
-      right: constraints.maxWidth * 0.1,
-      child: Container(
-        child: AnimatedDefaultTextStyle(
-          child: Text('$startYear - $endYear', textAlign: TextAlign.center,),
-          style : showYearsRange ? TextStyle(
-            color: Colors.blue,
-            fontSize: 20,
-          ) : TextStyle(
-            color: Colors.grey,
-            fontSize: 0,
-          ),
-          duration: Duration(milliseconds: 500),
-        ),
-
-      ),
-    );
-
-    elements.add(yearRange);
+    elements.add(bottom);
 
     // print('elements.length: ' + elements.length.toString());
 

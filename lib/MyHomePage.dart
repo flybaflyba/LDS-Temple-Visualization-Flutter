@@ -162,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
       duration: Duration(milliseconds: 0),
       bottom: constraints.maxHeight * 0.07,
       left: constraints.maxWidth * 0.01,
-      right: constraints.maxWidth * 0.1,
+      // right: constraints.maxWidth * 0.9,
       child: IconButton(
         icon: const Icon(Icons.arrow_left_sharp),
         color: Colors.blue,
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
     AnimatedPositioned rightButton = AnimatedPositioned(
       duration: Duration(milliseconds: 0),
       bottom: constraints.maxHeight * 0.07,
-      left: constraints.maxWidth * 0.1,
+      // left: constraints.maxWidth * 0.9,
       right: constraints.maxWidth * 0.01,
       child: IconButton(
         icon: const Icon(Icons.arrow_right_sharp),

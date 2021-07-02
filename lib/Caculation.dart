@@ -5,12 +5,12 @@ import 'package:spiral_vis/Circle.dart';
 
 List<List<double>> getCoordinatesAndSizes() {
     double initialRadius = 0.1;
-    double centerX = 0.5;
+    double centerX = 0.57;
     double centerY = 0.5;
 
     List<List<double>> coordinatesAndSizes = <List<double>>[];
 
-    for (double i = -18.0; i < 17.5; i += 0.02) {
+    for (double i = -28.0; i < 17.5; i += 0.02) {
       double x = centerX + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (cos(i));
       double y = centerY + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (sin(i));
 
@@ -53,9 +53,9 @@ List<Circle> placeCircles(List<List<double>> coordinatesAndSizes, List<Circle> c
       c.size = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][2];
     }
     else if (circleIndexInCoordinatesAndSizes < 0){
-      c.x = 0.503;
-      c.y = 0.5;
-      c.size = 0.025;
+      c.x = 0.57; // coordinatesAndSizes.first[0];
+      c.y = 0.5; // coordinatesAndSizes.first[1];
+      c.size = 0.01;
     } else if (circleIndexInCoordinatesAndSizes >= coordinatesAndSizes.length - 1) {
       c.x = coordinatesAndSizes.last[0];
       c.y = coordinatesAndSizes.last[1];

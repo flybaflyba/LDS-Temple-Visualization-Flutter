@@ -102,21 +102,60 @@ class _MyHomePageState extends State<MyHomePage> {
         bottom: constraints.maxHeight * 0.07,
         right: 0,
         left: 0,
-        child: Slider(
-          value: theta.toDouble(),
-          min: 0,
-          max: 9000,
-          divisions: 9000,
-          label: theta.toDouble().round().toString(),
-          onChanged: (double value) {
-            setState(() {
+        child:
+
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            activeTrackColor: Colors.blue[700],
+            inactiveTrackColor: Colors.blue[100],
+            trackShape: RoundedRectSliderTrackShape(),
+            trackHeight: 4.0,
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+            thumbColor: Colors.blueAccent,
+            overlayColor: Colors.blue.withAlpha(32),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+            tickMarkShape: RoundSliderTickMarkShape(),
+            activeTickMarkColor: Colors.blue[700],
+            inactiveTickMarkColor: Colors.blue[100],
+            valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+            valueIndicatorColor: Colors.blueAccent,
+            valueIndicatorTextStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          child: Slider(
+            value: theta.toDouble(),
+            min: 0,
+            max: 9000,
+            divisions: 9000,
+            label: theta.toDouble().round().toString(),
+            onChanged: (value) {
               theta = value.toInt();
               setState(() {
                 circles = placeCircles(coordinatesAndSizes, circles, theta);
-              });
-            });
-          },
-        )
+              }
+              );
+            },
+          ),
+        ),
+
+
+
+        // Slider(
+        //   value: theta.toDouble(),
+        //   min: 0,
+        //   max: 9000,
+        //   divisions: 9000,
+        //   label: theta.toDouble().round().toString(),
+        //   onChanged: (double value) {
+        //     setState(() {
+        //       theta = value.toInt();
+        //       setState(() {
+        //         circles = placeCircles(coordinatesAndSizes, circles, theta);
+        //       });
+        //     });
+        //   },
+        // )
     );
 
     elements.add(slider);

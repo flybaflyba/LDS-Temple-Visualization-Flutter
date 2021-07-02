@@ -41,7 +41,10 @@ Future<void> loadImages(BuildContext context) async {
       await bundle.load(imagePath);
       // print('we have this image');
       imageAvailability.add(true);
-      image = Image.asset(imagePath);
+      image = Image.asset(
+        imagePath,
+        fit: BoxFit.cover,
+      );
 
     } catch (e) {
       image = Image.asset('assets/images/' + 'no_image' + '_large.webp');

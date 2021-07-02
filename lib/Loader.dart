@@ -19,7 +19,7 @@ Future<List<Circle>> loadImages(BuildContext context) async {
 
   List<bool> imageAvailability = [];
 
-  for(String s in namesAndYearsList.reversed) {
+  for(String s in namesAndYearsList) {
     // namesList.add(s.split(" ")[0]);
     // yearsList.add(s.split(" ")[1]);
 

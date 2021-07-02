@@ -30,13 +30,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<List<double>> coordinatesAndSizes =[];
 
-  List<Circle> circles = [];
-
   Future<void> prepareCircles() async {
-      circles = await loadImages(context);
+      await loadImages(context);
   }
 
-  int theta = 7000;
+
 
   bool showYearsRange = true;
 
@@ -49,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     prepareCircles().then((value) {
       print('finish loading assets');
       setState(() {
-        circles = placeCircles(coordinatesAndSizes, circles, theta);
+        placeCircles(coordinatesAndSizes, theta);
       });
     });
   }
@@ -57,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void spin(int speed){
     setState(() {
       theta = (theta + speed * 0.5).toInt();
-      circles = placeCircles(coordinatesAndSizes, circles, theta);
+      placeCircles(coordinatesAndSizes, theta);
     });
   }
 
@@ -167,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onChanged: (value) {
             theta = value.toInt();
             setState(() {
-              circles = placeCircles(coordinatesAndSizes, circles, theta);
+              placeCircles(coordinatesAndSizes, theta);
             }
             );
           },
@@ -194,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               if(theta >= 2240 + 30) {
                 theta = theta - 30;
-                circles = placeCircles(coordinatesAndSizes, circles, theta);
+                placeCircles(coordinatesAndSizes, theta);
               }
             });
           },
@@ -216,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             if(theta <= 9820 - 30) {
               theta = theta + 30;
-              circles = placeCircles(coordinatesAndSizes, circles, theta);
+              placeCircles(coordinatesAndSizes, theta);
             }
           });
         },

@@ -43,7 +43,7 @@ List<List<double>> getCoordinatesAndSizes() {
 
   }
 
-List<Circle> placeCircles(List<List<double>> coordinatesAndSizes, List<Circle> circles, int theta) {
+void placeCircles(List<List<double>> coordinatesAndSizes, int theta) {
 
   for (Circle c in circles) {
 
@@ -84,7 +84,7 @@ List<Circle> placeCircles(List<List<double>> coordinatesAndSizes, List<Circle> c
     }
   }
 
-  return circles;
+  // return circles;
 }
 
 

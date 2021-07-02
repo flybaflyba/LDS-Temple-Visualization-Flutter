@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spiral_vis/Circle.dart';
+import 'package:spiral_vis/Universals.dart';
 
 Future<List<String>> readNamesAndYearsFile() async {
   String namesAndYearsText = await rootBundle.loadString('assets/texts/names_and_years.txt');
@@ -10,8 +11,8 @@ Future<List<String>> readNamesAndYearsFile() async {
   return namesAndYearsList;
 }
 
-Future<List<Circle>> loadImages(BuildContext context) async {
-  List<Circle> circles = [];
+Future<void> loadImages(BuildContext context) async {
+  // List<Circle> circles = [];
   List<String> namesAndYearsList = await readNamesAndYearsFile();
 
   // List<String> namesList = [];
@@ -58,7 +59,7 @@ Future<List<Circle>> loadImages(BuildContext context) async {
     circles.add(circle);
   }
 
-  return circles;
+  // return circles;
 
   // print("imageAvailability is: " + imageAvailability.toString());
 

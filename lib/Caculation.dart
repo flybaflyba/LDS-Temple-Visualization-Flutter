@@ -56,7 +56,7 @@ void placeCircles(List<List<double>> coordinatesAndSizes, int theta) {
     else if (circleIndexInCoordinatesAndSizes < 0){
       c.x = 0.57; // coordinatesAndSizes.first[0];
       c.y = 0.5; // coordinatesAndSizes.first[1];
-      c.size = 0.01;
+      c.size = 0.005;
     } else if (circleIndexInCoordinatesAndSizes >= coordinatesAndSizes.length - 1) {
       c.x = coordinatesAndSizes.last[0];
       c.y = coordinatesAndSizes.last[1];

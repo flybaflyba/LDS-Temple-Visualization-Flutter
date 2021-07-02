@@ -148,19 +148,19 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Column(
               children: [
-                Container(
-                  child: AnimatedDefaultTextStyle(
-                    child: Text(portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
-                    style : showYearsRange ? TextStyle(
-                      color: Colors.blue,
-                      fontSize: 20,
-                    ) : TextStyle(
-                      color: Colors.grey,
-                      fontSize: 0,
-                    ),
-                    duration: Duration(milliseconds: 500),
-                  ),
-                ),
+                // Container(
+                //   child: AnimatedDefaultTextStyle(
+                //     child: Text(portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
+                //     style : showYearsRange ? TextStyle(
+                //       color: Colors.blue,
+                //       fontSize: 20,
+                //     ) : TextStyle(
+                //       color: Colors.grey,
+                //       fontSize: 0,
+                //     ),
+                //     duration: Duration(milliseconds: 500),
+                //   ),
+                // ),
                 Container(
                   child:
                   Row(
@@ -265,18 +265,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Container(
-                  color: Color.fromRGBO(117, 107, 97, 0.5),
-                  child: AnimatedDefaultTextStyle(
-                    child: Text(!portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
-                    style : showYearsRange ? TextStyle(
-                      color: Colors.blue,
-                      fontSize: 20,
-                    ) : TextStyle(
-                      color: Colors.grey,
-                      fontSize: 0,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(117, 107, 97, 0.5),
+                        border: Border.all(
+                          color: Color.fromRGBO(117, 107, 97, 0.5),
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
-                    duration: Duration(milliseconds: 500),
-                  ),
+                    // color: Color.fromRGBO(117, 107, 97, 0.5),
+                    child: Container(
+                      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                      child: AnimatedDefaultTextStyle(
+                        child: Text('$startYear - $endYear', textAlign: TextAlign.center,),
+                        style : showYearsRange ? TextStyle(
+                          color: Colors.blue,
+                          fontSize: 20,
+                        ) : TextStyle(
+                          color: Colors.grey,
+                          fontSize: 0,
+                        ),
+                        duration: Duration(milliseconds: 500),
+                      ),
+                    )
                 ),
               ],
             )

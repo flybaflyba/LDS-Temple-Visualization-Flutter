@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:spiral_vis/Circle.dart';
+import 'package:spiral_vis/Universals.dart';
 
 
 List<List<double>> getCoordinatesAndSizes() {
@@ -45,7 +46,7 @@ List<List<double>> getCoordinatesAndSizes() {
 List<Circle> placeCircles(List<List<double>> coordinatesAndSizes, List<Circle> circles, int theta) {
 
   for (Circle c in circles) {
-    int circleIndex = circles.indexOf(c);
+
     int circleIndexInCoordinatesAndSizes = theta - 30 * circles.indexOf(c);
     if (circleIndexInCoordinatesAndSizes >= 0 && circleIndexInCoordinatesAndSizes < coordinatesAndSizes.length) {
       c.x = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][0];
@@ -60,6 +61,26 @@ List<Circle> placeCircles(List<List<double>> coordinatesAndSizes, List<Circle> c
       c.x = coordinatesAndSizes.last[0];
       c.y = coordinatesAndSizes.last[1];
       c.size = coordinatesAndSizes.last[2];
+
+      // get on screen temple years
+      startYear = c.year;
+      int circleIndex = circles.indexOf(c);
+      endYear = circles[(circleIndex + 30) < circles.length ? circleIndex + 30 : circles.length - 1].year;
+
+      if(startYear == '0000'){
+        startYear = 'Construction';
+      } else if(startYear == '1111'){
+        startYear = 'Dedicated';
+      }
+
+      if(endYear == '0000'){
+        endYear = 'Construction';
+      } else if(endYear == '1111'){
+        endYear = 'Dedicated';
+      }
+
+      // print(startYear + " " + endYear);
+
     }
   }
 

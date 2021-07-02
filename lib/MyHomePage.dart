@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:spiral_vis/Caculation.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Loader.dart';
+import 'package:spiral_vis/Universals.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -34,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int theta = 7000;
+
+  bool showYearsRange = true;
 
   @override
   void initState() {
@@ -86,6 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: () {
               setState(() {
               });
+            },
+            onPanStart: (DragStartDetails details) {
+
+            },
+            onPanEnd: (DragEndDetails details) {
+
             },
             onPanUpdate: (DragUpdateDetails details) {
               double x = details.globalPosition.dx;
@@ -146,7 +155,17 @@ class _MyHomePageState extends State<MyHomePage> {
           min: 2240,
           max: 9820,
           divisions: 9820 - 2240,
-          label: theta.toDouble().round().toString(),
+          label: '$startYear - $endYear',
+          onChangeStart: (value) {
+            setState(() {
+              showYearsRange = false;
+            });
+          },
+          onChangeEnd: (value) {
+            setState(() {
+              showYearsRange = true;
+            });
+          },
           onChanged: (value) {
             theta = value.toInt();
             setState(() {
@@ -204,6 +223,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
     elements.add(leftButton);
     elements.add(rightButton);
+
+    AnimatedPositioned yearRange = AnimatedPositioned(
+      duration: Duration(milliseconds: 0),
+      bottom: constraints.maxHeight * 0.15,
+      left: constraints.maxWidth * 0.1,
+      right: constraints.maxWidth * 0.1,
+      child: Container(
+        child: AnimatedDefaultTextStyle(
+          child: Text('$startYear - $endYear', textAlign: TextAlign.center,),
+          style : showYearsRange ? TextStyle(
+            color: Colors.blue,
+            fontSize: 20,
+          ) : TextStyle(
+            color: Colors.grey,
+            fontSize: 0,
+          ),
+          duration: Duration(milliseconds: 500),
+        ),
+
+      ),
+    );
+
+    elements.add(yearRange);
 
     // print('elements.length: ' + elements.length.toString());
 

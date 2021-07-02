@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // import 'dart:ui';
@@ -88,13 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
           GestureDetector(
             onTap: () {
               setState(() {
+                print('tapped $realName');
+                Navigator.pushNamed(context, '/SingleView');
               });
-            },
-            onPanStart: (DragStartDetails details) {
-
-            },
-            onPanEnd: (DragEndDetails details) {
-
             },
             onPanUpdate: (DragUpdateDetails details) {
               double x = details.globalPosition.dx;
@@ -179,25 +177,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
     elements.add(slider);
 
+    Timer timer;
+
     AnimatedPositioned leftButton = AnimatedPositioned(
       duration: Duration(milliseconds: 0),
       bottom: constraints.maxHeight * 0.07,
       left: constraints.maxWidth * 0.01,
       // right: constraints.maxWidth * 0.9,
-      child: IconButton(
-        icon: const Icon(Icons.arrow_left_sharp),
-        color: Colors.blue,
-        iconSize: constraints.maxWidth * 0.1,
-        tooltip: 'Anticlockwise spinning',
-        onPressed: () {
-          setState(() {
-            if(theta >= 2240 + 30) {
-              theta = theta - 30;
-              circles = placeCircles(coordinatesAndSizes, circles, theta);
-            }
-          });
-        },
-      ),
+      child: Container(
+        child: IconButton(
+          icon: const Icon(Icons.arrow_left_sharp),
+          color: Colors.blue,
+          iconSize: constraints.maxWidth * 0.1,
+          tooltip: 'Anticlockwise spinning',
+          onPressed: () {
+            setState(() {
+              if(theta >= 2240 + 30) {
+                theta = theta - 30;
+                circles = placeCircles(coordinatesAndSizes, circles, theta);
+              }
+            });
+          },
+        ),
+      )
     );
 
     AnimatedPositioned rightButton = AnimatedPositioned(

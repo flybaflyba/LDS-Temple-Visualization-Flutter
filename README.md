@@ -1,16 +1,23 @@
 # spiral_vis
 
-Spiral Visualization for LDS temples
+Spiral Visualization for LDS temples - Flutter Version
 
-## Getting Started
+- [Android version](https://github.com/flybaflyba/LDS-Temple-Visualization)
+- [iOS version](https://github.com/flybaflyba/LDS-Temple-Visualization-IOS)
 
-This project is a starting point for a Flutter application.
+## LDS Temple Visualization in Flutter
 
-A few resources to get you started if this is your first Flutter project:
+- Easier maintenance
+- Identical iOS and Android versions
+- Web supported! 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## About
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [App website - Chinese](https://latterdaytemples.litianzhang.com/home-chinese/)
+- [App website - English](https://latterdaytemples.litianzhang.com/)
+- [Church website - Chinese](https://www.churchofjesuschrist.org/?lang=zho)
+- [Church website - English](https://www.churchofjesuschrist.org/?lang=eng)
+- [School website](https://www.byuh.edu/)
+- [Professor website](https://geoffdraper.com/)
+- [Student website - Chinese](https://litianzhang.com/zh/home-2/)
+- [Student website -English](https://litianzhang.com/)

@@ -10,8 +10,8 @@ Future<List<String>> readNamesAndYearsFile() async {
   return namesAndYearsList;
 }
 
-Future<void> loadImages(BuildContext context) async {
-  List<Circle> circles;
+Future<List<Circle>> loadImages(BuildContext context) async {
+  List<Circle> circles = [];
   List<String> namesAndYearsList = await readNamesAndYearsFile();
 
   // List<String> namesList = [];
@@ -30,24 +30,35 @@ Future<void> loadImages(BuildContext context) async {
     for(String s in name.split("_")){
       realName = realName + '${s[0].toUpperCase()}${s.substring(1)}' + " ";
     }
-    print(realName);
+    // print(realName);
 
     String imagePath = 'assets/images/' + name + '_large.webp';
 
+    Image image;
     try {
       final bundle = DefaultAssetBundle.of(context);
       await bundle.load(imagePath);
       // print('we have this image');
       imageAvailability.add(true);
-      Image image = Image.asset(imagePath);
+      image = Image.asset(imagePath);
 
     } catch (e) {
-      Image image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
+      image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
       // print('no image');
       imageAvailability.add(false);
     }
   // print(image);
+
+    Circle circle = new Circle();
+    circle.name = name;
+    circle.year = year;
+    circle.realName = realName;
+    circle.image = image;
+
+    circles.add(circle);
   }
+
+  return circles;
 
   // print("imageAvailability is: " + imageAvailability.toString());
 

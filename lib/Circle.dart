@@ -6,18 +6,11 @@ class Circle {
   double y;
   double size;
   Image image;
+  String name;
+  String realName;
+  String year;
 
-  Circle(
-      double x,
-      double y,
-      double size,
-      Image image,
-      ) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    this.image = image;
-  }
+  Circle();
 
 }
 

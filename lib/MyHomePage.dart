@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 // import 'dart:ui';
 
 import 'package:spiral_vis/Caculation.dart';
+import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Loader.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -26,6 +27,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<List<double>> coordinatesAndSizes =[];
 
+  List<Circle> circles = [];
+
+  Future<void> prepareCircles() async {
+
+      circles = await loadImages(context);
+
+  }
+
+  int theta = 7000;
+
 
   @override
   void initState() {
@@ -33,42 +44,85 @@ class _MyHomePageState extends State<MyHomePage> {
 
     coordinatesAndSizes = getCoordinatesAndSizes();
 
+
+      prepareCircles().then((value) {
+        print('finish loading assets');
+        setState(() {
+          circles = placeCircles(coordinatesAndSizes, circles, theta);
+        });
+
+      });
+
+
+
+
   }
 
   Stack buildSpiral(BoxConstraints constraints) {
 
-    print(constraints.maxWidth);
-    print(constraints.maxHeight);
+    // print(constraints.maxWidth);
+    // print(constraints.maxHeight);
 
-    List<Positioned> points = [];
+    List<AnimatedPositioned> points = [];
 
-    double specialSizeRatio = 1.25;
+    double specialSizeRatio = 1.33;
 
-    for(List<double> i in coordinatesAndSizes) {
-      Positioned point = Positioned(
-          top: i[1] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 + 100,
-          left: i[0] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 ,
+    // print('circles.length: ' + circles.length.toString());
+
+    for(int i = 0; i < circles.length; i++){
+      double x = circles[i].x == null ? 0 : circles[i].x;
+      double y = circles[i].y == null ? 0 : circles[i].y;
+      double size = circles[i].size  == null ? 0 : circles[i].size;
+      Image image = circles[i].image  == null ? 0 : circles[i].image;
+      // print('$x, $y, $size');
+      // print(circles[i].image);
+      AnimatedPositioned point = AnimatedPositioned(
+        duration: Duration(milliseconds: 1000),
+          top: y * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 + 100,
+          left: x * constraints.maxWidth - (size * constraints.maxWidth * specialSizeRatio) / 2 ,
           // top: constraints.maxWidth / 2 + 100,
           // left: constraints.maxWidth / 2 ,
           // left: w/2,
+          width: size * constraints.maxWidth * specialSizeRatio,
+          height: size * constraints.maxWidth * specialSizeRatio,
           child: Container(
-            width: i[2] * constraints.maxWidth * specialSizeRatio,
-            height: i[2] * constraints.maxWidth * specialSizeRatio,
             // color: Colors.black,
             child:
-            CircleAvatar(backgroundColor: Colors.red,),
+              image,
+            // CircleAvatar(backgroundColor: Colors.red,),
             // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
           )
       );
-
       points.add(point);
-
     }
+
+    // print('points.length: ' + points.length.toString());
+
+    // for(List<Circle> circle in circles) {
+    //   Positioned point = Positioned(
+    //       top: i[1] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 + 100,
+    //       left: i[0] * constraints.maxWidth - (i[2] * constraints.maxWidth * specialSizeRatio) / 2 ,
+    //       // top: constraints.maxWidth / 2 + 100,
+    //       // left: constraints.maxWidth / 2 ,
+    //       // left: w/2,
+    //       child: Container(
+    //         width: i[2] * constraints.maxWidth * specialSizeRatio,
+    //         height: i[2] * constraints.maxWidth * specialSizeRatio,
+    //         // color: Colors.black,
+    //         child:
+    //         CircleAvatar(backgroundColor: Colors.red,),
+    //         // Image.asset('assets/images/laie_hawaii_temple_large.webp'),
+    //       )
+    //   );
+    //
+    //   points.add(point);
+    //
+    // }
 
     Stack stack = Stack(children: points,);
 
-    print('coordinates and sizes length: ' + coordinatesAndSizes.length.toString());
-    print('stack children length: ' + stack.children.length.toString());
+    // print('coordinates and sizes length: ' + coordinatesAndSizes.length.toString());
+    // print('stack children length: ' + stack.children.length.toString());
 
     return stack;
   }
@@ -77,16 +131,30 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
+
+    // circles = placeCircles(coordinatesAndSizes, circles, 8000);
+
     // getCoordinatesAndSizes();
 
-    loadImages(context);
+    // loadImages(context);
+
+    // placeCircles(coordinatesAndSizes, circles, 0);
 
     return
       Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-
+          TextButton(
+            onPressed: () {
+             print('update test');
+             setState(() {
+               theta = theta - 100;
+               circles = placeCircles(coordinatesAndSizes, circles, theta);
+             });
+            },
+            child: const Text('button', style: TextStyle(color: Colors.red),),
+          ),
         ],
       ),
       body: LayoutBuilder (

@@ -47,7 +47,7 @@ void showToast(String message, bool warning) {
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 1,
+    timeInSecForIosWeb: 2,
     backgroundColor: warning ? Colors.red : Colors.blue,
     textColor: Colors.white,
     fontSize: 16.0,

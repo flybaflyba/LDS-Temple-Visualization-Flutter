@@ -10,6 +10,7 @@ import 'package:spiral_vis/About.dart';
 import 'package:spiral_vis/Caculation.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Loader.dart';
+import 'package:spiral_vis/Settings.dart';
 import 'package:spiral_vis/SingleView.dart';
 import 'package:spiral_vis/Universals.dart';
 
@@ -182,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     :
                 Container(),
 
-                (circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
+                (showLabel && circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
                     ?
                 Container(
                   // color: Colors.red,
@@ -415,61 +416,25 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          aboutButton(context),
+
+          IconButton(
+              icon: const Icon(Icons.settings),
+              color: Colors.lightBlueAccent,
+              tooltip: 'Settings',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
+              }
+          ),
 
 
-        ],
+
+
+
+    ],
       ),
       body: LayoutBuilder (
         builder: (context, constraints) {
-          return
-            buildLayout(constraints);
-
-
-            Stack(
-            children: [
-              Positioned(
-                top: 0.2 * constraints.maxHeight,
-                left: 0.2 * constraints.maxWidth,
-                // left: w/2,
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 1000),
-                  color: Colors.red,
-                  width: sampleW,
-                  child: Image.asset(
-                    "assets/images/laie_hawaii_temple_large.webp",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              Positioned(
-                top: 0.1 * constraints.maxHeight,
-                // bottom: 0.2 * constraints.maxHeight,
-                left: 0.1 * constraints.maxWidth,
-                // right: 0.2 * constraints.maxWidth,
-                // left: w/2,
-                child: TextButton(
-                  onPressed: () {
-                    // print(w);
-                    // print(h);
-                    print(constraints.maxWidth);
-                    print(constraints.maxHeight);
-                    print(coordinatesAndSizes.length);
-                    print(coordinatesAndSizes);
-                    setState(() {
-                      large = !large;
-                      sampleW = sampleW + 100;
-                    });
-                  },
-                  child: const Text('button', style: TextStyle(color: Colors.red),),
-                ),
-              ),
-
-
-
-            ],
-          );
+          return buildLayout(constraints);
         }
 
       ),

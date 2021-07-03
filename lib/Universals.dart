@@ -22,3 +22,5 @@ Future<void> launchInBrowser(String url) async {
     throw 'Could not launch $url';
   }
 }
+
+bool showLabel = false;

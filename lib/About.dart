@@ -6,7 +6,7 @@ IconButton aboutButton(BuildContext context) {
   return IconButton(
     icon: const Icon(Icons.help),
     color: Colors.lightBlueAccent,
-    tooltip: 'Anticlockwise spinning',
+    tooltip: 'About',
     onPressed: () {
       showDialog<void>(
         context: context,

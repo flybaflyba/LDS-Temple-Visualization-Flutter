@@ -10,6 +10,7 @@ class Circle {
   String realName;
   String year;
   bool imageAvailability;
+  bool onScreen;
 
   Circle();
 

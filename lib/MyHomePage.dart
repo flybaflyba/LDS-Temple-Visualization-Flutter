@@ -102,151 +102,111 @@ class _MyHomePageState extends State<MyHomePage> {
       double size = circles[i].size  == null ? 0 : circles[i].size;
       Image image = circles[i].image  == null ? 0 : circles[i].image;
       String realName = circles[i].realName  == null ? 'no name' : circles[i].realName;
+      bool onScreen = circles[i].onScreen  == null ? false : circles[i].onScreen;
       // print('$x, $y, $size');
       // print(circles[i].image);
       AnimatedPositioned point = AnimatedPositioned(
-        duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 500),
           top: y * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + constraints.maxHeight * (portrait ? 0.15 : 0.1),
           left: x * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + (magicNumberAnother - magicNumber) / 2,
           width: size * magicNumber * specialSizeRatio,
           height: size * magicNumber * specialSizeRatio,
           child: GestureDetector(
-            onTap: () {
-              setState(() {
-                print('tapped $realName');
-                // Navigator.pushNamed(context, '/SingleView');
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleView(circle: circles[i],)));
-              });
-            },
-            onPanUpdate: (DragUpdateDetails details) {
-              double x = details.globalPosition.dx;
-              double y = details.globalPosition.dy;
+              onTap: () {
+                setState(() {
+                  print('tapped $realName');
+                  // Navigator.pushNamed(context, '/SingleView');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleView(circle: circles[i],)));
+                });
+              },
+              onPanUpdate: (DragUpdateDetails details) {
+                double x = details.globalPosition.dx;
+                double y = details.globalPosition.dy;
 
-              if(x <= constraints.maxWidth * (1/3)) {
-                // print('at left');
-                spin(-details.delta.dy.toInt());
-              } else if (x >= constraints.maxWidth * (2/3)) {
-                // print('at right');
-                spin(details.delta.dy.toInt());
-              } else {
-                // print('at middle');
-                if(y <= constraints.maxHeight * (1/3)){
-                  // print('top');
-                  spin(details.delta.dx.toInt());
-                } else if(y >= constraints.maxHeight * (2/3)){
-                  // print('bottom');
-                  spin(-details.delta.dx.toInt());
+                if(x <= constraints.maxWidth * (1/3)) {
+                  // print('at left');
+                  spin(-details.delta.dy.toInt());
+                } else if (x >= constraints.maxWidth * (2/3)) {
+                  // print('at right');
+                  spin(details.delta.dy.toInt());
+                } else {
+                  // print('at middle');
+                  if(y <= constraints.maxHeight * (1/3)){
+                    // print('top');
+                    spin(details.delta.dx.toInt());
+                  } else if(y >= constraints.maxHeight * (2/3)){
+                    // print('bottom');
+                    spin(-details.delta.dx.toInt());
+                  }
                 }
-              }
-            },
-            child: Stack(
-              children: [
-                Container(
-                  // color: Colors.blue,
-                  child: image,
-                ),
+              },
+              child:
 
-                (searchedCircleIndexes.contains(i))
-                    ?
-                Container(
-                  // color: Colors.red,
-                  constraints: BoxConstraints(
-                    minWidth: size * magicNumber * specialSizeRatio,
-                    minHeight: size * magicNumber * specialSizeRatio,
-                    maxWidth: size * magicNumber * specialSizeRatio,
-                    maxHeight: size * magicNumber * specialSizeRatio,
+              !onScreen
+                  ?
+              Container()
+                  :
+              Stack(
+                children: [
+                  Container(
+                    // color: Colors.blue,
+                    child: image,
                   ),
-                  child:  Container(
+
+                  (searchedCircleIndexes.contains(i))
+                      ?
+                  Container(
                     // color: Colors.red,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(100),),
-                      border: Border.all(
-                        width: 5,
-                        color: Colors.green,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
                     constraints: BoxConstraints(
-                      minWidth: size * magicNumber * specialSizeRatio * 0.8,
-                      minHeight: size * magicNumber * specialSizeRatio * 0.8,
-                      maxWidth: size * magicNumber * specialSizeRatio * 0.8,
-                      maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                      minWidth: size * magicNumber * specialSizeRatio,
+                      minHeight: size * magicNumber * specialSizeRatio,
+                      maxWidth: size * magicNumber * specialSizeRatio,
+                      maxHeight: size * magicNumber * specialSizeRatio,
                     ),
-                  ),
-                )
-                    :
-                Container(),
-
-                (!circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
-                    ?
-                Container(
-                  // color: Colors.red,
-                  constraints: BoxConstraints(
-                    minWidth: size * magicNumber * specialSizeRatio,
-                    minHeight: size * magicNumber * specialSizeRatio,
-                    maxWidth: size * magicNumber * specialSizeRatio,
-                    maxHeight: size * magicNumber * specialSizeRatio,
-                  ),
-                  child:  Container(
-                    // color: Colors.red,
-                      constraints: BoxConstraints(
-                        minWidth: size * magicNumber * specialSizeRatio * 0.8,
-                        minHeight: size * magicNumber * specialSizeRatio * 0.8,
-                        maxWidth: size * magicNumber * specialSizeRatio * 0.8,
-                        maxHeight: size * magicNumber * specialSizeRatio * 0.8,
-                      ),
-                      child: Center(
-                        child: Text(
-                          realName,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(1.0, 1.0),
-                                blurRadius: 3.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                              Shadow(
-                                offset: Offset(1.0, 1.0),
-                                blurRadius: 8.0,
-                                color: Color.fromARGB(125, 0, 0, 255),
-                              ),
-                            ],
-                          ),
+                    child:  Container(
+                      // color: Colors.red,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(100),),
+                        border: Border.all(
+                          width: 5,
+                          color: Colors.green,
+                          style: BorderStyle.solid,
                         ),
-                      )
-                  ),
-                )
-                    :
-                Container(),
-
-                (showLabel && circles[i].imageAvailability && size > 0.15 && (size < circles.first.size || realName != 'Kirtland Temple'))
-                    ?
-                Container(
-                  // color: Colors.red,
-                  constraints: BoxConstraints(
-                    minWidth: size * magicNumber * specialSizeRatio,
-                    minHeight: size * magicNumber * specialSizeRatio,
-                    maxWidth: size * magicNumber * specialSizeRatio,
-                    maxHeight: size * magicNumber * specialSizeRatio,
-                  ),
-                  child: Container(
-                    // color: Colors.red,
+                      ),
                       constraints: BoxConstraints(
                         minWidth: size * magicNumber * specialSizeRatio * 0.8,
                         minHeight: size * magicNumber * specialSizeRatio * 0.8,
                         maxWidth: size * magicNumber * specialSizeRatio * 0.8,
                         maxHeight: size * magicNumber * specialSizeRatio * 0.8,
                       ),
-                      child: Center(
-                        child: Container(
-                            alignment: Alignment(0.0, 0.9),
+                    ),
+                  )
+                      :
+                  Container(),
+
+                  (!circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
+                      ?
+                  Container(
+                    // color: Colors.red,
+                    constraints: BoxConstraints(
+                      minWidth: size * magicNumber * specialSizeRatio,
+                      minHeight: size * magicNumber * specialSizeRatio,
+                      maxWidth: size * magicNumber * specialSizeRatio,
+                      maxHeight: size * magicNumber * specialSizeRatio,
+                    ),
+                    child:  Container(
+                      // color: Colors.red,
+                        constraints: BoxConstraints(
+                          minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                          minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                          maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                          maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                        ),
+                        child: Center(
                           child: Text(
                             realName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 10,
                               color: Colors.white,
                               shadows: <Shadow>[
                                 Shadow(
@@ -263,20 +223,67 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         )
+                    ),
+                  )
+                      :
+                  Container(),
+
+                  (showLabel && circles[i].imageAvailability && size > 0.15 && (size < circles.first.size || realName != 'Kirtland Temple'))
+                      ?
+                  Container(
+                    // color: Colors.red,
+                    constraints: BoxConstraints(
+                      minWidth: size * magicNumber * specialSizeRatio,
+                      minHeight: size * magicNumber * specialSizeRatio,
+                      maxWidth: size * magicNumber * specialSizeRatio,
+                      maxHeight: size * magicNumber * specialSizeRatio,
+                    ),
+                    child: Container(
+                      // color: Colors.red,
+                        constraints: BoxConstraints(
+                          minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                          minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                          maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                          maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                        ),
+                        child: Center(
+                            child: Container(
+                              alignment: Alignment(0.0, 0.9),
+                              child: Text(
+                                realName,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1.0, 1.0),
+                                      blurRadius: 3.0,
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                    Shadow(
+                                      offset: Offset(1.0, 1.0),
+                                      blurRadius: 8.0,
+                                      color: Color.fromARGB(125, 0, 0, 255),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
 
 
 
-                      )
-                  ),
-                )
-                    :
-                Container(),
+                        )
+                    ),
+                  )
+                      :
+                  Container(),
 
 
 
 
-              ],
-            )
+                ],
+              )
           )
       );
       elements.add(point);

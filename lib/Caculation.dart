@@ -50,15 +50,18 @@ void placeCircles(List<List<double>> coordinatesAndSizes, int theta) {
       c.x = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][0];
       c.y = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][1];
       c.size = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][2];
+      c.onScreen = true;
     }
     else if (circleIndexInCoordinatesAndSizes < 0){
       c.x = 0.57; // coordinatesAndSizes.first[0];
       c.y = 0.5; // coordinatesAndSizes.first[1];
       c.size = 0.005;
+      c.onScreen = false;
     } else if (circleIndexInCoordinatesAndSizes >= coordinatesAndSizes.length - 1) {
       c.x = coordinatesAndSizes.last[0];
       c.y = coordinatesAndSizes.last[1];
       c.size = coordinatesAndSizes.last[2];
+      c.onScreen = false;
 
       // get on screen temple years
       startYear = c.year;

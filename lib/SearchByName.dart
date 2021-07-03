@@ -13,7 +13,7 @@ class _SearchByNameState extends State<SearchByName>{
   var typedName = "";
   TextEditingController typedNameTextEditingController = new TextEditingController();
 
-  Widget listMatchedCourses(String enteredString) {
+  Column listMatchedCourses(String enteredString) {
 
     print(enteredString);
 
@@ -55,6 +55,7 @@ class _SearchByNameState extends State<SearchByName>{
                     setState(() {
                       typedName = temp;
                       typedNameTextEditingController.text = temp;
+                      searchingByName = typedName;
                     });
                   }
                 },
@@ -67,20 +68,17 @@ class _SearchByNameState extends State<SearchByName>{
         );
       }
     }
-    return new ListView(
-      shrinkWrap: true,
+
+    return new Column(
       children: list,
     );
+
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Search By Name'),
-        ),
+
       body: Center(
         child: ListView(
           children: [
@@ -90,61 +88,53 @@ class _SearchByNameState extends State<SearchByName>{
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // IconButton(icon: Icon(Icons.person), onPressed: null),
-                      Container(
-                        color: Colors.white,
-                        constraints: BoxConstraints(minWidth: 10, maxWidth: 500),
-                        margin: EdgeInsets.only(left: 10),
-                        child: TextField(
-                          controller: typedNameTextEditingController,
-                          onChanged: (value){
-                            setState(() {
-                              typedName = value;
-                            });
-                            // print(course);
-                          },
-                          decoration: InputDecoration(
-                            hintText: "",
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue, width: 1.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                            ),
-                          ),
+                  child: Container(
+                    color: Colors.white,
+                    child: TextField(
+                      controller: typedNameTextEditingController,
+                      onChanged: (value){
+                        setState(() {
+                          typedName = value;
+                          searchingByName = typedName;
+                        });
+                        // print(course);
+                      },
+                      decoration: InputDecoration(
+                        hintText: "",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey, width: 1.0),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: ElevatedButton(
-                    child: Text((names.contains(typedName) ? 'Show $typedName' : 'Cancel')),
-                    onPressed: () {
-                      if(names.contains(typedName)) {
-                        // update
-                        print(names.indexOf(typedName));
-
-                        searchedCircleIndexes.clear();
-                        searchedCircleIndexes.add(names.indexOf(typedName));
-                        theta = 2240 + names.indexOf(typedName) * 30;
-
-                        Navigator.pop(context);
-
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 5),
+                //   child: ElevatedButton(
+                //     child: Text((names.contains(typedName) ? 'Show $typedName' : 'Cancel')),
+                //     onPressed: () {
+                //       if(names.contains(typedName)) {
+                //         // update
+                //         print(names.indexOf(typedName));
+                //
+                //         // searchedCircleIndexes.clear();
+                //         // searchedCircleIndexes.add(names.indexOf(typedName));
+                //         // theta = 2240 + names.indexOf(typedName) * 30;
+                //
+                //         Navigator.pop(context);
+                //
+                //       } else {
+                //         Navigator.pop(context);
+                //       }
+                //     },
+                //   ),
+                // ),
 
                 listMatchedCourses(typedName),
-
 
               ],
             ),

@@ -24,6 +24,12 @@ Future<void> launchInBrowser(String url) async {
 }
 List<String> names = [];
 
+List<String> years = [];
+
+List<String> distinctYears = [];
+
 List<List<double>> coordinatesAndSizes = [];
 
 List<int> searchedCircleIndexes = [];
+
+String searchingByName = '';

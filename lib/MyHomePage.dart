@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
+import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
 // import 'dart:ui';
@@ -58,8 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void spin(int speed){
     setState(() {
-      theta = (theta + speed * 0.5).toInt();
-      placeCircles(coordinatesAndSizes, theta);
+      if ((theta + speed * 0.5).toInt() >= 2240 && (theta + speed * 0.5).toInt() <= 9820) {
+        theta = (theta + speed * 0.5).toInt();
+        placeCircles(coordinatesAndSizes, theta);
+      }
     });
   }
 
@@ -141,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // color: Colors.blue,
                   child: image,
                 ),
+
                 (!circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
                     ?
                 Container(
@@ -342,7 +347,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               min: 2240,
                               max: 9820,
                               divisions: 9820 - 2240,
-                              label: '$startYear - $endYear' + ' ' + theta.toString(),
+                              label: '$startYear - $endYear',
                               onChangeStart: (value) {
                                 setState(() {
                                   showYearsRange = false;
@@ -434,6 +439,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool showLabel = false;
 
+  String selectedYear;
 
   @override
   Widget build(BuildContext context) {
@@ -477,8 +483,61 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Icon(Icons.calendar_today),
               foregroundColor: Colors.blue,
               backgroundColor: Colors.greenAccent,
-              label: 'Search by Year',
+              label: 'Pick a Year',
               onPressed: () {
+
+                print(distinctYears);
+
+                showMaterialScrollPicker<String>(
+                  context: context,
+                  title: 'Pick a Year',
+                  items: distinctYears,
+                  selectedItem: selectedYear,
+                  showDivider: false,
+                  onChanged: (value) => setState(() => selectedYear = value),
+                  onCancelled: () {
+
+                  },
+                  onConfirmed: () {
+                    print(selectedYear);
+
+                    int firstCircleFoundIndex = years.indexOf(selectedYear);
+
+                    theta = 2240 + firstCircleFoundIndex * 30;
+
+                    int numOfCirclesWithThisYear = 0;
+                    for(String y in years){
+                      if(y == selectedYear) {
+                        numOfCirclesWithThisYear ++;
+                      }
+                    }
+
+                    searchedCircleIndexes.clear();
+                    for (int i = 0; i < numOfCirclesWithThisYear; i++) {
+                      searchedCircleIndexes.add(firstCircleFoundIndex + i);
+                    }
+
+                    setState(() {
+                      placeCircles(coordinatesAndSizes, theta);
+                    });
+
+                  },
+
+                );
+
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByYear(),))..then((value) {
+                //   setState(() {
+                //     placeCircles(coordinatesAndSizes, theta);
+                //   });
+                //
+                // });
+
+                // showModalBottomSheet(
+                //     context: context,
+                //     builder: (context) {
+                //       return SearchByYear();
+                //     },
+                // );
 
               },
             ),
@@ -489,12 +548,35 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.red,
               label: 'Search by Name',
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {
-                  setState(() {
-                    placeCircles(coordinatesAndSizes, theta);
-                  });
 
-                });
+                showMaterialResponsiveDialog(
+                  context: context,
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(30.0),
+                      child: SearchByName(),
+                    ),
+                  ),
+                  onConfirmed: () {
+                    searchedCircleIndexes.clear();
+                    searchedCircleIndexes.add(names.indexOf(searchingByName));
+
+                    // print(searchingByName);
+
+                    theta = 2240 + names.indexOf(searchingByName) * 30;
+                    setState(() {
+                      setState(() {
+                        placeCircles(coordinatesAndSizes, theta);
+                      });
+                    });
+                  }
+                );
+
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {
+                //   setState(() {
+                //     placeCircles(coordinatesAndSizes, theta);
+                //   });
+                // });
               },
             ),
             SpeedDialChild(

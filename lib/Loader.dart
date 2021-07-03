@@ -36,6 +36,7 @@ Future<void> loadImages(BuildContext context) async {
     // print(realName);
 
     names.add(realName);
+    years.add(year);
 
     String imagePath = 'assets/images/' + name + '_large.webp';
 
@@ -78,6 +79,15 @@ Future<void> loadImages(BuildContext context) async {
     circle.imageAvailability = imageAvailability;
 
     circles.add(circle);
+
+    for(String i in years) {
+      if (!distinctYears.contains(i)) {
+        distinctYears.add(i);
+      }
+    }
+
+    // print(distinctYears);
+
   }
 
   // return circles;

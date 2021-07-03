@@ -33,7 +33,7 @@ SpeedDialChild aboutButton(BuildContext context) {
                         textStyle: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        launchInBrowser('https://latterdaytemples.litianzhang.com/');
+                        launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
                       },
                       child: Text('Visit App website'),
                     ),

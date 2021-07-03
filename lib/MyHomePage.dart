@@ -588,7 +588,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         placeCircles(coordinatesAndSizes, theta);
                       });
 
-                      showToast('Showing ' + selectedYear.toLowerCase() + ' temples', false);
+                      if(selectedYear.length == 4) {
+                        showToast('Showing year ' + selectedYear.toLowerCase() + ' temples', false);
+                      } else if(selectedYear == 'Under Construction') {
+                        showToast('Showing ' + selectedYear.toLowerCase() + ' temples', false);
+                      } else {
+                        showToast('Showing ' + selectedYear.toLowerCase(), false);
+                      }
 
                     },
 

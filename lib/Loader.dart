@@ -18,7 +18,9 @@ Future<void> loadImages(BuildContext context) async {
   // List<String> namesList = [];
   // List<String> yearsList = [];
 
-  List<bool> imageAvailability = [];
+  print('loading images');
+
+  bool imageAvailability;
 
   for(String s in namesAndYearsList) {
     // namesList.add(s.split(" ")[0]);
@@ -40,16 +42,29 @@ Future<void> loadImages(BuildContext context) async {
       final bundle = DefaultAssetBundle.of(context);
       await bundle.load(imagePath);
       // print('we have this image');
-      imageAvailability.add(true);
+      imageAvailability = true;
       image = Image.asset(
         imagePath,
         fit: BoxFit.cover,
+        filterQuality: FilterQuality.none,
+        frameBuilder: (BuildContext context, Widget child, int frame,
+            bool wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded) {
+            return child;
+          }
+          return AnimatedOpacity(
+            child: child,
+            opacity: frame == null ? 0 : 1,
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeOut,
+          );
+        },
       );
 
     } catch (e) {
       image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
       // print('no image');
-      imageAvailability.add(false);
+      imageAvailability = false;
     }
   // print(image);
 
@@ -58,6 +73,7 @@ Future<void> loadImages(BuildContext context) async {
     circle.year = year;
     circle.realName = realName;
     circle.image = image;
+    circle.imageAvailability = imageAvailability;
 
     circles.add(circle);
   }

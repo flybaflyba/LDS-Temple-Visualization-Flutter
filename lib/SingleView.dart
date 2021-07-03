@@ -56,14 +56,16 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                 child: Center(
                   child: Container(
                     // color: Colors.red,
-                    child:
-                    AnimatedSwitcher(
+                    child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 500),
                         child: Container(
-                          child: widget.circle.image,
+                          child: Center(
+                            child: widget.circle.image,
+                          ),
                           key: ValueKey<Circle>(widget.circle),
-                        )
+                        ),
                     ),
+
                     constraints: BoxConstraints(
                       minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                       minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,

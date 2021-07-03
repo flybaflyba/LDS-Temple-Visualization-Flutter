@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:thumbnailer/thumbnailer.dart';
 
 class Circle {
   double x;
@@ -9,6 +10,7 @@ class Circle {
   String name;
   String realName;
   String year;
+  bool imageAvailability;
 
   Circle();
 

@@ -132,9 +132,57 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               }
             },
-            child: Container(
-              child: image,
-            ),
+            child: Stack(
+              children: [
+                Container(
+                  // color: Colors.blue,
+                  child: image,
+                ),
+                (!circles[i].imageAvailability && size > 0.15)
+                    ?
+                Container(
+                  // color: Colors.red,
+                  constraints: BoxConstraints(
+                    minWidth: size * magicNumber * specialSizeRatio,
+                    minHeight: size * magicNumber * specialSizeRatio,
+                    maxWidth: size * magicNumber * specialSizeRatio,
+                    maxHeight: size * magicNumber * specialSizeRatio,
+                  ),
+                  child:  Container(
+                    // color: Colors.red,
+                      constraints: BoxConstraints(
+                        minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                        minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                        maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                        maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                      ),
+                      child: Center(
+                        child: Text(
+                          realName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 3.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 8.0,
+                                color: Color.fromARGB(125, 0, 0, 255),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                  ),
+                )
+                    :
+                Container(),
+              ],
+            )
           )
       );
       elements.add(point);

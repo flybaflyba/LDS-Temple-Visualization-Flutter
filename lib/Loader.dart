@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spiral_vis/Circle.dart';
@@ -49,10 +51,13 @@ Future<void> loadImages(BuildContext context) async {
 
     String imagePath = 'assets/images/' + name + '_large.webp';
 
+    final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+    final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/images'));
+    // print(imagesInAssets);
+
     Image image;
-    try {
-      final bundle = DefaultAssetBundle.of(context);
-      await bundle.load(imagePath);
+
+    if(imagesInAssets.contains(imagePath)){
       // print('we have this image');
       imageAvailability = true;
       image = Image.asset(
@@ -72,12 +77,20 @@ Future<void> loadImages(BuildContext context) async {
           );
         },
       );
-
-    } catch (e) {
-      image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
-      // print('no image');
+    } else {
+      // print('missing image');
       imageAvailability = false;
+      image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
     }
+
+    // try {
+    //   final bundle = DefaultAssetBundle.of(context);
+    //   await bundle.load(imagePath);
+    //   // print('we have this image');
+    // } catch (e) {
+    //   // print('no image');
+    // }
+
   // print(image);
 
     Circle circle = new Circle();

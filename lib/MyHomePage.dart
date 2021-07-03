@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (MediaQuery.of(context).orientation == Orientation.portrait){
       // is portrait
-      print('portrait');
+      // print('portrait');
       portrait = true;
       // if(constraints.maxHeight <= constraints.maxWidth * 0.6) {
       //   magicNumber = min(constraints.maxWidth, constraints.maxHeight);
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // }
     }else{
       // is landscape
-      print('landscape');
+      // print('landscape');
       portrait = false;
       magicNumberAnother = max(constraints.maxWidth, constraints.maxHeight);
 
@@ -518,25 +518,43 @@ class _MyHomePageState extends State<MyHomePage> {
           // ),
     ],
       ),
-      body: loadingAssets
-          ?
-      Center(
-        child: LiquidCircularProgressIndicator(
-          value: loaded, // 0.65, // Defaults to 0.5.
-          valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
-          backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-          borderColor: Colors.red,
-          borderWidth: 5.0,
-          direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-          center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
-        ),
-      )
-          :
-      LayoutBuilder (
-          builder: (context, constraints) {
-            return buildLayout(constraints);
-          }
-      ),
+      body:
+
+          Stack(
+            children: [
+              LayoutBuilder (
+                builder: (context, constraints) {
+                  return buildLayout(constraints);
+                },
+
+              ),
+              IgnorePointer(
+                ignoring: !loadingAssets,
+                child: AnimatedOpacity(
+                    opacity: loadingAssets ? 1 : 0,
+                    duration: Duration(milliseconds: 500),
+                    child: Center(
+                        child: Container(
+                          color: Colors.grey[300],
+                          child: Center(
+                            child: LiquidCircularProgressIndicator(
+                              value: loaded, // 0.65, // Defaults to 0.5.
+                              valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
+                              backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                              borderColor: Colors.red,
+                              borderWidth: 5.0,
+                              direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                              center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
+                            ),
+                          )
+                        )
+                    )
+                ),
+              )
+            ],
+          ),
+
+
 
         floatingActionButton: SpeedDial(
           child: const Icon(Icons.add),

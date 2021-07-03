@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spiral_vis/About.dart';
-import 'package:spiral_vis/Universals.dart';
 
 class Settings extends StatefulWidget{
 

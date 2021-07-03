@@ -11,6 +11,7 @@ import 'package:spiral_vis/About.dart';
 import 'package:spiral_vis/Caculation.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Loader.dart';
+import 'package:spiral_vis/SearchByName.dart';
 import 'package:spiral_vis/Settings.dart';
 import 'package:spiral_vis/SingleView.dart';
 import 'package:spiral_vis/Universals.dart';
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var sampleW = 100.0;
 
-  List<List<double>> coordinatesAndSizes =[];
+
 
   Future<void> prepareCircles() async {
       await loadImages(context);
@@ -45,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    coordinatesAndSizes = getCoordinatesAndSizes();
+    getCoordinatesAndSizes();
 
     prepareCircles().then((value) {
       print('finish loading assets');
@@ -209,6 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             realName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
+                              fontSize: 10,
                               color: Colors.white,
                               shadows: <Shadow>[
                                 Shadow(
@@ -232,7 +234,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )
                     :
-                Container()
+                Container(),
+
+                (searchedCircleIndexes.contains(i))
+                    ?
+                Container(
+                  // color: Colors.red,
+                  constraints: BoxConstraints(
+                    minWidth: size * magicNumber * specialSizeRatio,
+                    minHeight: size * magicNumber * specialSizeRatio,
+                    maxWidth: size * magicNumber * specialSizeRatio,
+                    maxHeight: size * magicNumber * specialSizeRatio,
+                  ),
+                  child:  Container(
+                    // color: Colors.red,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(100),),
+                      border: Border.all(
+                        width: 5,
+                        color: Colors.green,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                      minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                      maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                      maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                    ),
+                  ),
+                )
+                    :
+                Container(),
 
 
               ],
@@ -309,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               min: 2240,
                               max: 9820,
                               divisions: 9820 - 2240,
-                              label: '$startYear - $endYear',
+                              label: '$startYear - $endYear' + ' ' + theta.toString(),
                               onChangeStart: (value) {
                                 setState(() {
                                   showYearsRange = false;
@@ -401,6 +434,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool showLabel = false;
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -440,24 +474,25 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.add),
           speedDialChildren: <SpeedDialChild>[
             SpeedDialChild(
-              child: const Icon(Icons.search),
+              child: const Icon(Icons.calendar_today),
               foregroundColor: Colors.blue,
               backgroundColor: Colors.greenAccent,
-              label: 'Search by Name',
+              label: 'Search by Year',
               onPressed: () {
-                setState(() {
 
-                });
               },
             ),
 
             SpeedDialChild(
-              child: const Icon(Icons.calendar_today),
+              child: const Icon(Icons.search),
               foregroundColor: Colors.white,
               backgroundColor: Colors.red,
-              label: 'Search by Year',
+              label: 'Search by Name',
               onPressed: () {
-                setState(() {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {
+                  setState(() {
+                    placeCircles(coordinatesAndSizes, theta);
+                  });
 
                 });
               },

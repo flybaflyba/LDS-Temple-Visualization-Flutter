@@ -35,6 +35,8 @@ Future<void> loadImages(BuildContext context) async {
     }
     // print(realName);
 
+    names.add(realName);
+
     String imagePath = 'assets/images/' + name + '_large.webp';
 
     Image image;

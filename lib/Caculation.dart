@@ -4,12 +4,12 @@ import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Universals.dart';
 
 
-List<List<double>> getCoordinatesAndSizes() {
+void getCoordinatesAndSizes() {
     double initialRadius = 0.1;
     double centerX = 0.57;
     double centerY = 0.5;
 
-    List<List<double>> coordinatesAndSizes = <List<double>>[];
+    // List<List<double>> coordinatesAndSizes = <List<double>>[];
 
     for (double i = -28.0; i < 17.5; i += 0.02) {
       double x = centerX + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (cos(i));
@@ -38,8 +38,6 @@ List<List<double>> getCoordinatesAndSizes() {
       temp.add(topSize);
       coordinatesAndSizes.add(temp);
     }
-
-    return coordinatesAndSizes;
 
   }
 

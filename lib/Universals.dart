@@ -22,3 +22,8 @@ Future<void> launchInBrowser(String url) async {
     throw 'Could not launch $url';
   }
 }
+List<String> names = [];
+
+List<List<double>> coordinatesAndSizes = [];
+
+List<int> searchedCircleIndexes = [];

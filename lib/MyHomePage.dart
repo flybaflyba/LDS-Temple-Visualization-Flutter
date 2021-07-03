@@ -138,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // color: Colors.blue,
                   child: image,
                 ),
-                (!circles[i].imageAvailability && size > 0.15)
+                (!circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
                     ?
                 Container(
                   // color: Colors.red,
@@ -181,6 +181,58 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
                     :
                 Container(),
+
+                (circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
+                    ?
+                Container(
+                  // color: Colors.red,
+                  constraints: BoxConstraints(
+                    minWidth: size * magicNumber * specialSizeRatio,
+                    minHeight: size * magicNumber * specialSizeRatio,
+                    maxWidth: size * magicNumber * specialSizeRatio,
+                    maxHeight: size * magicNumber * specialSizeRatio,
+                  ),
+                  child:  Container(
+                    // color: Colors.red,
+                      constraints: BoxConstraints(
+                        minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                        minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                        maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                        maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                      ),
+                      child: Center(
+                        child: Container(
+                            alignment: Alignment(0.0, 1.0),
+                          child: Text(
+                            realName,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 3.0,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                                Shadow(
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 8.0,
+                                  color: Color.fromARGB(125, 0, 0, 255),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+
+
+
+                      )
+                  ),
+                )
+                    :
+                Container()
+
+
               ],
             )
           )

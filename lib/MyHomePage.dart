@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool showYearsRange = true;
 
+  Timer timer;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +54,17 @@ class _MyHomePageState extends State<MyHomePage> {
     loadingAssets = true;
 
     getCoordinatesAndSizes();
+
+    const duration = const Duration(seconds:1);
+    timer = new Timer.periodic(duration, (Timer t) {
+      // print('loading');
+      setState(() {
+        loaded = loaded.roundToDouble();
+      });
+      if(!loadingAssets) {
+        timer.cancel();
+      }
+    });
 
     prepareCircles().then((value) {
       print('finish loading assets');
@@ -487,13 +500,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ?
       Center(
         child: LiquidCircularProgressIndicator(
-          value: 0.65, // Defaults to 0.5.
+          value: loaded, // 0.65, // Defaults to 0.5.
           valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
           backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
           borderColor: Colors.red,
           borderWidth: 5.0,
           direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-          center: Text("Loading..."),
+          center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
         ),
       )
           :

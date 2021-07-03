@@ -22,6 +22,8 @@ Future<void> loadImages(BuildContext context) async {
 
   bool imageAvailability;
 
+  totalCircles = namesAndYearsList.length;
+
   for(String s in namesAndYearsList) {
     // namesList.add(s.split(" ")[0]);
     // yearsList.add(s.split(" ")[1]);
@@ -94,6 +96,8 @@ Future<void> loadImages(BuildContext context) async {
     }
 
     // print(distinctYears);
+
+    loaded = (namesAndYearsList.indexOf(s) + 1) / namesAndYearsList.length;
 
   }
 

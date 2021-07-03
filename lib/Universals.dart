@@ -35,3 +35,7 @@ List<int> searchedCircleIndexes = [];
 String searchingByName = '';
 
 bool loadingAssets = true;
+
+double loaded = 0.0;
+
+int totalCircles = 0;

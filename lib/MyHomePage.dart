@@ -99,13 +99,24 @@ class _MyHomePageState extends State<MyHomePage> {
       // is portrait
       print('portrait');
       portrait = true;
+      // if(constraints.maxHeight <= constraints.maxWidth * 0.6) {
+      //   magicNumber = min(constraints.maxWidth, constraints.maxHeight);
+      // } else {
+      //   magicNumber = min(constraints.maxWidth, constraints.maxHeight) * 0.8;
+      // }
     }else{
       // is landscape
       print('landscape');
       portrait = false;
       magicNumberAnother = max(constraints.maxWidth, constraints.maxHeight);
 
-      magicNumber = min(constraints.maxWidth, constraints.maxHeight) * 0.75;
+      magicNumber = min(constraints.maxWidth, constraints.maxHeight) * 0.9;
+
+      // if(constraints.maxWidth <= constraints.maxHeight * 0.6) {
+      //   magicNumber = min(constraints.maxWidth, constraints.maxHeight);
+      // } else {
+      //   magicNumber = min(constraints.maxWidth, constraints.maxHeight) * 0.8;
+      // }
     }
 
     // print(constraints.maxWidth);
@@ -528,43 +539,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 print(distinctYears);
 
-                showMaterialScrollPicker<String>(
-                  backgroundColor: Colors.white,
-                  context: context,
-                  title: 'Pick a Year',
-                  items: distinctYears,
-                  selectedItem: selectedYear,
-                  showDivider: false,
-                  onChanged: (value) => setState(() => selectedYear = value),
-                  onCancelled: () {
+                if(loadingAssets) {
+                showToast('Please wait for loading to finish.', true);
+                } else {
+                  showMaterialScrollPicker<String>(
+                    backgroundColor: Colors.white,
+                    context: context,
+                    title: 'Pick a Year',
+                    items: distinctYears,
+                    selectedItem: selectedYear,
+                    showDivider: false,
+                    onChanged: (value) => setState(() => selectedYear = value),
+                    onCancelled: () {
 
-                  },
-                  onConfirmed: () {
-                    print(selectedYear);
+                    },
+                    onConfirmed: () {
+                      print(selectedYear);
 
-                    int firstCircleFoundIndex = years.indexOf(selectedYear);
+                      int firstCircleFoundIndex = years.indexOf(selectedYear);
 
-                    theta = 2240 + firstCircleFoundIndex * 30;
+                      theta = 2240 + firstCircleFoundIndex * 30;
 
-                    int numOfCirclesWithThisYear = 0;
-                    for(String y in years){
-                      if(y == selectedYear) {
-                        numOfCirclesWithThisYear ++;
+                      int numOfCirclesWithThisYear = 0;
+                      for(String y in years){
+                        if(y == selectedYear) {
+                          numOfCirclesWithThisYear ++;
+                        }
                       }
-                    }
 
-                    searchedCircleIndexes.clear();
-                    for (int i = 0; i < numOfCirclesWithThisYear; i++) {
-                      searchedCircleIndexes.add(firstCircleFoundIndex + i);
-                    }
+                      searchedCircleIndexes.clear();
+                      for (int i = 0; i < numOfCirclesWithThisYear; i++) {
+                        searchedCircleIndexes.add(firstCircleFoundIndex + i);
+                      }
 
-                    setState(() {
-                      placeCircles(coordinatesAndSizes, theta);
-                    });
+                      setState(() {
+                        placeCircles(coordinatesAndSizes, theta);
+                      });
 
-                  },
+                    },
 
-                );
+                  );
+                }
+
+
 
                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByYear(),))..then((value) {
                 //   setState(() {
@@ -589,8 +606,10 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.red,
               label: 'Search by Name',
               onPressed: () {
-
-                showMaterialResponsiveDialog(
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish.', true);
+                } else {
+                  showMaterialResponsiveDialog(
                     backgroundColor: Colors.white,
                     title: 'Search by Name',
                     context: context,
@@ -615,8 +634,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
 
                     },
-                );
-
+                  );
+                }
                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {
                 //   setState(() {
                 //     placeCircles(coordinatesAndSizes, theta);
@@ -624,14 +643,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 // });
               },
             ),
+
             SpeedDialChild(
               child: Checkbox(
                 checkColor: Colors.lightBlueAccent,
                 value: showLabel,
                 onChanged: (bool value) {
-                  setState(() {
-                    showLabel = value;
-                  });
+
+                  if(loadingAssets) {
+                    showToast('Please wait for loading to finish.', true);
+                  } else {
+                    setState(() {
+                      showLabel = value;
+                    });
+                  }
                 },
               ),
               foregroundColor: Colors.black,

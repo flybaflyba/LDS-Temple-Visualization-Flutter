@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,3 +41,15 @@ bool loadingAssets = true;
 double loaded = 0.0;
 
 int totalCircles = 0;
+
+void showToast(String message, bool warning) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: warning ? Colors.red : Colors.blue,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
+}

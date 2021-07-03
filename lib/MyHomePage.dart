@@ -78,6 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
       print('landscape');
       portrait = false;
       magicNumberAnother = max(constraints.maxWidth, constraints.maxHeight);
+
+      magicNumber = min(constraints.maxWidth, constraints.maxHeight) * 0.75;
     }
 
     // print(constraints.maxWidth);
@@ -97,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // print(circles[i].image);
       AnimatedPositioned point = AnimatedPositioned(
         duration: Duration(milliseconds: 500),
-          top: y * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + constraints.maxHeight * (portrait ? 0.15 : 0.05),
+          top: y * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + constraints.maxHeight * (portrait ? 0.15 : 0.1),
           left: x * magicNumber - (size * magicNumber * specialSizeRatio) / 2 + (magicNumberAnother - magicNumber) / 2,
           width: size * magicNumber * specialSizeRatio,
           height: size * magicNumber * specialSizeRatio,
@@ -148,19 +150,6 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Column(
               children: [
-                // Container(
-                //   child: AnimatedDefaultTextStyle(
-                //     child: Text(portrait ? '$startYear - $endYear' : '', textAlign: TextAlign.center,),
-                //     style : showYearsRange ? TextStyle(
-                //       color: Colors.blue,
-                //       fontSize: 20,
-                //     ) : TextStyle(
-                //       color: Colors.grey,
-                //       fontSize: 0,
-                //     ),
-                //     duration: Duration(milliseconds: 500),
-                //   ),
-                // ),
                 Container(
                   child:
                   Row(
@@ -279,10 +268,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text('$startYear - $endYear', textAlign: TextAlign.center,),
                         style : showYearsRange ? TextStyle(
                           color: Colors.blue,
-                          fontSize: 20,
+                          fontSize: 15,
                         ) : TextStyle(
                           color: Colors.grey,
-                          fontSize: 0,
+                          fontSize: 1,
                         ),
                         duration: Duration(milliseconds: 500),
                       ),

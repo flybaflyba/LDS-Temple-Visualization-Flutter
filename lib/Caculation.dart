@@ -70,13 +70,13 @@ void placeCircles(List<List<double>> coordinatesAndSizes, int theta) {
       if(startYear == '0000'){
         startYear = 'Construction';
       } else if(startYear == '1111'){
-        startYear = 'Dedicated';
+        startYear = 'Announced';
       }
 
       if(endYear == '0000'){
         endYear = 'Construction';
       } else if(endYear == '1111'){
-        endYear = 'Dedicated';
+        endYear = 'Announced';
       }
 
       // print(startYear + " " + endYear);

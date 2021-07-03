@@ -65,10 +65,10 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                         )
                     ),
                     constraints: BoxConstraints(
-                      minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.8,
-                      minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.8,
-                      maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.8,
-                      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.8,
+                      minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                      minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                      maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                     ),
                   ),
                 ),

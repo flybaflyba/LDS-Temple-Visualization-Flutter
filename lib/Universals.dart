@@ -3,7 +3,8 @@
 import 'package:spiral_vis/Circle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String startYear, endYear;
+String startYear = 'Loading';
+String endYear = 'Loading';
 
 List<Circle> circles = [];
 

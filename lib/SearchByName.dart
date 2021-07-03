@@ -61,6 +61,7 @@ class _SearchByNameState extends State<SearchByName>{
                 },
                 child: Text(
                   temp,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -102,7 +103,7 @@ class _SearchByNameState extends State<SearchByName>{
                         // print(course);
                       },
                       decoration: InputDecoration(
-                        hintText: "",
+                        hintText: "type a temple name",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue, width: 1.0),
                         ),

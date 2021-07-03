@@ -33,3 +33,5 @@ List<List<double>> coordinatesAndSizes = [];
 List<int> searchedCircleIndexes = [];
 
 String searchingByName = '';
+
+bool loadingAssets = true;

@@ -36,6 +36,13 @@ Future<void> loadImages(BuildContext context) async {
     // print(realName);
 
     names.add(realName);
+
+    if(year == '0000') {
+      year = 'Under Construction';
+    } else if(year == '1111'){
+      year = 'Announced Temples';
+    }
+
     years.add(year);
 
     String imagePath = 'assets/images/' + name + '_large.webp';

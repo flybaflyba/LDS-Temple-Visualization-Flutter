@@ -14,10 +14,8 @@ class _SettingsState extends State<Settings>{
         appBar: AppBar(
           title: Text('Settings'),
         ),
-      body: ListView(
-        children: [
-
-        ],
+      body: Center(
+        child: Text('Settings'),
       )
     );
   }

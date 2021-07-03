@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
 // import 'dart:ui';
@@ -48,14 +49,19 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    loadingAssets = true;
+
     getCoordinatesAndSizes();
 
     prepareCircles().then((value) {
       print('finish loading assets');
       setState(() {
+        loadingAssets = false;
         placeCircles(coordinatesAndSizes, theta);
       });
     });
+
+
   }
 
   void spin(int speed){
@@ -467,22 +473,34 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-
-          IconButton(
-              icon: const Icon(Icons.settings),
-              color: Colors.lightBlueAccent,
-              tooltip: 'Settings',
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
-              }
-          ),
+          // IconButton(
+          //     icon: const Icon(Icons.settings),
+          //     color: Colors.lightBlueAccent,
+          //     tooltip: 'Settings',
+          //     onPressed: () {
+          //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
+          //     }
+          // ),
     ],
       ),
-      body: LayoutBuilder (
-        builder: (context, constraints) {
-          return buildLayout(constraints);
-        }
-
+      body: loadingAssets
+          ?
+      Center(
+        child: LiquidCircularProgressIndicator(
+          value: 0.65, // Defaults to 0.5.
+          valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
+          backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+          borderColor: Colors.red,
+          borderWidth: 5.0,
+          direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+          center: Text("Loading..."),
+        ),
+      )
+          :
+      LayoutBuilder (
+          builder: (context, constraints) {
+            return buildLayout(constraints);
+          }
       ),
 
         floatingActionButton: SpeedDial(
@@ -570,18 +588,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     onConfirmed: () {
-                      searchedCircleIndexes.clear();
-                      searchedCircleIndexes.add(names.indexOf(searchingByName));
-
                       // print(searchingByName);
 
-                      theta = 2240 + names.indexOf(searchingByName) * 30;
-                      setState(() {
+                      if(names.contains(searchingByName)) {
+                        searchedCircleIndexes.clear();
+                        searchedCircleIndexes.add(names.indexOf(searchingByName));
+                        theta = 2240 + names.indexOf(searchingByName) * 30;
                         setState(() {
-                          placeCircles(coordinatesAndSizes, theta);
+                          setState(() {
+                            placeCircles(coordinatesAndSizes, theta);
+                          });
                         });
-                      });
-                    }
+                      }
+
+                    },
                 );
 
                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {
@@ -603,7 +623,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               foregroundColor: Colors.black,
               backgroundColor: Colors.yellow,
-              label: 'Show Temple Labels!',
+              label: 'Show Temple Labels',
               onPressed: () {
                 setState(() {
 

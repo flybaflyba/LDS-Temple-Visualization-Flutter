@@ -111,6 +111,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     });
                                   } else {
                                     // show no more image
+                                    showToast('This is the oldest temple', true);
                                   }
 
                                 },
@@ -152,6 +153,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     });
                                   } else {
                                     // show no more image
+                                    showToast('This is the newest temple', true);
                                   }
                                 },
                               ),

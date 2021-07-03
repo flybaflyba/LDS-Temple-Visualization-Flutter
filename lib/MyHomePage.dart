@@ -562,6 +562,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     showDivider: false,
                     onChanged: (value) => setState(() => selectedYear = value),
                     onCancelled: () {
+                      showToast('Pick a Year cancelled', false);
 
                     },
                     onConfirmed: () {
@@ -586,6 +587,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         placeCircles(coordinatesAndSizes, theta);
                       });
+
+                      showToast('Showing ' + selectedYear.toLowerCase() + ' temples', false);
 
                     },
 
@@ -630,6 +633,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: SearchByName(),
                       ),
                     ),
+                    onCancelled: () {
+                      showToast('Search by Name cancelled', false);
+                    },
                     onConfirmed: () {
                       // print(searchingByName);
 
@@ -638,10 +644,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         searchedCircleIndexes.add(names.indexOf(searchingByName));
                         theta = 2240 + names.indexOf(searchingByName) * 30;
                         setState(() {
-                          setState(() {
-                            placeCircles(coordinatesAndSizes, theta);
-                          });
+                          placeCircles(coordinatesAndSizes, theta);
                         });
+                        showToast('Showing $searchingByName', false);
+                      } else {
+                        showToast('No temple found', true);
                       }
 
                     },

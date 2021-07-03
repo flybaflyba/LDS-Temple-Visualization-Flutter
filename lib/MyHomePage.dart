@@ -489,6 +489,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 print(distinctYears);
 
                 showMaterialScrollPicker<String>(
+                  backgroundColor: Colors.white,
                   context: context,
                   title: 'Pick a Year',
                   items: distinctYears,
@@ -550,26 +551,28 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
 
                 showMaterialResponsiveDialog(
-                  context: context,
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.all(30.0),
-                      child: SearchByName(),
+                    backgroundColor: Colors.white,
+                    title: 'Search by Name',
+                    context: context,
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.all(30.0),
+                        child: SearchByName(),
+                      ),
                     ),
-                  ),
-                  onConfirmed: () {
-                    searchedCircleIndexes.clear();
-                    searchedCircleIndexes.add(names.indexOf(searchingByName));
+                    onConfirmed: () {
+                      searchedCircleIndexes.clear();
+                      searchedCircleIndexes.add(names.indexOf(searchingByName));
 
-                    // print(searchingByName);
+                      // print(searchingByName);
 
-                    theta = 2240 + names.indexOf(searchingByName) * 30;
-                    setState(() {
+                      theta = 2240 + names.indexOf(searchingByName) * 30;
                       setState(() {
-                        placeCircles(coordinatesAndSizes, theta);
+                        setState(() {
+                          placeCircles(coordinatesAndSizes, theta);
+                        });
                       });
-                    });
-                  }
+                    }
                 );
 
                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByName(),))..then((value) {

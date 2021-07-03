@@ -79,6 +79,7 @@ class _SearchByNameState extends State<SearchByName>{
   Widget build(BuildContext context) {
     return Scaffold(
 
+      backgroundColor: Colors.white,
       body: Center(
         child: ListView(
           children: [
@@ -91,6 +92,7 @@ class _SearchByNameState extends State<SearchByName>{
                   child: Container(
                     color: Colors.white,
                     child: TextField(
+                      textAlign: TextAlign.center,
                       controller: typedNameTextEditingController,
                       onChanged: (value){
                         setState(() {

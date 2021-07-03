@@ -146,6 +146,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: image,
                 ),
 
+                (searchedCircleIndexes.contains(i))
+                    ?
+                Container(
+                  // color: Colors.red,
+                  constraints: BoxConstraints(
+                    minWidth: size * magicNumber * specialSizeRatio,
+                    minHeight: size * magicNumber * specialSizeRatio,
+                    maxWidth: size * magicNumber * specialSizeRatio,
+                    maxHeight: size * magicNumber * specialSizeRatio,
+                  ),
+                  child:  Container(
+                    // color: Colors.red,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(100),),
+                      border: Border.all(
+                        width: 5,
+                        color: Colors.green,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: size * magicNumber * specialSizeRatio * 0.8,
+                      minHeight: size * magicNumber * specialSizeRatio * 0.8,
+                      maxWidth: size * magicNumber * specialSizeRatio * 0.8,
+                      maxHeight: size * magicNumber * specialSizeRatio * 0.8,
+                    ),
+                  ),
+                )
+                    :
+                Container(),
+
                 (!circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
                     ?
                 Container(
@@ -190,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     :
                 Container(),
 
-                (showLabel && circles[i].imageAvailability && size > 0.15 && size < circles.first.size)
+                (showLabel && circles[i].imageAvailability && size > 0.15 && (size < circles.first.size || realName != 'Kirtland Temple'))
                     ?
                 Container(
                   // color: Colors.red,
@@ -200,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     maxWidth: size * magicNumber * specialSizeRatio,
                     maxHeight: size * magicNumber * specialSizeRatio,
                   ),
-                  child:  Container(
+                  child: Container(
                     // color: Colors.red,
                       constraints: BoxConstraints(
                         minWidth: size * magicNumber * specialSizeRatio * 0.8,
@@ -210,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: Center(
                         child: Container(
-                            alignment: Alignment(0.0, 1.0),
+                            alignment: Alignment(0.0, 0.9),
                           child: Text(
                             realName,
                             textAlign: TextAlign.center,
@@ -241,36 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     :
                 Container(),
 
-                (searchedCircleIndexes.contains(i))
-                    ?
-                Container(
-                  // color: Colors.red,
-                  constraints: BoxConstraints(
-                    minWidth: size * magicNumber * specialSizeRatio,
-                    minHeight: size * magicNumber * specialSizeRatio,
-                    maxWidth: size * magicNumber * specialSizeRatio,
-                    maxHeight: size * magicNumber * specialSizeRatio,
-                  ),
-                  child:  Container(
-                    // color: Colors.red,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(100),),
-                      border: Border.all(
-                        width: 5,
-                        color: Colors.green,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: size * magicNumber * specialSizeRatio * 0.8,
-                      minHeight: size * magicNumber * specialSizeRatio * 0.8,
-                      maxWidth: size * magicNumber * specialSizeRatio * 0.8,
-                      maxHeight: size * magicNumber * specialSizeRatio * 0.8,
-                    ),
-                  ),
-                )
-                    :
-                Container(),
+
 
 
               ],

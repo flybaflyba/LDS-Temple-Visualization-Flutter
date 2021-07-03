@@ -44,12 +44,14 @@ int totalCircles = 0;
 
 void showToast(String message, bool warning) {
   Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      backgroundColor: warning ? Colors.red : Colors.blue,
-      textColor: Colors.white,
-      fontSize: 16.0
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor: warning ? Colors.red : Colors.blue,
+    textColor: Colors.white,
+    fontSize: 16.0,
+    webBgColor: warning ? "linear-gradient(to right, #cc00ff, #ff0000)" : "	linear-gradient(to right, #00b09b, #96c93d)",
+
   );
 }

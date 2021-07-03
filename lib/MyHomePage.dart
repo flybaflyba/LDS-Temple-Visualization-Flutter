@@ -656,6 +656,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {
                       showLabel = value;
                     });
+                    if(value) {
+                      showToast('Showing temple labels.', false);
+                    } else{
+                      showToast('Hide temple labels.', false);
+                    }
                   }
                 },
               ),

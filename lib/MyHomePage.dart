@@ -82,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if ((theta + speed * 0.5).toInt() >= 2240 && (theta + speed * 0.5).toInt() <= 9820) {
         theta = (theta + speed * 0.5).toInt();
         placeCircles(coordinatesAndSizes, theta);
+      } else {
+        showToast((speed > 0 ? 'Ending': 'Beginning') + ' of spiral', true);
       }
     });
   }
@@ -350,6 +352,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 if(theta >= 2240 + 30) {
                                   theta = theta - 30;
                                   placeCircles(coordinatesAndSizes, theta);
+                                } else {
+                                  showToast('Beginning of spiral', true);
                                 }
                               });
                             },
@@ -401,8 +405,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 theta = value.toInt();
                                 setState(() {
                                   placeCircles(coordinatesAndSizes, theta);
+                                });
+
+                                if(value == 2240) {
+                                  showToast('Beginning of spiral', true);
+                                } else if(value == 9820) {
+                                  showToast('End of spiral', true);
                                 }
-                                );
                               },
                             ),
                           ),
@@ -423,6 +432,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   if(theta <= 9820 - 30) {
                                     theta = theta + 30;
                                     placeCircles(coordinatesAndSizes, theta);
+                                  } else {
+                                    showToast('End of spiral', true);
                                   }
                                 });
                               },
@@ -540,7 +551,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 print(distinctYears);
 
                 if(loadingAssets) {
-                showToast('Please wait for loading to finish.', true);
+                showToast('Please wait for loading to finish', true);
                 } else {
                   showMaterialScrollPicker<String>(
                     backgroundColor: Colors.white,
@@ -607,7 +618,7 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Search by Name',
               onPressed: () {
                 if(loadingAssets) {
-                  showToast('Please wait for loading to finish.', true);
+                  showToast('Please wait for loading to finish', true);
                 } else {
                   showMaterialResponsiveDialog(
                     backgroundColor: Colors.white,
@@ -651,15 +662,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (bool value) {
 
                   if(loadingAssets) {
-                    showToast('Please wait for loading to finish.', true);
+                    showToast('Please wait for loading to finish', true);
                   } else {
                     setState(() {
                       showLabel = value;
                     });
                     if(value) {
-                      showToast('Showing temple labels.', false);
+                      showToast('Showing temple labels', false);
                     } else{
-                      showToast('Hide temple labels.', false);
+                      showToast('Hide temple labels', false);
                     }
                   }
                 },

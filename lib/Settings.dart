@@ -18,16 +18,7 @@ class _SettingsState extends State<Settings>{
         ),
       body: ListView(
         children: [
-          Checkbox(
-            checkColor: Colors.lightBlueAccent,
-            value: showLabel,
-            onChanged: (bool value) {
-              setState(() {
-                showLabel = value;
-              });
-            },
-          ),
-          aboutButton(context),
+
         ],
       )
     );

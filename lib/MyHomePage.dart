@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
 // import 'dart:ui';
 
@@ -398,6 +399,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return stack;
   }
 
+  bool showLabel = false;
 
   @override
   Widget build(BuildContext context) {
@@ -425,11 +427,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
               }
           ),
-
-
-
-
-
     ],
       ),
       body: LayoutBuilder (
@@ -439,7 +436,58 @@ class _MyHomePageState extends State<MyHomePage> {
 
       ),
 
+        floatingActionButton: SpeedDial(
+          child: const Icon(Icons.add),
+          speedDialChildren: <SpeedDialChild>[
+            SpeedDialChild(
+              child: const Icon(Icons.search),
+              foregroundColor: Colors.blue,
+              backgroundColor: Colors.greenAccent,
+              label: 'Search by Name',
+              onPressed: () {
+                setState(() {
 
+                });
+              },
+            ),
+
+            SpeedDialChild(
+              child: const Icon(Icons.calendar_today),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+              label: 'Search by Year',
+              onPressed: () {
+                setState(() {
+
+                });
+              },
+            ),
+            SpeedDialChild(
+              child: Checkbox(
+                checkColor: Colors.lightBlueAccent,
+                value: showLabel,
+                onChanged: (bool value) {
+                  setState(() {
+                    showLabel = value;
+                  });
+                },
+              ),
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.yellow,
+              label: 'Show Temple Labels!',
+              onPressed: () {
+                setState(() {
+
+                });
+              },
+            ),
+            aboutButton(context),
+          ],
+          closedForegroundColor: Colors.black,
+          openForegroundColor: Colors.white,
+          closedBackgroundColor: Colors.white,
+          openBackgroundColor: Colors.black,
+        ),
      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

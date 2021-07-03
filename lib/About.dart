@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/Universals.dart';
 
 
-IconButton aboutButton(BuildContext context) {
-  return IconButton(
-    icon: const Icon(Icons.help),
-    color: Colors.lightBlueAccent,
-    tooltip: 'About',
+SpeedDialChild aboutButton(BuildContext context) {
+  return SpeedDialChild(
+    child: const Icon(Icons.help),
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.green,
+    label: 'About the App',
     onPressed: () {
       showDialog<void>(
         context: context,
@@ -22,6 +24,7 @@ IconButton aboutButton(BuildContext context) {
                   Text('Temple photos are copyrighted by Intellectual Reserve, Inc. Used by permission.'),
                   Text(''),
                   Text('This app is a research project funded by Brigham Young University--Hawaii, however the contents are the responsibility of its developers. This app is not an \"official\" publication of the Church of Jesus Christ of Latter-day Saints.'),
+                  Text(''),
                   TextButton(
                     style: TextButton.styleFrom(
                       textStyle: TextStyle(fontSize: 20),
@@ -45,6 +48,16 @@ IconButton aboutButton(BuildContext context) {
           );
         },
       );
+    },
+  );
+
+
+    IconButton(
+    icon: const Icon(Icons.help),
+    color: Colors.lightBlueAccent,
+    tooltip: 'About',
+    onPressed: () {
+
     },
   );
 }

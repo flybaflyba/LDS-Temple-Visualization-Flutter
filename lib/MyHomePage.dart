@@ -8,6 +8,7 @@ import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
 // import 'dart:ui';
@@ -19,6 +20,9 @@ import 'package:spiral_vis/SearchByName.dart';
 import 'package:spiral_vis/Settings.dart';
 import 'package:spiral_vis/SingleView.dart';
 import 'package:spiral_vis/Universals.dart';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -509,14 +513,26 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          // IconButton(
-          //     icon: const Icon(Icons.settings),
-          //     color: Colors.lightBlueAccent,
-          //     tooltip: 'Settings',
-          //     onPressed: () {
-          //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
-          //     }
-          // ),
+
+          kIsWeb
+              ?
+          IconButton(
+              icon: const Icon(Icons.link),
+              color: Colors.lightBlueAccent,
+              tooltip: 'More',
+              onPressed: () {
+                launchInBrowser('https://latterdaytemples.litianzhang.com/');
+              }
+          )
+              :
+          IconButton(
+              icon: const Icon(Icons.ios_share),
+              color: Colors.lightBlueAccent,
+              tooltip: 'Share',
+              onPressed: () {
+                Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
+              }
+          ),
     ],
       ),
       body:

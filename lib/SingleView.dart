@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Universals.dart';
+import 'package:spiral_vis/WebViewPage.dart';
 
 
 class SingleView extends StatefulWidget{
@@ -75,6 +76,29 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                 ),
               ),
+
+              Center(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(10.0),
+                    primary: Colors.blue
+                    // textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+
+                    String urlEndding =  widget.circle.realName.toLowerCase().replaceAll(' ', '-').substring(0, widget.circle.realName.length - 1);
+                    String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery/' + urlEndding;
+
+                    print(url);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                        WebViewPage(url: url, name: widget.circle.realName,)
+                    ));
+
+                  },
+                  child: const Text('See more photos online'),
+                ),
+              ),
+
               Column(
                 children: [
                   Padding(

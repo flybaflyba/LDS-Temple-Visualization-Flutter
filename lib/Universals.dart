@@ -43,6 +43,7 @@ double loaded = 0.0;
 int totalCircles = 0;
 
 void showToast(String message, bool warning) {
+  Fluttertoast.cancel();
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

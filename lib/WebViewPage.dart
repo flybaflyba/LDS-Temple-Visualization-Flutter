@@ -78,6 +78,7 @@ class _WebViewPageState extends State<WebViewPage> {
           gestureNavigationEnabled: true,
         );
       }),
+      floatingActionButton: openInBrowserButton(),
     );
   }
 
@@ -90,6 +91,15 @@ class _WebViewPageState extends State<WebViewPage> {
             SnackBar(content: Text(message.message)),
           );
         });
+  }
+
+  Widget openInBrowserButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        launchInBrowser(widget.url);
+      },
+      child: const Icon(Icons.open_in_browser),
+    );
   }
 }
 

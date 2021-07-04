@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Universals.dart';
 import 'package:spiral_vis/WebViewPage.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 
 class SingleView extends StatefulWidget{
@@ -90,9 +92,16 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                     String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery/' + urlEndding;
 
                     print(url);
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                        WebViewPage(url: url, name: widget.circle.realName,)
-                    ));
+
+                    if(kIsWeb) {
+                      launchInBrowser(url);
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                          WebViewPage(url: url, name: widget.circle.realName,)
+                      ));
+                    }
+
+
 
                   },
                   child: const Text('See more photos online'),

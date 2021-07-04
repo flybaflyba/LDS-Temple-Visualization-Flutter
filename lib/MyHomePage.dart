@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
@@ -532,21 +533,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 ignoring: !loadingAssets,
                 child: AnimatedOpacity(
                     opacity: loadingAssets ? 1 : 0,
-                    duration: Duration(milliseconds: 500),
+                    duration: Duration(milliseconds: 1000),
                     child: Center(
                         child: Container(
                           color: Colors.grey[300],
                           child: Center(
-                            child: LiquidCircularProgressIndicator(
-                              value: loaded, // 0.65, // Defaults to 0.5.
-                              valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
-                              backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                              borderColor: Colors.red,
-                              borderWidth: 5.0,
-                              direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                              center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
-                            ),
+                              child: Container(
+                                color: Colors.grey[300],
+                                child:
+                                //Center(child: Text(showLoader.toString()),)
+                                SpinKitChasingDots(
+                                  color: Colors.blueAccent,
+                                  size: 50.0,
+                                ),
+                              )
                           )
+
+
+                          // Center(
+                          //   child: LiquidCircularProgressIndicator(
+                          //     value: loaded, // 0.65, // Defaults to 0.5.
+                          //     valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
+                          //     backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                          //     borderColor: Colors.red,
+                          //     borderWidth: 5.0,
+                          //     direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                          //     center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
+                          //   ),
+                          // )
                         )
                     )
                 ),

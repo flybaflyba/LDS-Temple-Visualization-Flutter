@@ -20,7 +20,7 @@
     </queries>
 
    <application
-        android:label="spiral_vis"
+        android:label="Temples Timeline"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

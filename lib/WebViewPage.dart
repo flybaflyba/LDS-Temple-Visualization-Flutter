@@ -8,26 +8,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:spiral_vis/Universals.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() => runApp(MaterialApp(home: WebViewPage()));
-
-const String kNavigationExamplePage = '''
-<!DOCTYPE html><html>
-<head><title>Navigation Delegate Example</title></head>
-<body>
-<p>
-The navigation delegate is set to block navigation to the youtube website.
-</p>
-<ul>
-<ul><a href="https://www.youtube.com/">https://www.youtube.com/</a></ul>
-<ul><a href="https://www.google.com/">https://www.google.com/</a></ul>
-</ul>
-</body>
-</html>
-''';
-
-
 
 class WebViewPage extends StatefulWidget {
 
@@ -72,15 +56,24 @@ class _WebViewPageState extends State<WebViewPage> {
           },
           onProgress: (int progress) {
             print("WebView is loading (progress : $progress%)");
+            showToast("Loading : $progress%", false);
           },
           javascriptChannels: <JavascriptChannel>{
             _toasterJavascriptChannel(context),
           },
           onPageStarted: (String url) {
             print('Page started loading: $url');
+            showToast("Start loading", false);
+            // Scaffold.of(context).showSnackBar(
+            //   const SnackBar(content: Text("Start loading")),
+            // );
           },
           onPageFinished: (String url) {
             print('Page finished loading: $url');
+            showToast("Finish loading", false);
+            // Scaffold.of(context).showSnackBar(
+            //   const SnackBar(content: Text("Finish loading")),
+            // );
           },
           gestureNavigationEnabled: true,
         );

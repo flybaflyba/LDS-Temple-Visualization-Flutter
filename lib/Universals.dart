@@ -47,7 +47,7 @@ void showToast(String message, bool warning) {
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.CENTER,
+    gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 2,
     backgroundColor: warning ? Colors.red : Colors.blue,
     textColor: Colors.white,

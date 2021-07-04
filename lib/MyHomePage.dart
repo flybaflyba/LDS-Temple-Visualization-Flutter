@@ -518,7 +518,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ?
           IconButton(
               icon: const Icon(Icons.link),
-              color: Colors.lightBlueAccent,
+              color: Colors.white,
               tooltip: 'More',
               onPressed: () {
                 launchInBrowser('https://latterdaytemples.litianzhang.com/');
@@ -527,7 +527,7 @@ class _MyHomePageState extends State<MyHomePage> {
               :
           IconButton(
               icon: const Icon(Icons.ios_share),
-              color: Colors.lightBlueAccent,
+              color: Colors.white,
               tooltip: 'Share',
               onPressed: () {
                 Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');

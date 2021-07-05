@@ -187,18 +187,33 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
 
-                    String urlEndding = widget.circle.realName.toLowerCase().replaceAll(' ', '-').substring(0, widget.circle.realName.length - 1) + '?lang=eng';
-                    String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery/' + urlEndding;
-
-                    print(url);
-
-                    if(kIsWeb) {
-                      launchInBrowser(url);
+                    if(widget.circle.imageAvailability == false) {
+                      showToast('No Photos for ' + widget.circle.realName + '. Showing Other Temples\' Photos', false);
+                      String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
+                      if(kIsWeb) {
+                        launchInBrowser(url);
+                      } else {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                                WebViewPage(url: url, name: 'Photos',)
+                            ));
+                      }
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                          WebViewPage(url: url, name: widget.circle.realName,)
-                      ));
+                      String urlEndding = widget.circle.realName.toLowerCase().replaceAll(' ', '-').substring(0, widget.circle.realName.length - 1) + '?lang=eng';
+                      String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery/' + urlEndding;
+
+                      print(url);
+
+                      if(kIsWeb) {
+                        launchInBrowser(url);
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                            WebViewPage(url: url, name: widget.circle.realName,)
+                        ));
+                      }
                     }
+
+
 
 
 

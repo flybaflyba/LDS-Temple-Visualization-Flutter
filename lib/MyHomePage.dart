@@ -802,27 +802,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             SpeedDialChild(
-              child: const Icon(Icons.location_on),
-              foregroundColor: Colors.blue,
-              backgroundColor: Colors.pink,
-              label: 'View Temples on Map',
-              onPressed: () {
-                if(loadingAssets) {
-                  showToast('Please wait for loading to finish', true);
-                } else {
-                  String url = 'https://www.churchofjesuschrist.org/temples/map?lang=eng';
-                  if(kIsWeb) {
-                    launchInBrowser(url);
-                  } else {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                        WebViewPage(url: url, name: 'Map',)
-                    ));
-                  }
-                }
-              },
-            ),
-
-            SpeedDialChild(
               child: const Icon(Icons.house_rounded),
               foregroundColor: Colors.white,
               backgroundColor: Colors.blue,

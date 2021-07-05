@@ -1,8 +1,10 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:spiral_vis/Universals.dart';
 import 'package:spiral_vis/WebViewPage.dart';
@@ -24,6 +26,10 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
   String info = '';
 
+  Uint8List imageData;
+
+  bool loadingLargeImage = true;
+
   void getFileData(String path) async {
     info = await rootBundle.loadString(path);
     setState(() {
@@ -31,13 +37,28 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     });
   }
 
+  void getLargeImage() async {
+    String imageFilePath = 'assets/large_circles/' + widget.circle.name + '_large.webp';
+    imageData = (await rootBundle.load(imageFilePath))
+    .buffer
+    .asUint8List();
+    setState(() {
+      imageData = imageData;
+      loadingLargeImage = false;
+    });
+    print('large image loaded');
+  }
+
+
   @override
   void initState() {
     super.initState();
 
-    String path = 'assets/infos/' + widget.circle.name + '.txt';
+    String infoFilePath = 'assets/infos/' + widget.circle.name + '.txt';
 
-    getFileData(path);
+    getFileData(infoFilePath);
+
+    getLargeImage();
 
   }
 
@@ -68,7 +89,40 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                             maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                             maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                           ),
-                          child: widget.circle.image,
+                          child: Stack(
+                            children: [
+                              loadingLargeImage
+                                  ?
+                              Container()
+                              :
+                              Image.memory(imageData),
+                              IgnorePointer(
+                                ignoring: !loadingAssets,
+                                child: AnimatedOpacity(
+                                    opacity: loadingAssets ? 1 : 0,
+                                    duration: Duration(milliseconds: 1000),
+                                    child: Center(
+                                        child: Container(
+                                            color: Colors.grey[300],
+                                            child: Center(
+                                                child: Container(
+                                                  color: Colors.grey[300],
+                                                  child:
+                                                  //Center(child: Text(showLoader.toString()),)
+                                                  SpinKitChasingDots(
+                                                    color: Colors.blueAccent,
+                                                    size: 50.0,
+                                                  ),
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                              )
+                            ],
+                          ),
+
+                          // widget.circle.image,
                           key: ValueKey<Circle>(widget.circle),
                         ),
                     ),
@@ -85,7 +139,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
 
-                    String urlEndding =  widget.circle.realName.toLowerCase().replaceAll(' ', '-').substring(0, widget.circle.realName.length - 1);
+                    String urlEndding = widget.circle.realName.toLowerCase().replaceAll(' ', '-').substring(0, widget.circle.realName.length - 1);
                     String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery/' + urlEndding;
 
                     print(url);
@@ -136,6 +190,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                   if(circleIndex > 0) {
                                     setState(() {
                                       widget.circle = circles[circleIndex - 1];
+                                      getLargeImage();
                                       String path = 'assets/infos/' + widget.circle.name + '.txt';
                                       getFileData(path);
                                     });
@@ -178,6 +233,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                   if(circleIndex < circles.length - 1) {
                                     setState(() {
                                       widget.circle = circles[circleIndex + 1];
+                                      getLargeImage();
                                       String path = 'assets/infos/' + widget.circle.name + '.txt';
                                       getFileData(path);
                                     });

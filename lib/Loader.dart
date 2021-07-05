@@ -57,9 +57,9 @@ Future<void> loadImages(BuildContext context) async {
 
     Image image;
 
-    print(imagePath);
+    // print(imagePath);
     if(imagesInAssets.contains(imagePath)){
-      print('we have this image');
+      // print('we have this image');
       imageAvailability = true;
       image = Image.asset(
         imagePath,
@@ -79,7 +79,7 @@ Future<void> loadImages(BuildContext context) async {
         },
       );
     } else {
-      print('missing image');
+      // print('missing image');
       imageAvailability = false;
       image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
     }

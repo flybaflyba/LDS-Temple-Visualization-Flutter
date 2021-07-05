@@ -23,6 +23,7 @@ import 'package:spiral_vis/SingleView.dart';
 import 'package:spiral_vis/Universals.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:spiral_vis/WebViewPage.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -627,7 +628,7 @@ class _MyHomePageState extends State<MyHomePage> {
           speedDialChildren: <SpeedDialChild>[
             SpeedDialChild(
               child: const Icon(Icons.calendar_today),
-              foregroundColor: Colors.blue,
+              foregroundColor: Colors.blueGrey,
               backgroundColor: Colors.greenAccent,
               label: 'Pick a Year',
               onPressed: () {
@@ -703,6 +704,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               },
             ),
+
 
             SpeedDialChild(
               child: const Icon(Icons.search),
@@ -781,6 +783,49 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+
+            SpeedDialChild(
+              child: const Icon(Icons.location_on),
+              foregroundColor: Colors.blue,
+              backgroundColor: Colors.pink,
+              label: 'View Temples on Map',
+              onPressed: () {
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
+                } else {
+                  String url = 'https://www.churchofjesuschrist.org/temples/map?lang=eng';
+                  if(kIsWeb) {
+                    launchInBrowser(url);
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                        WebViewPage(url: url, name: 'Map',)
+                    ));
+                  }
+                }
+              },
+            ),
+
+            SpeedDialChild(
+              child: const Icon(Icons.house_rounded),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              label: 'Temple Open Houses and Dedications',
+              onPressed: () {
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
+                } else {
+                  String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
+                  if(kIsWeb) {
+                    launchInBrowser(url);
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                        WebViewPage(url: url, name: 'Map',)
+                    ));
+                  }
+                }
+              },
+            ),
+
             aboutButton(context),
           ],
           closedForegroundColor: Colors.black,

@@ -38,7 +38,14 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   }
 
   void getLargeImage() async {
-    String imageFilePath = 'assets/large_circles/' + widget.circle.name + '_large.webp';
+    String imageFilePath;
+
+    if(widget.circle.imageAvailability) {
+      imageFilePath = 'assets/large_circles/' + widget.circle.name + '_large.webp';
+    } else {
+      imageFilePath = 'assets/large_circles/' + 'no_image' + '_large.webp';
+    }
+
     imageData = (await rootBundle.load(imageFilePath))
     .buffer
     .asUint8List();
@@ -96,6 +103,30 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                               Container()
                               :
                               Image.memory(imageData),
+
+                              Center(
+                                child: Text(
+                                  widget.circle.imageAvailability ? "" : "No Image",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                                    color: Colors.white,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                        offset: Offset(1.0, 1.0),
+                                        blurRadius: 3.0,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                      Shadow(
+                                        offset: Offset(1.0, 1.0),
+                                        blurRadius: 8.0,
+                                        color: Color.fromARGB(125, 0, 0, 255),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                               IgnorePointer(
                                 ignoring: !loadingAssets,
                                 child: AnimatedOpacity(

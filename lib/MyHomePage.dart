@@ -47,10 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<void> prepareCircles() async {
-    loadingAssets = true;
+
+    setState(() {
+      loadingAssets = true;
+    });
     const duration = const Duration(seconds:1);
     timer = new Timer.periodic(duration, (Timer t) {
-      print('loading');
+      print('loading ' + DateTime.now().toString());
       setState(() {
         loaded = loaded.roundToDouble();
       });
@@ -558,6 +561,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'Refresh',
               onPressed: () {
+                showToast('Refreshing Page', false);
                 prepareCircles();
                 // launchInBrowser('https://latterdaytemples.litianzhang.com/');
               }
@@ -594,56 +598,76 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
 
               ),
+
+
+              // Container(
+              //   color: loadingAssets ? Colors.white : Color.fromRGBO(0, 0, 0, 0),
+              // ),
+
+              IgnorePointer(
+                ignoring: !loadingAssets,
+                child: AnimatedOpacity(
+                    opacity: loadingAssets ? 1 : 1,
+                    duration: Duration(milliseconds: 500),
+                    child: Center(
+                        child: Container(
+                        )
+                    )
+                ),
+              ),
+
               IgnorePointer(
                 ignoring: !loadingAssets,
                 child: AnimatedOpacity(
                     opacity: loadingAssets ? 1 : 0,
-                    duration: Duration(milliseconds: 1000),
+                    duration: Duration(milliseconds: 500),
                     child: Center(
                         child: Container(
-                          color: Colors.grey[300],
-                          child: Center(
-                              child: Container(
-                                constraints: BoxConstraints(
-                                  minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                  minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                  maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                  maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                ),
-                                color: Colors.grey[300],
-                                child:
-                                //Center(child: Text(showLoader.toString()),)
-                                // SpinKitChasingDots(
-                                //   color: Colors.blueAccent,
-                                //   size: 50.0,
-                                // ),
-                                Center(
-                                  child: LiquidCircularProgressIndicator(
-                                    value: loaded, // 0.65, // Defaults to 0.5.
-                                    valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
-                                    backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                                    borderColor: Colors.blue,
-                                    borderWidth: 5.0,
-                                    direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                                    center:
-                                    loaded == 0
-                                        ?
-                                    Text('Start Loading Images')
-                                        :
-                                    loaded != 1.0
-                                        ?
-                                    Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
-                                        :
-                                    Text("All Images Loaded"),
+                            color: Colors.grey[300],
+                            child: Center(
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                    minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                    minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                    maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                    maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                                   ),
-                                ),
-                              )
-                          )
+                                  color: Colors.grey[300],
+                                  child:
+                                  //Center(child: Text(showLoader.toString()),)
+                                  // SpinKitChasingDots(
+                                  //   color: Colors.blueAccent,
+                                  //   size: 50.0,
+                                  // ),
+                                  Center(
+                                    child: LiquidCircularProgressIndicator(
+                                      value: loaded, // 0.65, // Defaults to 0.5.
+                                      valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
+                                      backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                                      borderColor: Colors.blue,
+                                      borderWidth: 5.0,
+                                      direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                                      center:
+                                      loaded == 0
+                                          ?
+                                      Text('Start Loading Images')
+                                          :
+                                      loaded != 1.0
+                                          ?
+                                      Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
+                                          :
+                                      Text("All Images Loaded"),
+                                    ),
+                                  ),
+                                )
+                            )
 
                         )
                     )
                 ),
-              )
+              ),
+
+
             ],
           ),
 

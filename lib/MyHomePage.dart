@@ -537,6 +537,23 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
 
+          IconButton(
+              icon: const Icon(Icons.list),
+              color: Colors.white,
+              tooltip: 'Temples List',
+              onPressed: () {
+                String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
+                if(kIsWeb) {
+                  launchInBrowser(url);
+                } else {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) =>
+                          WebViewPage(url: url, name: 'Temples List',)
+                      ));
+                }
+              }
+          ),
+
           kIsWeb
               ?
           IconButton(

@@ -1,4 +1,6 @@
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class Circle {
@@ -11,6 +13,7 @@ class Circle {
   String year;
   bool imageAvailability;
   bool onScreen;
+  Uint8List imageData;
 
   Circle();
 

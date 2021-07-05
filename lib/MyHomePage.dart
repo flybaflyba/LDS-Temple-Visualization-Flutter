@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -138,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double y = circles[i].y == null ? 0 : circles[i].y;
       double size = circles[i].size  == null ? 0 : circles[i].size;
       Image image = circles[i].image  == null ? 0 : circles[i].image;
+      Uint8List imageData = circles[i].imageData  == null ? 0 : circles[i].imageData;
       String realName = circles[i].realName  == null ? 'no name' : circles[i].realName;
       bool onScreen = circles[i].onScreen  == null ? false : circles[i].onScreen;
       // print('$x, $y, $size');
@@ -189,7 +191,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: size * magicNumber * specialSizeRatio,
                       height: size * magicNumber * specialSizeRatio,
                     // color: Colors.blue,
-                    child: image,
+                    child: Image.memory(
+                      imageData,
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.none,
+                      frameBuilder: (BuildContext context, Widget child, int frame,
+                          bool wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) {
+                          return child;
+                        }
+                        return AnimatedOpacity(
+                          child: child,
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(seconds: 2),
+                          curve: Curves.easeOut,
+                        );
+                      },
+                    ),
+
+                    // image,
                   ),
 
                   (searchedCircleIndexes.contains(i))
@@ -557,28 +577,42 @@ class _MyHomePageState extends State<MyHomePage> {
                           color: Colors.grey[300],
                           child: Center(
                               child: Container(
+                                constraints: BoxConstraints(
+                                  minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                  minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                  maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                  maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                                ),
                                 color: Colors.grey[300],
                                 child:
                                 //Center(child: Text(showLoader.toString()),)
-                                SpinKitChasingDots(
-                                  color: Colors.blueAccent,
-                                  size: 50.0,
+                                // SpinKitChasingDots(
+                                //   color: Colors.blueAccent,
+                                //   size: 50.0,
+                                // ),
+                                Center(
+                                  child: LiquidCircularProgressIndicator(
+                                    value: loaded, // 0.65, // Defaults to 0.5.
+                                    valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
+                                    backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                                    borderColor: Colors.blue,
+                                    borderWidth: 5.0,
+                                    direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                                    center:
+                                    loaded == 0
+                                        ?
+                                    Text('Start Loading Images')
+                                        :
+                                    loaded != 1.0
+                                        ?
+                                    Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
+                                        :
+                                    Text("All Images Loaded"),
+                                  ),
                                 ),
                               )
                           )
 
-
-                          // Center(
-                          //   child: LiquidCircularProgressIndicator(
-                          //     value: loaded, // 0.65, // Defaults to 0.5.
-                          //     valueColor: AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
-                          //     backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                          //     borderColor: Colors.red,
-                          //     borderWidth: 5.0,
-                          //     direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                          //     center: Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...'),
-                          //   ),
-                          // )
                         )
                     )
                 ),

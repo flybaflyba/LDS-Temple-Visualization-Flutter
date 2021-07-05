@@ -1,6 +1,7 @@
 
 
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,8 +58,16 @@ Future<void> loadImages(BuildContext context) async {
 
     Image image;
 
+    Uint8List imageData;
+
+
     // print(imagePath);
     if(imagesInAssets.contains(imagePath)){
+
+      imageData = (await rootBundle.load(imagePath))
+          .buffer
+          .asUint8List();
+
       // print('we have this image');
       imageAvailability = true;
       image = Image.asset(
@@ -82,6 +91,11 @@ Future<void> loadImages(BuildContext context) async {
       // print('missing image');
       imageAvailability = false;
       image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
+
+      imageData = (await rootBundle.load('assets/small_circles/' + 'no_image' + '.webp'))
+          .buffer
+          .asUint8List();
+
     }
 
     // try {
@@ -100,6 +114,7 @@ Future<void> loadImages(BuildContext context) async {
     circle.realName = realName;
     circle.image = image;
     circle.imageAvailability = imageAvailability;
+    circle.imageData = imageData;
 
     circles.add(circle);
 

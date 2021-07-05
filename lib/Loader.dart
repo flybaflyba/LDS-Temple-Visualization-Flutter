@@ -62,7 +62,7 @@ Future<void> loadImages(BuildContext context) async {
       imageAvailability = true;
       image = Image.asset(
         imagePath,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
         filterQuality: FilterQuality.none,
         frameBuilder: (BuildContext context, Widget child, int frame,
             bool wasSynchronouslyLoaded) {

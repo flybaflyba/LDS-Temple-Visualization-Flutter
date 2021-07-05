@@ -186,6 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Stack(
                 children: [
                   Container(
+                      width: size * magicNumber * specialSizeRatio,
+                      height: size * magicNumber * specialSizeRatio,
                     // color: Colors.blue,
                     child: image,
                   ),

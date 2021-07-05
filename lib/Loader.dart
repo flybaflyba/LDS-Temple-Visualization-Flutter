@@ -49,16 +49,17 @@ Future<void> loadImages(BuildContext context) async {
 
     years.add(year);
 
-    String imagePath = 'assets/images/' + name + '_large.webp';
+    String imagePath = 'assets/small_circles/' + name + '.webp';
 
     final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-    final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/images'));
+    final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/small_circles'));
     // print(imagesInAssets);
 
     Image image;
 
+    print(imagePath);
     if(imagesInAssets.contains(imagePath)){
-      // print('we have this image');
+      print('we have this image');
       imageAvailability = true;
       image = Image.asset(
         imagePath,
@@ -78,9 +79,9 @@ Future<void> loadImages(BuildContext context) async {
         },
       );
     } else {
-      // print('missing image');
+      print('missing image');
       imageAvailability = false;
-      image = Image.asset('assets/images/' + 'no_image' + '_large.webp');
+      image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
     }
 
     // try {

@@ -65,7 +65,8 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-     - assets/images/
+     - assets/small_circles/
+     - assets/large_circles/
      - assets/texts/
      - assets/infos/
 

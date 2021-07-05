@@ -188,7 +188,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   onPressed: () {
 
                     if(widget.circle.imageAvailability == false) {
-                      showToast('No Photos for ' + widget.circle.realName + '. Showing Other Temples\' Photos', false);
+                      // showToast('No Photos for ' + widget.circle.realName + '. Showing Other Temples\' Photos', false);
                       String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
                       if(kIsWeb) {
                         launchInBrowser(url);

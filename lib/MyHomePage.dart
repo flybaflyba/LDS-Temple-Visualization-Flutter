@@ -47,7 +47,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<void> prepareCircles() async {
-      await loadImages(context);
+    loadingAssets = true;
+    const duration = const Duration(seconds:1);
+    timer = new Timer.periodic(duration, (Timer t) {
+      print('loading');
+      setState(() {
+        loaded = loaded.roundToDouble();
+      });
+      if(!loadingAssets) {
+        timer.cancel();
+      }
+    });
+    await loadImages(context);
+
+    print('finish loading assets');
+    setState(() {
+      loadingAssets = false;
+      placeCircles(coordinatesAndSizes, theta);
+    });
   }
 
   bool showYearsRange = true;
@@ -58,27 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    loadingAssets = true;
-
     getCoordinatesAndSizes();
 
-    const duration = const Duration(seconds:1);
-    timer = new Timer.periodic(duration, (Timer t) {
-      // print('loading');
-      setState(() {
-        loaded = loaded.roundToDouble();
-      });
-      if(!loadingAssets) {
-        timer.cancel();
-      }
-    });
-
     prepareCircles().then((value) {
-      print('finish loading assets');
-      setState(() {
-        loadingAssets = false;
-        placeCircles(coordinatesAndSizes, theta);
-      });
+
     });
 
 
@@ -553,15 +553,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               }
           ),
+          IconButton(
+              icon: const Icon(Icons.refresh),
+              color: Colors.white,
+              tooltip: 'Refresh',
+              onPressed: () {
+                prepareCircles();
+                // launchInBrowser('https://latterdaytemples.litianzhang.com/');
+              }
+          ),
 
           kIsWeb
               ?
           IconButton(
               icon: const Icon(Icons.link),
               color: Colors.white,
-              tooltip: 'More',
+              tooltip: 'App Website',
               onPressed: () {
-                launchInBrowser('https://latterdaytemples.litianzhang.com/');
+                launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
               }
           )
               :

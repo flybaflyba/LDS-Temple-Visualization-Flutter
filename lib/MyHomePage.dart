@@ -312,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 realName,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: magicNumber * specialSizeRatio * 0.01,
                                   color: Colors.white,
                                   shadows: <Shadow>[
                                     Shadow(

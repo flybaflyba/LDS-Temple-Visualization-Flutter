@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<void> prepareCircles() async {
+    circles.clear();
     loaded = 0;
     setState(() {
       loadingAssets = true;
@@ -597,7 +598,6 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'Share',
               onPressed: () {
-
                 Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
               }
           ),
@@ -607,11 +607,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
           Stack(
             children: [
+
               LayoutBuilder (
                 builder: (context, constraints) {
-                  return buildLayout(constraints);
+                  return
+                    circles.isNotEmpty
+                        ?
+                    buildLayout(constraints)
+                        :
+                    Container();
                 },
-
               ),
 
 
@@ -619,17 +624,17 @@ class _MyHomePageState extends State<MyHomePage> {
               //   color: loadingAssets ? Colors.white : Color.fromRGBO(0, 0, 0, 0),
               // ),
 
-              IgnorePointer(
-                ignoring: !loadingAssets,
-                child: AnimatedOpacity(
-                    opacity: loadingAssets ? 1 : 1,
-                    duration: Duration(milliseconds: 500),
-                    child: Center(
-                        child: Container(
-                        )
-                    )
-                ),
-              ),
+              // IgnorePointer(
+              //   ignoring: !loadingAssets,
+              //   child: AnimatedOpacity(
+              //       opacity: loadingAssets ? 1 : 1,
+              //       duration: Duration(milliseconds: 500),
+              //       child: Center(
+              //           child: Container(
+              //           )
+              //       )
+              //   ),
+              // ),
 
               IgnorePointer(
                 ignoring: !loadingAssets,

@@ -47,13 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<void> prepareCircles() async {
-
+    loaded = 0;
     setState(() {
       loadingAssets = true;
     });
     const duration = const Duration(seconds:1);
     timer = new Timer.periodic(duration, (Timer t) {
-      print('loading ' + DateTime.now().toString());
+      // print('loading ' + DateTime.now().toString());
       setState(() {
         loaded = loaded.roundToDouble();
       });
@@ -316,7 +316,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 realName,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: magicNumber * specialSizeRatio * 0.01,
+                                  // fontSize: magicNumber * specialSizeRatio * 0.01,
+                                  fontSize: 10,
                                   color: Colors.white,
                                   shadows: <Shadow>[
                                     Shadow(
@@ -545,15 +546,20 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'Temples List',
               onPressed: () {
-                String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
-                if(kIsWeb) {
-                  launchInBrowser(url);
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
                 } else {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) =>
-                          WebViewPage(url: url, name: 'Temples List',)
-                      ));
+                  String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
+                  if(kIsWeb) {
+                    launchInBrowser(url);
+                  } else {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) =>
+                            WebViewPage(url: url, name: 'Temples List',)
+                        ));
+                  }
                 }
+
               }
           ),
           IconButton(
@@ -561,8 +567,12 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'Refresh',
               onPressed: () {
-                showToast('Refreshing Page', false);
-                prepareCircles();
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
+                } else {
+                  showToast('Refreshing Page', false);
+                  prepareCircles();
+                }
                 // launchInBrowser('https://latterdaytemples.litianzhang.com/');
               }
           ),
@@ -574,7 +584,11 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'App Website',
               onPressed: () {
-                launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
+                } else {
+                  launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
+                }
               }
           )
               :
@@ -583,6 +597,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               tooltip: 'Share',
               onPressed: () {
+
                 Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
               }
           ),
@@ -648,15 +663,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                       borderWidth: 5.0,
                                       direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
                                       center:
-                                      loaded == 0
-                                          ?
-                                      Text('Start Loading Images')
-                                          :
-                                      loaded != 1.0
-                                          ?
-                                      Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
-                                          :
-                                      Text("All Images Loaded"),
+                                      // loaded == 0
+                                      //     ?
+                                      // Text('Start Loading Images')
+                                      //     :
+                                      // loaded != 1.0
+                                      //     ?
+                                      // Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
+                                      Text(
+                                        (loaded * 100).toInt().toString() + '%',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 50,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+
+
+                                      //     :
+                                      // Text("All Images Loaded"),
                                     ),
                                   ),
                                 )

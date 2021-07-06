@@ -29,22 +29,33 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   Uint8List imageData;
 
   bool loadingLargeImage = true;
+  bool loadingInfoFile = true;
 
   void getFileData(String path) async {
+
+    setState(() {
+      loadingInfoFile = true;
+    });
+
     info = await rootBundle.loadString(path);
     setState(() {
       info = info;
+      loadingInfoFile = false;
     });
   }
 
   void getLargeImage() async {
     String imageFilePath;
 
+    setState(() {
+      loadingLargeImage = true;
+    });
     if(widget.circle.imageAvailability) {
       imageFilePath = 'assets/large_circles/' + widget.circle.name + '_large.webp';
     } else {
       imageFilePath = 'assets/large_circles/' + 'no_image' + '_large.webp';
     }
+
 
     imageData = (await rootBundle.load(imageFilePath))
     .buffer
@@ -145,16 +156,20 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                               ),
 
                               IgnorePointer(
-                                ignoring: !loadingAssets,
+                                ignoring: !loadingLargeImage,
                                 child: AnimatedOpacity(
-                                    opacity: loadingAssets ? 1 : 0,
-                                    duration: Duration(milliseconds: 1000),
+                                    opacity: loadingLargeImage ? 1 : 0,
+                                    duration: Duration(milliseconds: 1),
                                     child: Center(
                                         child: Container(
-                                            color: Colors.grey[300],
+                                            // color: Colors.grey[300],
                                             child: Center(
                                                 child: Container(
-                                                  color: Colors.grey[300],
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[300],
+                                                      shape: BoxShape.circle
+                                                  ),
+                                                  // color: Colors.grey[300],
                                                   child:
                                                   //Center(child: Text(showLoader.toString()),)
                                                   SpinKitChasingDots(
@@ -289,13 +304,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
                               Flexible(
                                 child:
-
                                 Container(
                                   child: AnimatedSwitcher(
                                     duration: const Duration(milliseconds: 0),
                                     child:
                                     Text(
-                                      info,
+                                      loadingInfoFile ? 'Loading' : info,
                                       textAlign: TextAlign.center,
                                       key: ValueKey<Circle>(widget.circle),
                                     ),

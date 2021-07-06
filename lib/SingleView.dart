@@ -288,12 +288,18 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 onPressed: () {
                                   int circleIndex = circles.indexOf(widget.circle);
                                   if(circleIndex > 0) {
-                                    setState(() {
-                                      widget.circle = circles[circleIndex - 1];
-                                      getLargeImage();
-                                      String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                      getFileData(path);
-                                    });
+
+                                    if(!loadingInfoFile && !loadingLargeImage) {
+                                      setState(() {
+                                        widget.circle = circles[circleIndex - 1];
+                                        getLargeImage();
+                                        String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                        getFileData(path);
+                                      });
+                                    } else {
+                                      showToast('Loading in Progress, Please Wait', true);
+                                    }
+
                                   } else {
                                     // show no more image
                                     showToast('This is the oldest temple', true);
@@ -330,12 +336,17 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 onPressed: () {
                                   int circleIndex = circles.indexOf(widget.circle);
                                   if(circleIndex < circles.length - 1) {
-                                    setState(() {
-                                      widget.circle = circles[circleIndex + 1];
-                                      getLargeImage();
-                                      String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                      getFileData(path);
-                                    });
+                                    if(!loadingInfoFile && !loadingLargeImage) {
+                                      setState(() {
+                                        widget.circle = circles[circleIndex + 1];
+                                        getLargeImage();
+                                        String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                        getFileData(path);
+                                      });
+                                    } else {
+                                      showToast('Loading in Progress, Please Wait', true);
+                                    }
+
                                   } else {
                                     // show no more image
                                     showToast('This is the newest temple', true);

@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       loadingAssets = true;
     });
-    const duration = const Duration(seconds:1);
+    const duration = const Duration(milliseconds: 100);
     timer = new Timer.periodic(duration, (Timer t) {
       // print('loading ' + DateTime.now().toString());
       setState(() {
@@ -677,14 +677,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                       // loaded != 1.0
                                       //     ?
                                       // Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
-                                      Text(
-                                        (loaded * 100).toInt().toString() + '%',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 50,
-                                          color: Colors.black,
-                                        ),
-                                      ),
+                                      Wrap(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                (loaded * 100).toInt().toString() + '%',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 50,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )
 
 
                                       //     :

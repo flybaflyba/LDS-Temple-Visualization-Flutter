@@ -11,7 +11,7 @@ import 'package:spiral_vis/Universals.dart';
 Future<List<String>> readNamesAndYearsFile() async {
   String namesAndYearsText = await rootBundle.loadString('assets/texts/names_and_years.txt');
   List<String> namesAndYearsList = namesAndYearsText.split('\n');
-  return namesAndYearsList;
+  return namesAndYearsList.reversed.toList();
 }
 
 Future<void> loadImages(BuildContext context) async {
@@ -129,6 +129,9 @@ Future<void> loadImages(BuildContext context) async {
     loaded = (namesAndYearsList.indexOf(s) + 1) / namesAndYearsList.length;
 
   }
+
+
+  circles = circles.reversed.toList();
 
   // return circles;
 

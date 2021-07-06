@@ -16,12 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      // home: MyHomePage(title: 'Temples Timeline'),
-      initialRoute: '/MyHomePage',
-      routes: {
-        '/MyHomePage' : (context) => MyHomePage(title: 'Temples Timeline',),
-        '/SingleView' : (context) => SingleView(),
-      },
+      home: MyHomePage(title: 'Temples Timeline'),
+      // initialRoute: '/MyHomePage',
+      // routes: {
+      //   '/MyHomePage' : (context) => MyHomePage(title: 'Temples Timeline',),
+      //   '/SingleView' : (context) => SingleView(),
+      // },
 
     );
   }

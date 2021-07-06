@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     timer = new Timer.periodic(duration, (Timer t) {
       // print('loading ' + DateTime.now().toString());
       setState(() {
-        loaded = loaded.roundToDouble();
+        loaded = (loaded - 0.0000000000001).abs();
       });
       if(!loadingAssets) {
         timer.cancel();

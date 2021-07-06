@@ -133,6 +133,9 @@ Future<void> loadImages(BuildContext context) async {
 
   circles = circles.reversed.toList();
 
+  years = years.reversed.toList();
+  names = names.reversed.toList();
+
   // return circles;
 
   // print("imageAvailability is: " + imageAvailability.toString());

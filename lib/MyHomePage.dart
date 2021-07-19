@@ -942,7 +942,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     launchInBrowser(url);
                   } else {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                        WebViewPage(url: url, name: 'Map',)
+                        WebViewPage(url: url, name: 'Open Houses and Dedications',)
                     ));
                   }
                 }

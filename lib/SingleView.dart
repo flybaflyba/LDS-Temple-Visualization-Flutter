@@ -260,7 +260,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                       padding: EdgeInsets.only(top: 20),
                       child: Container(
                         child: Text(
-                          'Mile Stone Dates',
+                          'Milestone Dates',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.bold
@@ -292,7 +292,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                         getFileData(path);
                                       });
                                     } else {
-                                      showToast('Loading in Progress, Please Wait', true);
+                                      showToast('Loading in progress, please Wait', true);
                                     }
 
                                   } else {

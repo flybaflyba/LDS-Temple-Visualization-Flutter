@@ -714,6 +714,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
                                     borderColor: Colors.blue,
                                     borderWidth: 5.0,
+                                    borderRadius: 100,
                                     direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
                                     center:
                                     // loaded == 0
@@ -736,7 +737,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ),
                                             ),
                                             Text(
-                                              "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...',
+                                              "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images...',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: 15,

@@ -202,7 +202,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
 
-                    String url = 'https://www.google.com/search?&tbm=isch&q=' + widget.circle.name;
+                    String url = 'https://www.google.com/search?&tbm=isch&q=' + widget.circle.realName + 'LDS';
 
                     print(url);
                     if(kIsWeb) {

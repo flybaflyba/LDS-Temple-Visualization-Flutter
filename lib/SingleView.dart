@@ -74,6 +74,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
     String infoFilePath = 'assets/infos/' + widget.circle.name + '.txt';
 
+    print(infoFilePath);
     getFileData(infoFilePath);
 
     getLargeImage();

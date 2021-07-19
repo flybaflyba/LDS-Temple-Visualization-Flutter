@@ -50,17 +50,16 @@ Future<void> loadImages(BuildContext context) async {
 
     years.add(year);
 
+
     String imagePath = 'assets/small_circles/' + name + '.webp';
 
     final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/small_circles'));
     // print(imagesInAssets);
 
-    Image image;
+    // Image image;
 
     Uint8List imageData;
-
-
     // print(imagePath);
     if(imagesInAssets.contains(imagePath)){
 
@@ -70,27 +69,27 @@ Future<void> loadImages(BuildContext context) async {
 
       // print('we have this image');
       imageAvailability = true;
-      image = Image.asset(
-        imagePath,
-        fit: BoxFit.fill,
-        filterQuality: FilterQuality.none,
-        frameBuilder: (BuildContext context, Widget child, int frame,
-            bool wasSynchronouslyLoaded) {
-          if (wasSynchronouslyLoaded) {
-            return child;
-          }
-          return AnimatedOpacity(
-            child: child,
-            opacity: frame == null ? 0 : 1,
-            duration: const Duration(seconds: 2),
-            curve: Curves.easeOut,
-          );
-        },
-      );
+      // image = Image.asset(
+      //   imagePath,
+      //   fit: BoxFit.fill,
+      //   filterQuality: FilterQuality.none,
+      //   frameBuilder: (BuildContext context, Widget child, int frame,
+      //       bool wasSynchronouslyLoaded) {
+      //     if (wasSynchronouslyLoaded) {
+      //       return child;
+      //     }
+      //     return AnimatedOpacity(
+      //       child: child,
+      //       opacity: frame == null ? 0 : 1,
+      //       duration: const Duration(seconds: 2),
+      //       curve: Curves.easeOut,
+      //     );
+      //   },
+      // );
     } else {
       // print('missing image');
       imageAvailability = false;
-      image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
+      // image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
 
       imageData = (await rootBundle.load('assets/small_circles/' + 'no_image' + '.webp'))
           .buffer
@@ -112,7 +111,7 @@ Future<void> loadImages(BuildContext context) async {
     circle.name = name;
     circle.year = year;
     circle.realName = realName;
-    circle.image = image;
+    // circle.image = image;
     circle.imageAvailability = imageAvailability;
     circle.imageData = imageData;
 

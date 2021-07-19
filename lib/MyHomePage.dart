@@ -42,25 +42,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var large = true;
 
-  var sampleW = 100.0;
+  // var sampleW = 100.0;
 
 
 
   Future<void> prepareCircles() async {
-    circles.clear();
-    loaded = 0;
+    // circles.clear();
+
+    // for(Circle c in circles) {
+    //   c.imageData = null;
+    // }
+
+    loaded = 0.0;
     setState(() {
       loadingAssets = true;
     });
     const duration = const Duration(milliseconds: 100);
     timer = new Timer.periodic(duration, (Timer t) {
       // print('loading ' + DateTime.now().toString());
-      setState(() {
-        loaded = (loaded - 0.0000000000001).abs();
-      });
       if(!loadingAssets) {
         timer.cancel();
       }
+      setState(() {
+        loaded = loaded; // (loaded - 0.0000000000001).abs();
+      });
+      print(loaded);
+
     });
     await loadImages(context);
 
@@ -143,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double x = circles[i].x == null ? 0 : circles[i].x;
       double y = circles[i].y == null ? 0 : circles[i].y;
       double size = circles[i].size  == null ? 0 : circles[i].size;
-      Image image = circles[i].image  == null ? 0 : circles[i].image;
+      // Image image = circles[i].image  == null ? 0 : circles[i].image;
       Uint8List imageData = circles[i].imageData  == null ? 0 : circles[i].imageData;
       String realName = circles[i].realName  == null ? 'no name' : circles[i].realName;
       bool onScreen = circles[i].onScreen  == null ? false : circles[i].onScreen;
@@ -645,7 +652,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     duration: Duration(milliseconds: 500),
                     child: Center(
                         child: Container(
-                            color: Colors.grey[300],
+                            // color: Colors.grey[300],
                             child: Center(
                                 child: Container(
                                   constraints: BoxConstraints(
@@ -654,7 +661,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                                     maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
                                   ),
-                                  color: Colors.grey[300],
+                                  // color: Colors.grey[300],
                                   child:
                                   //Center(child: Text(showLoader.toString()),)
                                   // SpinKitChasingDots(
@@ -682,7 +689,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           Column(
                                             children: [
                                               Text(
-                                                (loaded * 100).toInt().toString() + '%',
+                                                (loaded * 100).floorToDouble().toString() + '%',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontSize: 50,

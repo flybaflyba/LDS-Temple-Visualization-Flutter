@@ -7,7 +7,7 @@ class Circle {
   double x;
   double y;
   double size;
-  Image image;
+  // Image image;
   String name;
   String realName;
   String year;

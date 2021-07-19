@@ -13,7 +13,7 @@ class Circle {
   String year;
   bool imageAvailability;
   bool onScreen;
-  Uint8List imageData;
+  Uint8List imageData = null;
 
   Circle();
 

@@ -249,11 +249,6 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                     //     ));
                     //   }
                     // }
-
-
-
-
-
                   },
                   child: const Text('See more photos online'),
                 ),

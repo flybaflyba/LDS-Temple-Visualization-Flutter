@@ -53,6 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //   c.imageData = null;
     // }
 
+    for (Circle c in circles) {
+      setState(() {
+        c.imageData = null;
+      });
+    }
+
     loaded = 0.0;
     setState(() {
       loadingAssets = true;
@@ -63,18 +69,24 @@ class _MyHomePageState extends State<MyHomePage> {
       if(!loadingAssets) {
         timer.cancel();
       }
+      // print('update screen');
       setState(() {
         loaded = loaded; // (loaded - 0.0000000000001).abs();
       });
       // print(loaded);
 
     });
+
+
     if(circles.isEmpty) {
       await loadCircles(context);
-    } else {
-      await loadImages(context);
-    }
 
+    }
+    setState(() {
+      placeCircles(coordinatesAndSizes, theta);
+    });
+
+    await loadImages(context);
 
     print('finish loading assets');
     setState(() {
@@ -93,10 +105,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     getCoordinatesAndSizes();
 
+    // setState(() {
+    //
+    // });
+
     prepareCircles().then((value) {
 
     });
 
+    print("circles.length is: " + circles.length.toString());
 
   }
 
@@ -113,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Stack buildLayout(BoxConstraints constraints) {
+
+    // print('building circle');
 
     double magicNumber = min(constraints.maxWidth, constraints.maxHeight);
 
@@ -156,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double y = circles[i].y == null ? 0 : circles[i].y;
       double size = circles[i].size  == null ? 0 : circles[i].size;
       // Image image = circles[i].image  == null ? 0 : circles[i].image;
-      Uint8List imageData = circles[i].imageData  == null ? 0 : circles[i].imageData;
+      Uint8List imageData = circles[i].imageData  == null ? null : circles[i].imageData;
       String realName = circles[i].realName  == null ? 'no name' : circles[i].realName;
       bool onScreen = circles[i].onScreen  == null ? false : circles[i].onScreen;
       // print('$x, $y, $size');
@@ -208,7 +227,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: size * magicNumber * specialSizeRatio,
                       height: size * magicNumber * specialSizeRatio,
                     // color: Colors.blue,
-                    child: Image.memory(
+                    child:
+
+                    imageData == null ?
+
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          shape: BoxShape.circle
+                      ),
+                      // color: Colors.grey[300],
+                      child:
+                      //Center(child: Text(showLoader.toString()),)
+                      SpinKitChasingDots(
+                        color: Colors.blueAccent,
+                        size: size * magicNumber * specialSizeRatio * 0.4,
+                      ),
+                    )
+                        :
+                    Image.memory(
                       imageData,
                       fit: BoxFit.fill,
                       filterQuality: FilterQuality.none,
@@ -624,14 +661,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
               LayoutBuilder (
                 builder: (context, constraints) {
-                  return
-                    circles.isNotEmpty
-                        ?
-                    buildLayout(constraints)
-                        :
-                    Container();
+                  return buildLayout(constraints);
                 },
               ),
+
+
 
 
               // Container(
@@ -650,82 +684,82 @@ class _MyHomePageState extends State<MyHomePage> {
               //   ),
               // ),
 
-              IgnorePointer(
-                ignoring: !loadingAssets,
-                child: AnimatedOpacity(
-                    opacity: loadingAssets ? 1 : 0,
-                    duration: Duration(milliseconds: 500),
-                    child: Center(
-                        child: Container(
-                            // color: Colors.grey[300],
+              Column(
+                children: [
+                  IgnorePointer(
+                    ignoring: !loadingAssets,
+                    child: AnimatedOpacity(
+                        opacity: loadingAssets ? 1 : 0,
+                        duration: Duration(milliseconds: 500),
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
                             child: Center(
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                    minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                    maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                    maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                                  ),
-                                  // color: Colors.grey[300],
-                                  child:
-                                  //Center(child: Text(showLoader.toString()),)
-                                  // SpinKitChasingDots(
-                                  //   color: Colors.blueAccent,
-                                  //   size: 50.0,
-                                  // ),
-                                  Center(
-                                    child: LiquidCircularProgressIndicator(
-                                      value: loaded, // 0.65, // Defaults to 0.5.
-                                      valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
-                                      backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                                      borderColor: Colors.blue,
-                                      borderWidth: 5.0,
-                                      direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                                      center:
-                                      // loaded == 0
-                                      //     ?
-                                      // Text('Start Loading Images')
-                                      //     :
-                                      // loaded != 1.0
-                                      //     ?
-                                      // Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
-                                      Wrap(
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                (loaded * 100).floorToDouble().toString() + '%',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 50,
-                                                  color: Colors.black,
-                                                ),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                  minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.9,
+                                  minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                                  maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.9,
+                                  maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                                ),
+                                // color: Colors.grey[300],
+                                child:
+                                //Center(child: Text(showLoader.toString()),)
+                                // SpinKitChasingDots(
+                                //   color: Colors.blueAccent,
+                                //   size: 50.0,
+                                // ),
+                                LiquidLinearProgressIndicator(
+                                    value: loaded, // 0.65, // Defaults to 0.5.
+                                    valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
+                                    backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                                    borderColor: Colors.blue,
+                                    borderWidth: 5.0,
+                                    direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                                    center:
+                                    // loaded == 0
+                                    //     ?
+                                    // Text('Start Loading Images')
+                                    //     :
+                                    // loaded != 1.0
+                                    //     ?
+                                    // Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
+                                    Wrap(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              (loaded * 100).floorToDouble().toString() + '%',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.black,
                                               ),
-                                              Text(
-                                                "Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black,
-                                                ),
+                                            ),
+                                            Text(
+                                              "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
                                               ),
-                                            ],
-                                          )
-                                        ],
-                                      )
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )
 
 
-                                      //     :
-                                      // Text("All Images Loaded"),
-                                    ),
-                                  ),
-                                )
+                                  //     :
+                                  // Text("All Images Loaded"),
+                                ),
+                              ),
                             )
-
                         )
-                    )
-                ),
-              ),
+                    ),
+                  ),
+                ],
+              )
+
 
 
             ],

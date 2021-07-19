@@ -51,12 +51,29 @@ Future<void> loadCircles(BuildContext context) async {
     years.add(year);
 
 
+    bool imageAvailability;
+    String imagePath = 'assets/small_circles/' + name + '.webp';
+
+    final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+    final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/small_circles'));
+    // print(imagesInAssets);
+
+    if(imagesInAssets.contains(imagePath)) {
+      // print('we have this image');
+      imageAvailability = true;
+    } else {
+      // print('missing image');
+      imageAvailability = false;
+    }
+
+
+
     Circle circle = new Circle();
     circle.name = name;
     circle.year = year;
     circle.realName = realName;
     // circle.image = image;
-    // circle.imageAvailability = imageAvailability;
+    circle.imageAvailability = imageAvailability;
     // circle.imageData = imageData;
 
     circles.add(circle);
@@ -77,7 +94,7 @@ Future<void> loadCircles(BuildContext context) async {
   years = years.reversed.toList();
   names = names.reversed.toList();
 
-  await loadImages(context);
+
 
   // return circles;
 
@@ -102,25 +119,18 @@ Future<void> loadImages(BuildContext context) async {
 
     String name = c.name;
 
-    bool imageAvailability;
     String imagePath = 'assets/small_circles/' + name + '.webp';
-
-    final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-    final imagesInAssets = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/small_circles'));
-    // print(imagesInAssets);
-
-    // Image image;
 
     Uint8List imageData;
     // print(imagePath);
-    if(imagesInAssets.contains(imagePath)){
+    if(c.imageAvailability){
 
       imageData = (await rootBundle.load(imagePath))
           .buffer
           .asUint8List();
 
       // print('we have this image');
-      imageAvailability = true;
+      // imageAvailability = true;
       // image = Image.asset(
       //   imagePath,
       //   fit: BoxFit.fill,
@@ -140,7 +150,7 @@ Future<void> loadImages(BuildContext context) async {
       // );
     } else {
       // print('missing image');
-      imageAvailability = false;
+      // imageAvailability = false;
       // image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
 
       imageData = (await rootBundle.load('assets/small_circles/' + 'no_image' + '.webp'))
@@ -150,7 +160,7 @@ Future<void> loadImages(BuildContext context) async {
     }
 
     c.imageData = imageData;
-    c.imageAvailability = imageAvailability;
+    // c.imageAvailability = imageAvailability;
 
     loaded = (circles.indexOf(c) + 1) / circles.length;
   }

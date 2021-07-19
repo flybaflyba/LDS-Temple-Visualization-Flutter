@@ -14,16 +14,16 @@ Future<List<String>> readNamesAndYearsFile() async {
   return namesAndYearsList.reversed.toList();
 }
 
-Future<void> loadImages(BuildContext context) async {
+Future<void> loadCircles(BuildContext context) async {
   // List<Circle> circles = [];
   List<String> namesAndYearsList = await readNamesAndYearsFile();
 
   // List<String> namesList = [];
   // List<String> yearsList = [];
 
-  print('loading images');
 
-  bool imageAvailability;
+
+  // bool imageAvailability;
 
   totalCircles = namesAndYearsList.length;
 
@@ -51,6 +51,58 @@ Future<void> loadImages(BuildContext context) async {
     years.add(year);
 
 
+    Circle circle = new Circle();
+    circle.name = name;
+    circle.year = year;
+    circle.realName = realName;
+    // circle.image = image;
+    // circle.imageAvailability = imageAvailability;
+    // circle.imageData = imageData;
+
+    circles.add(circle);
+
+    for(String i in years) {
+      if (!distinctYears.contains(i)) {
+        distinctYears.add(i);
+      }
+    }
+
+    // print(distinctYears);
+
+  }
+
+
+  circles = circles.reversed.toList();
+
+  years = years.reversed.toList();
+  names = names.reversed.toList();
+
+  await loadImages(context);
+
+  // return circles;
+
+  // print("imageAvailability is: " + imageAvailability.toString());
+
+  // print('names length is: ' + namesList.length.toString());
+  // // print(namesList);
+  // print('yearsList length is: ' + yearsList.length.toString());
+  // // print(yearsList);
+  //
+  // var temp = namesList[100].split(" ").first;
+  // print(temp);
+
+
+}
+
+Future<void> loadImages(BuildContext context) async {
+
+  print('loading images');
+
+  for (Circle c in circles) {
+
+    String name = c.name;
+
+    bool imageAvailability;
     String imagePath = 'assets/small_circles/' + name + '.webp';
 
     final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
@@ -97,56 +149,24 @@ Future<void> loadImages(BuildContext context) async {
 
     }
 
-    // try {
-    //   final bundle = DefaultAssetBundle.of(context);
-    //   await bundle.load(imagePath);
-    //   // print('we have this image');
-    // } catch (e) {
-    //   // print('no image');
-    // }
+    c.imageData = imageData;
+    c.imageAvailability = imageAvailability;
 
-  // print(image);
-
-    Circle circle = new Circle();
-    circle.name = name;
-    circle.year = year;
-    circle.realName = realName;
-    // circle.image = image;
-    circle.imageAvailability = imageAvailability;
-    circle.imageData = imageData;
-
-    circles.add(circle);
-
-    for(String i in years) {
-      if (!distinctYears.contains(i)) {
-        distinctYears.add(i);
-      }
-    }
-
-    // print(distinctYears);
-
-    loaded = (namesAndYearsList.indexOf(s) + 1) / namesAndYearsList.length;
-
+    loaded = (circles.indexOf(c) + 1) / circles.length;
   }
 
 
-  circles = circles.reversed.toList();
-
-  years = years.reversed.toList();
-  names = names.reversed.toList();
-
-  // return circles;
-
-  // print("imageAvailability is: " + imageAvailability.toString());
-
-  // print('names length is: ' + namesList.length.toString());
-  // // print(namesList);
-  // print('yearsList length is: ' + yearsList.length.toString());
-  // // print(yearsList);
-  //
-  // var temp = namesList[100].split(" ").first;
-  // print(temp);
 
 
+
+  // try {
+  //   final bundle = DefaultAssetBundle.of(context);
+  //   await bundle.load(imagePath);
+  //   // print('we have this image');
+  // } catch (e) {
+  //   // print('no image');
+  // }
+
+  // print(image);
 
 }

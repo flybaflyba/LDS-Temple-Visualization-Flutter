@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<void> prepareCircles() async {
-    // circles.clear();
+    circles.clear();
 
     // for(Circle c in circles) {
     //   c.imageData = null;
@@ -66,10 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         loaded = loaded; // (loaded - 0.0000000000001).abs();
       });
-      print(loaded);
+      // print(loaded);
 
     });
-    await loadImages(context);
+    await loadCircles(context);
 
     print('finish loading assets');
     setState(() {

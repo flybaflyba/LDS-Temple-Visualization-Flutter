@@ -158,7 +158,39 @@ class _SettingsState extends State<Settings>{
             ),
           ),
 
+          Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 400,
+              ),
+              padding: EdgeInsets.all(10),
+              child: RaisedButton(
+                onPressed: () {
+                  String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
+                  goToWebPage(context, url, 'Official Gallery');
 
+                },
+                color: Theme.of(context).accentColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(
+                      Icons.photo,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Official Gallery',
+                      style: TextStyle(
+                        // fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+          ),
 
           kIsWeb
               ?

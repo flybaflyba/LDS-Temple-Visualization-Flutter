@@ -630,29 +630,39 @@ class _MyHomePageState extends State<MyHomePage> {
               }
           ),
 
-          kIsWeb
-              ?
+
           IconButton(
-              icon: const Icon(Icons.link),
+              icon: const Icon(Icons.more_horiz),
               color: Colors.white,
-              tooltip: 'App Website',
+              tooltip: 'More',
               onPressed: () {
-                if(loadingAssets) {
-                  showToast('Please wait for loading to finish', true);
-                } else {
-                  launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
-                }
-              }
-          )
-              :
-          IconButton(
-              icon: const Icon(Icons.ios_share),
-              color: Colors.white,
-              tooltip: 'Share',
-              onPressed: () {
-                Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings()));
               }
           ),
+
+          // kIsWeb
+          //     ?
+          // IconButton(
+          //     icon: const Icon(Icons.link),
+          //     color: Colors.white,
+          //     tooltip: 'App Website',
+          //     onPressed: () {
+          //       if(loadingAssets) {
+          //         showToast('Please wait for loading to finish', true);
+          //       } else {
+          //         launchInBrowser('https://latterdaytemples.litianzhang.com/related-links-english/');
+          //       }
+          //     }
+          // )
+          //     :
+          // IconButton(
+          //     icon: const Icon(Icons.ios_share),
+          //     color: Colors.white,
+          //     tooltip: 'Share',
+          //     onPressed: () {
+          //       Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
+          //     }
+          // ),
     ],
       ),
       body:

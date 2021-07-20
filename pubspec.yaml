@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  gzx_dropdown_menu: ^3.1.0
 #  percent_indicator: ^3.0.1
   url_launcher: ^6.0.8 # configure
 #  thumbnailer: ^2.0.0

@@ -293,7 +293,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                         getFileData(path);
                                       });
                                     } else {
-                                      showToast('Loading in progress, please Wait', true);
+                                      showToast('Loading in progress, please wait', true);
                                     }
 
                                   } else {

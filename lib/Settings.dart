@@ -158,6 +158,40 @@ class _SettingsState extends State<Settings>{
             ),
           ),
 
+          Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 400,
+              ),
+              padding: EdgeInsets.all(10),
+              child: RaisedButton(
+                onPressed: () {
+                  String url = 'https://latterdaytemples.litianzhang.com/feedback-english/';
+                  goToWebPage(context, url, 'Feedback');
+
+                },
+                color: Theme.of(context).accentColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(
+                      Icons.email,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Feedback',
+                      style: TextStyle(
+                        // fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+
           kIsWeb
               ?
           Container()

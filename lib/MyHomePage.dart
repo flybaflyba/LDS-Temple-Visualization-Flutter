@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+// import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 // import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
@@ -730,27 +730,56 @@ class _MyHomePageState extends State<MyHomePage> {
                                 //   ),
                                 // ),
 
-                                LiquidLinearProgressIndicator(
-                                    value: loaded, // 0.65, // Defaults to 0.5.
-                                    valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
-                                    backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                                    borderColor: Colors.blue,
-                                    borderWidth: 5.0,
-                                    borderRadius: 100,
-                                    direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                                    center: Wrap(
-                                      children: [
-                                        Text(
-                                          "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                          ),
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      child: LinearProgressIndicator(
+                                        value: loaded,
+                                        semanticsLabel: 'Linear progress indicator',
+                                        minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
                                         ),
-                                      ],
+                                      ),
                                     )
+                                  ],
                                 ),
+
+
+                                // Container(
+                                //   child: LiquidLinearProgressIndicator(
+                                //       value: loaded, // 0.65, // Defaults to 0.5.
+                                //       valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
+                                //       backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                                //       borderColor: Colors.blue,
+                                //       borderWidth: 5.0,
+                                //       borderRadius: 100,
+                                //       direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+                                //       center: Wrap(
+                                //         children: [
+                                //           Text(
+                                //             "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
+                                //             textAlign: TextAlign.center,
+                                //             style: TextStyle(
+                                //               fontSize: 15,
+                                //               color: Colors.black,
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       )
+                                //   ),
+                                // )
+
+
+
                               ),
                             )
                         )

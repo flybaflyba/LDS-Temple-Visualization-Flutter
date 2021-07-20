@@ -99,41 +99,7 @@ class _SettingsState extends State<Settings>{
               child: RaisedButton(
                 onPressed: () {
                   String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
-                  goToWebPage(context, url, 'TTemple Open Houses and Dedications');
-
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.house,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      'Temple Open Houses And Dedications',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
-                  goToWebPage(context, url, 'TTemple Open Houses and Dedications');
+                  goToWebPage(context, url, 'Temple Open Houses and Dedications');
 
                 },
                 color: Theme.of(context).accentColor,

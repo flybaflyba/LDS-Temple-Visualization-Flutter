@@ -132,7 +132,8 @@ class _SettingsState extends State<Settings>{
               padding: EdgeInsets.all(10),
               child: RaisedButton(
                 onPressed: () {
-                  aboutShow(context);
+                  String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
+                  goToWebPage(context, url, 'TTemple Open Houses and Dedications');
 
                 },
                 color: Theme.of(context).accentColor,
@@ -140,11 +141,11 @@ class _SettingsState extends State<Settings>{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Icon(
-                      Icons.developer_mode,
+                      Icons.house,
                       color: Colors.white,
                     ),
                     Text(
-                      'About the App',
+                      'Temple Open Houses And Dedications',
                       style: TextStyle(
                         // fontSize: 20,
                         color: Colors.white,
@@ -156,6 +157,8 @@ class _SettingsState extends State<Settings>{
               ),
             ),
           ),
+
+
 
           kIsWeb
               ?

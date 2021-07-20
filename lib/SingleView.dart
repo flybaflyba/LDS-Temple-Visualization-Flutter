@@ -88,23 +88,23 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text(widget.circle.realName),
         actions: [
-
-          IconButton(
-              icon: const Icon(Icons.photo_album),
-              color: Colors.white,
-              tooltip: 'More Photos',
-              onPressed: () {
-                String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
-                if(kIsWeb) {
-                  launchInBrowser(url);
-                } else {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) =>
-                          WebViewPage(url: url, name: 'Official Photos',)
-                      ));
-                }
-              }
-          )
+          //
+          // IconButton(
+          //     icon: const Icon(Icons.photo_album),
+          //     color: Colors.white,
+          //     tooltip: 'More Photos',
+          //     onPressed: () {
+          //       String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
+          //       if(kIsWeb) {
+          //         launchInBrowser(url);
+          //       } else {
+          //         Navigator.of(context).push(
+          //             MaterialPageRoute(builder: (context) =>
+          //                 WebViewPage(url: url, name: 'Official Photos',)
+          //             ));
+          //       }
+          //     }
+          // )
         ],
       ),
       body: Center(

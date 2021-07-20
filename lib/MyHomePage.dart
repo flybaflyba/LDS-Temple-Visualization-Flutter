@@ -574,6 +574,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String selectedYear;
 
+
+  String selectedSpiralStyle = 'Default';
+
   @override
   Widget build(BuildContext context) {
 
@@ -820,15 +823,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   backgroundColor: Colors.white,
                   context: context,
                   title: 'Choose a Spiral Style',
-                  items: distinctYears,
-                  selectedItem: selectedYear,
+                  items: ['Default', 'Spin', 'Rotate', 'Zoom'],
+                  selectedItem: selectedSpiralStyle,
                   showDivider: false,
                   onChanged: (value) => setState(() => selectedYear = value),
                   onCancelled: () {
                     showToast('Style selection cancelled', false);
-
                   },
                   onConfirmed: () {
+                    showToast('Spiral style is now ' + selectedSpiralStyle, false);
                   },
 
                 );
@@ -917,6 +920,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
             SpeedDialChild(
+              // closeSpeedDialOnPressed: false, // this one is working
               child: const Icon(Icons.search),
               foregroundColor: Colors.white,
               backgroundColor: Colors.red,
@@ -965,6 +969,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             SpeedDialChild(
+              // closeSpeedDialOnPressed: true, // not working?
               child: Checkbox(
                 checkColor: Colors.lightBlueAccent,
                 value: showLabel,
@@ -1002,6 +1007,7 @@ class _MyHomePageState extends State<MyHomePage> {
           openForegroundColor: Colors.white,
           closedBackgroundColor: Colors.white,
           openBackgroundColor: Colors.black,
+
         ),
      // This trailing comma makes auto-formatting nicer for build methods.
     );

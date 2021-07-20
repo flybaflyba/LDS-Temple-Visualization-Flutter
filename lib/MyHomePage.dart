@@ -592,27 +592,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
 
-          IconButton(
-              icon: const Icon(Icons.list),
-              color: Colors.white,
-              tooltip: 'Temples List',
-              onPressed: () {
-                if(loadingAssets) {
-                  showToast('Please wait for loading to finish', true);
-                } else {
-                  String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
-                  if(kIsWeb) {
-                    launchInBrowser(url);
-                  } else {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) =>
-                            WebViewPage(url: url, name: 'Temples List',)
-                        ));
-                  }
-                }
-
-              }
-          ),
+          // IconButton(
+          //     icon: const Icon(Icons.list),
+          //     color: Colors.white,
+          //     tooltip: 'Temples List',
+          //     onPressed: () {
+          //       if(loadingAssets) {
+          //         showToast('Please wait for loading to finish', true);
+          //       } else {
+          //         String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
+          //         if(kIsWeb) {
+          //           launchInBrowser(url);
+          //         } else {
+          //           Navigator.of(context).push(
+          //               MaterialPageRoute(builder: (context) =>
+          //                   WebViewPage(url: url, name: 'Temples List',)
+          //               ));
+          //         }
+          //       }
+          //
+          //     }
+          // ),
           IconButton(
               icon: const Icon(Icons.refresh),
               color: Colors.white,
@@ -808,6 +808,34 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: SpeedDial(
           child: const Icon(Icons.add),
           speedDialChildren: <SpeedDialChild>[
+
+            SpeedDialChild(
+              child: const Icon(Icons.build_circle),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              label: 'Spiral Style',
+              onPressed: () {
+
+                showMaterialScrollPicker<String>(
+                  backgroundColor: Colors.white,
+                  context: context,
+                  title: 'Choose a Spiral Style',
+                  items: distinctYears,
+                  selectedItem: selectedYear,
+                  showDivider: false,
+                  onChanged: (value) => setState(() => selectedYear = value),
+                  onCancelled: () {
+                    showToast('Style selection cancelled', false);
+
+                  },
+                  onConfirmed: () {
+                  },
+
+                );
+
+              },
+            ),
+
             SpeedDialChild(
               child: const Icon(Icons.calendar_today),
               foregroundColor: Colors.blueGrey,
@@ -966,28 +994,9 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
 
-            SpeedDialChild(
-              child: const Icon(Icons.house_rounded),
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
-              label: 'Temple Open Houses and Dedications',
-              onPressed: () {
-                if(loadingAssets) {
-                  showToast('Please wait for loading to finish', true);
-                } else {
-                  String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
-                  if(kIsWeb) {
-                    launchInBrowser(url);
-                  } else {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                        WebViewPage(url: url, name: 'Open Houses and Dedications',)
-                    ));
-                  }
-                }
-              },
-            ),
 
-            aboutButton(context),
+            // aboutButton(context),
+
           ],
           closedForegroundColor: Colors.black,
           openForegroundColor: Colors.white,

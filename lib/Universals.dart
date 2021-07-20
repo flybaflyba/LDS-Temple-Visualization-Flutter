@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spiral_vis/Circle.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'WebViewPage.dart';
 
 String startYear = 'Loading';
 String endYear = 'Loading';
@@ -55,4 +58,16 @@ void showToast(String message, bool warning) {
     webBgColor: warning ? "linear-gradient(to right, #cc00ff, #ff0000)" : "	linear-gradient(to right, #00b09b, #96c93d)",
 
   );
+}
+
+void goToWebPage(BuildContext context, String url, String title) {
+  if(kIsWeb) {
+    launchInBrowser(url);
+  } else {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) =>
+            WebViewPage(url: url, name: title,)
+        ));
+  }
+
 }

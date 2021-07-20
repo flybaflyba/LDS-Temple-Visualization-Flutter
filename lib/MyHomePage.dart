@@ -9,6 +9,7 @@ import 'package:flutter_material_pickers/helpers/show_responsive_dialog.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+// import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:spiral_vis/About.dart';
@@ -708,6 +709,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                 //   color: Colors.blueAccent,
                                 //   size: 50.0,
                                 // ),
+                                // Padding(
+                                //   padding: EdgeInsets.all(15.0),
+                                //   child: new LinearPercentIndicator(
+                                //     // width: MediaQuery.of(context).size.width - 50,
+                                //     animation: true,
+                                //     lineHeight: 30.0,
+                                //     // animationDuration: 2000,
+                                //     percent: loaded,
+                                //     center: Text(
+                                //       "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
+                                //       textAlign: TextAlign.center,
+                                //       style: TextStyle(
+                                //         fontSize: 15,
+                                //         color: Colors.black,
+                                //       ),
+                                //     ),
+                                //     linearStrokeCap: LinearStrokeCap.roundAll,
+                                //     progressColor: Colors.greenAccent,
+                                //   ),
+                                // ),
+
                                 LiquidLinearProgressIndicator(
                                     value: loaded, // 0.65, // Defaults to 0.5.
                                     valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent), // Defaults to the current Theme's accentColor.
@@ -716,42 +738,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                     borderWidth: 5.0,
                                     borderRadius: 100,
                                     direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                                    center:
-                                    // loaded == 0
-                                    //     ?
-                                    // Text('Start Loading Images')
-                                    //     :
-                                    // loaded != 1.0
-                                    //     ?
-                                    // Text("Loading " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Images...')
-                                    Wrap(
+                                    center: Wrap(
                                       children: [
-                                        Column(
-                                          children: [
-                                            Text(
-                                              (loaded * 100).floorToDouble().toString() + '%',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 30,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images...',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        )
+                                        Text(
+                                          "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                       ],
                                     )
-
-
-                                  //     :
-                                  // Text("All Images Loaded"),
                                 ),
                               ),
                             )

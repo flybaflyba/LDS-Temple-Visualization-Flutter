@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     }
     setState(() {
-      placeCircles(coordinatesAndSizes, theta);
+      placeCircles(theta);
     });
 
     await loadImages(context);
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print('finish loading assets');
     setState(() {
       loadingAssets = false;
-      placeCircles(coordinatesAndSizes, theta);
+      placeCircles(theta);
     });
   }
 
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    getCoordinatesAndSizes();
+    // getCoordinatesAndSizes();
 
     // setState(() {
     //
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if ((theta + speed * 0.5).toInt() >= 2240 && (theta + speed * 0.5).toInt() <= 9820) {
         theta = (theta + speed * 0.5).toInt();
-        placeCircles(coordinatesAndSizes, theta);
+        placeCircles(theta);
       } else {
         showToast((speed > 0 ? 'Ending': 'Beginning') + ' of spiral', true);
       }
@@ -434,7 +434,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               setState(() {
                                 if(theta >= 2240 + 30) {
                                   theta = theta - 30;
-                                  placeCircles(coordinatesAndSizes, theta);
+                                  placeCircles(theta);
                                 } else {
                                   showToast('Beginning of spiral', true);
                                 }
@@ -487,7 +487,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onChanged: (value) {
                                 theta = value.toInt();
                                 setState(() {
-                                  placeCircles(coordinatesAndSizes, theta);
+                                  placeCircles(theta);
                                 });
 
                                 if(value == 2240) {
@@ -514,7 +514,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 setState(() {
                                   if(theta <= 9820 - 30) {
                                     theta = theta + 30;
-                                    placeCircles(coordinatesAndSizes, theta);
+                                    placeCircles(theta);
                                   } else {
                                     showToast('End of spiral', true);
                                   }
@@ -627,7 +627,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   showToast('Refreshing Page', false);
                   prepareCircles();
                   theta = 7000;
-                  placeCircles(coordinatesAndSizes, theta);
+                  placeCircles(theta);
                 }
                 // launchInBrowser('https://latterdaytemples.litianzhang.com/');
               }
@@ -883,7 +883,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
 
                       setState(() {
-                        placeCircles(coordinatesAndSizes, theta);
+                        placeCircles(theta);
                       });
 
                       if(selectedYear.length == 4) {
@@ -950,7 +950,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         searchedCircleIndexes.add(names.indexOf(searchingByName));
                         theta = 2240 + names.indexOf(searchingByName) * 30;
                         setState(() {
-                          placeCircles(coordinatesAndSizes, theta);
+                          placeCircles(theta);
                         });
                         showToast('Showing $searchingByName', false);
                       } else {

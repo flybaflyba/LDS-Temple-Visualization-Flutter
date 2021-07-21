@@ -5,6 +5,9 @@ import 'package:spiral_vis/Universals.dart';
 
 
 void getCoordinatesAndSizes() {
+
+  coordinatesAndSizes.clear();
+
     double initialRadius = 0.1;
     double centerX = 0.57;
     double centerY = 0.5;
@@ -41,7 +44,12 @@ void getCoordinatesAndSizes() {
 
   }
 
-void placeCircles(List<List<double>> coordinatesAndSizes, int theta) {
+void placeCircles(int theta) {
+
+  // no need to do again if spiral style is set to default.
+  // do need to do again if spiral style is set to not default.
+
+  getCoordinatesAndSizes();
 
   for (Circle c in circles) {
 

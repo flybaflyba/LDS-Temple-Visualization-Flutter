@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     });
 
-    print("circles.length is: " + circles.length.toString());
+    // print("circles.length is: " + circles.length.toString());
 
   }
 
@@ -575,7 +575,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedYear;
 
 
-  String selectedSpiralStyle = 'Default';
+  // String selectedSpiralStyle = 'Default';
 
   @override
   Widget build(BuildContext context) {
@@ -823,15 +823,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   backgroundColor: Colors.white,
                   context: context,
                   title: 'Choose a Spiral Style',
-                  items: ['Default', 'Spin', 'Rotate', 'Zoom'],
-                  selectedItem: selectedSpiralStyle,
+                  items: ['Default', 'Spin', '3D'],
+                  selectedItem: spiralStyle,
                   showDivider: false,
-                  onChanged: (value) => setState(() => selectedYear = value),
+                  onChanged: (value) => setState(() => spiralStyle = value),
                   onCancelled: () {
                     showToast('Style selection cancelled', false);
                   },
                   onConfirmed: () {
-                    showToast('Spiral style is now ' + selectedSpiralStyle, false);
+                    placeCircles(theta);
+                    showToast('Spiral style is now ' + spiralStyle, false);
                   },
 
                 );

@@ -45,6 +45,10 @@ double loaded = 0.0;
 
 int totalCircles = 0;
 
+String spiralStyle = 'Default';
+
+bool firstTime = true;
+
 void showToast(String message, bool warning) {
   Fluttertoast.cancel();
   Fluttertoast.showToast(

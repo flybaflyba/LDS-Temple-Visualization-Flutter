@@ -755,7 +755,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     Center(
                                       child: Text(
-                                        "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' images... ' + (loaded * 100).floorToDouble().toString() + '%',
+                                        "Loading No. " + (loaded * totalCircles).toInt().toString() + ' of ' + totalCircles.toString() + ' Temples... ' + (loaded * 100).floorToDouble().toString() + '%.' + ' Please wait...',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 15,
@@ -853,7 +853,7 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Pick a Year',
               onPressed: () {
 
-                print(distinctYears);
+                // print(distinctYears);
 
                 if(loadingAssets) {
                 showToast('Please wait for loading to finish', true);

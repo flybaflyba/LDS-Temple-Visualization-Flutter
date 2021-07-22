@@ -50,7 +50,11 @@ String spiralStyle = 'Default';
 bool firstTime = true;
 
 void showToast(String message, bool warning) {
-  Fluttertoast.cancel();
+
+  if(!kIsWeb) {
+    Fluttertoast.cancel();
+  }
+
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

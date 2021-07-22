@@ -9,46 +9,46 @@ void getCoordinatesAndSizes() {
   coordinatesAndSizes.clear();
   // print('clear');
 
-    double initialRadius = 0.1;
-    double centerX = 0.57;
-    double centerY = 0.5;
+  double initialRadius = 0.1;
+  double centerX = 0.57;
+  double centerY = 0.5;
 
-    // List<List<double>> coordinatesAndSizes = <List<double>>[];
+  // List<List<double>> coordinatesAndSizes = <List<double>>[];
 
-    for (double i = -28.0; i < 17.5; i += 0.02) {
-      double x = centerX + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (cos(i));
-      double y = centerY + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (sin(i));
+  for (double i = -28.0; i < 17.5; i += 0.02) {
+    double x = centerX + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (cos(i));
+    double y = centerY + initialRadius * (exp(i * 1 / (tan(47 * pi / 100)))) * (sin(i));
 
-      double xNew = 0;
-      double yNew = 0;
+    double xNew = 0;
+    double yNew = 0;
 
-      int angle = theta;
+    int angle = theta;
 
-      if (spiralStyle == "Spin") {
-        angle = (theta / 100).toInt();
-        xNew = (x - centerX) * cos(angle) - (y - centerY) * sin(angle) + centerX;
-        yNew = (y - centerY) * cos(angle) + (x - centerX) * sin(angle) + centerY;
-      } else if (spiralStyle == "3D") {
-        angle = (theta / 500).toInt();
-        xNew = (x - centerX) * cos(angle) - (y - centerY) * sin(angle) + centerX;
-        yNew = (y - centerY) * cos(angle) + (xNew - centerX) * sin(angle) + centerY;
-      } else {
-        xNew = x;
-        yNew = y;
-      }
-
-
-      double i2 = i - 2 * pi;
-      double x2 = centerX + initialRadius * (exp(i2 * 1 / (tan(47 * pi / 100)))) * (cos(i2));
-      double y2 = centerY + initialRadius * (exp(i2 * 1 / (tan(47 * pi / 100)))) * (sin(i2));
-
-      double size = (sqrt(pow((x - x2).abs(), 2) + pow((y - y2).abs(), 2)));
-      // size = (size / screenWidth * 1.3f);
-
-      List<double> temp = [xNew, yNew, size];
-      coordinatesAndSizes.add(temp);
-
+    if (spiralStyle == "Spin") {
+      angle = (theta / 100).toInt();
+      xNew = (x - centerX) * cos(angle) - (y - centerY) * sin(angle) + centerX;
+      yNew = (y - centerY) * cos(angle) + (x - centerX) * sin(angle) + centerY;
+    } else if (spiralStyle == "3D") {
+      angle = (theta / 500).toInt();
+      xNew = (x - centerX) * cos(angle) - (y - centerY) * sin(angle) + centerX;
+      yNew = (y - centerY) * cos(angle) + (xNew - centerX) * sin(angle) + centerY;
+    } else {
+      xNew = x;
+      yNew = y;
     }
+
+
+    double i2 = i - 2 * pi;
+    double x2 = centerX + initialRadius * (exp(i2 * 1 / (tan(47 * pi / 100)))) * (cos(i2));
+    double y2 = centerY + initialRadius * (exp(i2 * 1 / (tan(47 * pi / 100)))) * (sin(i2));
+
+    double size = (sqrt(pow((x - x2).abs(), 2) + pow((y - y2).abs(), 2)));
+    // size = (size / screenWidth * 1.3f);
+
+    List<double> temp = [xNew, yNew, size];
+    coordinatesAndSizes.add(temp);
+
+  }
 
 
 
@@ -83,7 +83,7 @@ void getCoordinatesAndSizes() {
 
   }
 
-  }
+}
 
 void placeCircles(int theta) {
 

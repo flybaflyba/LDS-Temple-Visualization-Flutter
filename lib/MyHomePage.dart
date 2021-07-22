@@ -819,23 +819,29 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Spiral Style',
               onPressed: () {
 
-                showMaterialScrollPicker<String>(
-                  backgroundColor: Colors.white,
-                  context: context,
-                  title: 'Choose a Spiral Style',
-                  items: ['Default', 'Spin', '3D'],
-                  selectedItem: spiralStyle,
-                  showDivider: false,
-                  onChanged: (value) => setState(() => spiralStyle = value),
-                  onCancelled: () {
-                    showToast('Style selection cancelled', false);
-                  },
-                  onConfirmed: () {
-                    placeCircles(theta);
-                    showToast('Spiral style is now ' + spiralStyle, false);
-                  },
+                if(loadingAssets) {
+                  showToast('Please wait for loading to finish', true);
+                } else {
+                  showMaterialScrollPicker<String>(
+                    backgroundColor: Colors.white,
+                    context: context,
+                    title: 'Choose a Spiral Style',
+                    items: ['Default', 'Spin', '3D'],
+                    selectedItem: spiralStyle,
+                    showDivider: false,
+                    onChanged: (value) => setState(() => spiralStyle = value),
+                    onCancelled: () {
+                      showToast('Style selection cancelled', false);
+                    },
+                    onConfirmed: () {
+                      placeCircles(theta);
+                      showToast('Spiral style is now ' + spiralStyle, false);
+                    },
 
-                );
+                  );
+
+                }
+
 
               },
             ),

@@ -311,7 +311,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     duration: const Duration(milliseconds: 0),
                                     child:
                                     Text(
-                                      loadingInfoFile ? 'Loading' : info,
+                                      loadingInfoFile ? 'Loading...' : info,
                                       textAlign: TextAlign.center,
                                       key: ValueKey<Circle>(widget.circle),
                                     ),

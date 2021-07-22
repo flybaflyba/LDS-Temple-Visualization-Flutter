@@ -13,7 +13,7 @@ String endYear = 'Loading';
 
 List<Circle> circles = [];
 
-int theta = 7000;
+int theta = 2240;
 
 Future<void> launchInBrowser(String url) async {
   if (await canLaunch(url)) {

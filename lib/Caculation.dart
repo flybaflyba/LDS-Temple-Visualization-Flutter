@@ -97,6 +97,8 @@ void placeCircles(int theta) {
 
   // print(coordinatesAndSizes.length.toString());
 
+  bool gotYearRange = false;
+
   for (Circle c in circles) {
 
     int circleIndexInCoordinatesAndSizes = theta - 30 * circles.indexOf(c);
@@ -105,6 +107,31 @@ void placeCircles(int theta) {
       c.y = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][1];
       c.size = coordinatesAndSizes[circleIndexInCoordinatesAndSizes][2];
       c.onScreen = true;
+
+      if(!gotYearRange) {
+        gotYearRange = true;
+        // get on screen temple years
+        startYear = c.year;
+        int circleIndex = circles.indexOf(c);
+        endYear = circles[(circleIndex + 30) < circles.length ? circleIndex + 30 : circles.length - 1].year;
+
+        if(startYear == '0000'){
+          startYear = 'Construction';
+        } else if(startYear == '1111'){
+          startYear = 'Announced';
+        }
+
+        if(endYear == '0000'){
+          endYear = 'Construction';
+        } else if(endYear == '1111'){
+          endYear = 'Announced';
+        }
+
+        // print(startYear + " --- " + endYear);
+      }
+
+
+
     }
     else if (circleIndexInCoordinatesAndSizes < 0){
       c.x = 0.57; // coordinatesAndSizes.first[0];
@@ -117,24 +144,7 @@ void placeCircles(int theta) {
       c.size = coordinatesAndSizes.last[2];
       c.onScreen = false;
 
-      // get on screen temple years
-      startYear = c.year;
-      int circleIndex = circles.indexOf(c);
-      endYear = circles[(circleIndex + 30) < circles.length ? circleIndex + 30 : circles.length - 1].year;
 
-      if(startYear == '0000'){
-        startYear = 'Construction';
-      } else if(startYear == '1111'){
-        startYear = 'Announced';
-      }
-
-      if(endYear == '0000'){
-        endYear = 'Construction';
-      } else if(endYear == '1111'){
-        endYear = 'Announced';
-      }
-
-      // print(startYear + " " + endYear);
 
     }
   }

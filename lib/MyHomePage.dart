@@ -626,7 +626,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 } else {
                   showToast('Refreshing Page', false);
                   prepareCircles();
-                  theta = 7000;
+                  theta = 2240;
                   placeCircles(theta);
                 }
                 // launchInBrowser('https://latterdaytemples.litianzhang.com/');

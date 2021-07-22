@@ -21,215 +21,249 @@ class _SettingsState extends State<Settings>{
         appBar: AppBar(
           title: Text('More'),
         ),
-      body: ListView(
-        children: [
+      body: Center(
+        child: SingleChildScrollView(
+          child: Wrap(
+            children: [
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      goToWebPage(context, 'https://latterdaytemples.litianzhang.com/related-links-english/', 'App Page');
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.link,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'App Website',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                 maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  goToWebPage(context, 'https://latterdaytemples.litianzhang.com/related-links-english/', 'App Page');
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.link,
-                      color: Colors.white,
+                      ],
                     ),
-                    Text(
-                      'App Website',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
-                  goToWebPage(context, url, 'Temple List');
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
+                      goToWebPage(context, url, 'Temple List');
 
-                  },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.list,
-                      color: Colors.white,
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.list,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Temple List',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
                     ),
-                    Text(
-                      'Temple List',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
-                  goToWebPage(context, url, 'Temple Open Houses and Dedications');
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
+                      goToWebPage(context, url, 'Temple Open Houses and Dedications');
 
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.house,
-                      color: Colors.white,
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.house,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Temple Open Houses And Dedications',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
                     ),
-                    Text(
-                      'Temple Open Houses And Dedications',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
-                  goToWebPage(context, url, 'Official Gallery');
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
+                      goToWebPage(context, url, 'Official Gallery');
 
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.photo,
-                      color: Colors.white,
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.photo,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Official Gallery',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
                     ),
-                    Text(
-                      'Official Gallery',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  String url = 'https://latterdaytemples.litianzhang.com/feedback-english/';
-                  goToWebPage(context, url, 'Feedback');
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      String url = 'https://latterdaytemples.litianzhang.com/feedback-english/';
+                      goToWebPage(context, url, 'Feedback');
 
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.email,
-                      color: Colors.white,
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.email,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Feedback',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
                     ),
-                    Text(
-                      'Feedback',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          kIsWeb
-              ?
-          Container()
-              :
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-              padding: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
-                },
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.ios_share,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      'Share',
-                      style: TextStyle(
-                        // fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      aboutShow(context);
 
-                  ],
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.developer_mode,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'About the App',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+
+              kIsWeb
+                  ?
+              Container()
+                  :
+              Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
+                    },
+                    color: Theme.of(context).accentColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.ios_share,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Share',
+                          style: TextStyle(
+                            // fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-
-
-        ],
+        ),
       )
     );
   }

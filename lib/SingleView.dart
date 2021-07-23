@@ -31,7 +31,9 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   bool loadingLargeImage = true;
   bool loadingInfoFile = true;
 
-  void getFileData(String path) async {
+  void getFileData() async {
+
+    String path = 'assets/infos/' + widget.circle.name + '.txt';
 
     setState(() {
       loadingInfoFile = true;
@@ -72,11 +74,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    String infoFilePath = 'assets/infos/' + widget.circle.name + '.txt';
-
-    print(infoFilePath);
-    getFileData(infoFilePath);
-
+    getFileData();
     getLargeImage();
 
   }
@@ -289,8 +287,8 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                       setState(() {
                                         widget.circle = circles[circleIndex - 1];
                                         getLargeImage();
-                                        String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                        getFileData(path);
+                                        // String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                        getFileData();
                                       });
                                     } else {
                                       showToast('Loading in progress, please wait', true);
@@ -336,8 +334,8 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                       setState(() {
                                         widget.circle = circles[circleIndex + 1];
                                         getLargeImage();
-                                        String path = 'assets/infos/' + widget.circle.name + '.txt';
-                                        getFileData(path);
+                                        // String path = 'assets/infos/' + widget.circle.name + '.txt';
+                                        getFileData();
                                       });
                                     } else {
                                       showToast('Loading in Progress, Please Wait', true);

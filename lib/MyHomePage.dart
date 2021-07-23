@@ -192,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   print('tapped $realName');
                   // Navigator.pushNamed(context, '/SingleView');
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleView(circle: circles[i],)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleView(currentCircle: circles[i],)));
                 });
               },
               onPanUpdate: (DragUpdateDetails details) {

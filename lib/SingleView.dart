@@ -14,9 +14,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SingleView extends StatefulWidget{
 
-  SingleView({Key key, this.circle}) : super(key: key);
+  SingleView({Key key, this.currentCircle}) : super(key: key);
 
-  Circle circle;
+  Circle currentCircle;
 
   @override
   _SingleViewState createState() => _SingleViewState();
@@ -24,47 +24,44 @@ class SingleView extends StatefulWidget{
 
 class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
-  String info = '';
+  String currentInfo = '';
+  Uint8List currentImageData;
+  bool currentLoadingLargeImageStatus = true;
+  bool currentLoadingInfoFileStatus = true;
 
-  Uint8List imageData;
-
-  bool loadingLargeImage = true;
-  bool loadingInfoFile = true;
+  // int circleIndex = circles.indexOf(widget.currentCircle);
+  // print(circleIndex);
 
   void getFileData() async {
-
-    String path = 'assets/infos/' + widget.circle.name + '.txt';
-
+    Circle circle = widget.currentCircle;
+    String infoFilePath = 'assets/infos/' + circle.name + '.txt';
     setState(() {
-      loadingInfoFile = true;
+      currentLoadingInfoFileStatus = true;
     });
-
-    info = await rootBundle.loadString(path);
+    currentInfo = await rootBundle.loadString(infoFilePath);
     setState(() {
-      info = info;
-      loadingInfoFile = false;
+      currentInfo = currentInfo;
+      currentLoadingInfoFileStatus = false;
     });
   }
 
   void getLargeImage() async {
+    Circle circle = widget.currentCircle;
     String imageFilePath;
-
     setState(() {
-      loadingLargeImage = true;
+      currentLoadingLargeImageStatus = true;
     });
-    if(widget.circle.imageAvailability) {
-      imageFilePath = 'assets/large_circles/' + widget.circle.name + '_large.webp';
+    if(widget.currentCircle.imageAvailability) {
+      imageFilePath = 'assets/large_circles/' + circle.name + '_large.webp';
     } else {
       imageFilePath = 'assets/large_circles/' + 'no_image' + '_large.webp';
     }
-
-
-    imageData = (await rootBundle.load(imageFilePath))
+    currentImageData = (await rootBundle.load(imageFilePath))
     .buffer
     .asUint8List();
     setState(() {
-      imageData = imageData;
-      loadingLargeImage = false;
+      currentImageData = currentImageData;
+      currentLoadingLargeImageStatus = false;
     });
     print('large image loaded');
   }
@@ -84,7 +81,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.circle.realName),
+        title: Text(widget.currentCircle.realName),
         actions: [
           //
           // IconButton(
@@ -125,15 +122,15 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                           ),
                           child: Stack(
                             children: [
-                              loadingLargeImage
+                              currentLoadingLargeImageStatus
                                   ?
                               Container()
                               :
-                              Image.memory(imageData),
+                              Image.memory(currentImageData),
 
                               Center(
                                 child: Text(
-                                  widget.circle.imageAvailability ? "" : "No Image",
+                                  widget.currentCircle.imageAvailability ? "" : "No Image",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
@@ -155,9 +152,9 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                               ),
 
                               IgnorePointer(
-                                ignoring: !loadingLargeImage,
+                                ignoring: !currentLoadingLargeImageStatus,
                                 child: AnimatedOpacity(
-                                    opacity: loadingLargeImage ? 1 : 0,
+                                    opacity: currentLoadingLargeImageStatus ? 1 : 0,
                                     duration: Duration(milliseconds: 1),
                                     child: Center(
                                         child: Container(
@@ -185,7 +182,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                           ),
 
                           // widget.circle.image,
-                          key: ValueKey<Circle>(widget.circle),
+                          key: ValueKey<Circle>(widget.currentCircle),
                         ),
                     ),
                   ),
@@ -201,14 +198,14 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
 
-                    String url = 'https://www.google.com/search?&tbm=isch&q=' + widget.circle.realName + 'LDS';
+                    String url = 'https://www.google.com/search?&tbm=isch&q=' + widget.currentCircle.realName + 'LDS';
 
                     print(url);
                     if(kIsWeb) {
                       launchInBrowser(url);
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                          WebViewPage(url: url, name: widget.circle.realName,)
+                          WebViewPage(url: url, name: widget.currentCircle.realName,)
                       ));
                     }
 
@@ -280,12 +277,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 iconSize: 80,
                                 tooltip: 'Last',
                                 onPressed: () {
-                                  int circleIndex = circles.indexOf(widget.circle);
+                                  int circleIndex = circles.indexOf(widget.currentCircle);
                                   if(circleIndex > 0) {
 
-                                    if(!loadingInfoFile && !loadingLargeImage) {
+                                    if(!currentLoadingInfoFileStatus && !currentLoadingLargeImageStatus) {
                                       setState(() {
-                                        widget.circle = circles[circleIndex - 1];
+                                        widget.currentCircle = circles[circleIndex - 1];
                                         getLargeImage();
                                         // String path = 'assets/infos/' + widget.circle.name + '.txt';
                                         getFileData();
@@ -309,9 +306,9 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     duration: const Duration(milliseconds: 0),
                                     child:
                                     Text(
-                                      loadingInfoFile ? 'Loading...' : info,
+                                      currentLoadingInfoFileStatus ? 'Loading...' : currentInfo,
                                       textAlign: TextAlign.center,
-                                      key: ValueKey<Circle>(widget.circle),
+                                      key: ValueKey<Circle>(widget.currentCircle),
                                     ),
 
                                   ),
@@ -328,11 +325,11 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 iconSize: 80,
                                 tooltip: 'Next',
                                 onPressed: () {
-                                  int circleIndex = circles.indexOf(widget.circle);
+                                  int circleIndex = circles.indexOf(widget.currentCircle);
                                   if(circleIndex < circles.length - 1) {
-                                    if(!loadingInfoFile && !loadingLargeImage) {
+                                    if(!currentLoadingInfoFileStatus && !currentLoadingLargeImageStatus) {
                                       setState(() {
-                                        widget.circle = circles[circleIndex + 1];
+                                        widget.currentCircle = circles[circleIndex + 1];
                                         getLargeImage();
                                         // String path = 'assets/infos/' + widget.circle.name + '.txt';
                                         getFileData();

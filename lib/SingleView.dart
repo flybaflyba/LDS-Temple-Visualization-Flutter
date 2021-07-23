@@ -29,6 +29,11 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   bool currentLoadingLargeImageStatus = true;
   bool currentLoadingInfoFileStatus = true;
 
+  String lastInfo = '';
+  Uint8List lastImageData;
+  bool lastLoadingLargeImageStatus = true;
+  bool lastLoadingInfoFileStatus = true;
+
   // int circleIndex = circles.indexOf(widget.currentCircle);
   // print(circleIndex);
 
@@ -66,6 +71,90 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     print('large image loaded');
   }
 
+  Padding currentCircleView() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Center(
+        child: Container(
+          // color: Colors.red,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: Container(
+              constraints: BoxConstraints(
+                minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+              ),
+              child: Stack(
+                children: [
+                  currentLoadingLargeImageStatus
+                      ?
+                  Container()
+                      :
+                  Image.memory(currentImageData),
+
+                  Center(
+                    child: Text(
+                      widget.currentCircle.imageAvailability ? "" : "No Image",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 3.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 8.0,
+                            color: Color.fromARGB(125, 0, 0, 255),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  IgnorePointer(
+                    ignoring: !currentLoadingLargeImageStatus,
+                    child: AnimatedOpacity(
+                        opacity: currentLoadingLargeImageStatus ? 1 : 0,
+                        duration: Duration(milliseconds: 1),
+                        child: Center(
+                            child: Container(
+                              // color: Colors.grey[300],
+                                child: Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          shape: BoxShape.circle
+                                      ),
+                                      // color: Colors.grey[300],
+                                      child:
+                                      //Center(child: Text(showLoader.toString()),)
+                                      SpinKitChasingDots(
+                                        color: Colors.blueAccent,
+                                        size: 50.0,
+                                      ),
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                  )
+                ],
+              ),
+
+              // widget.circle.image,
+              key: ValueKey<Circle>(widget.currentCircle),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -106,88 +195,8 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
         child: SingleChildScrollView(
           child: Wrap(
             children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: Container(
-                    // color: Colors.red,
-                    child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 500),
-                        child: Container(
-                          constraints: BoxConstraints(
-                            minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                            minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                            maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                            maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                          ),
-                          child: Stack(
-                            children: [
-                              currentLoadingLargeImageStatus
-                                  ?
-                              Container()
-                              :
-                              Image.memory(currentImageData),
 
-                              Center(
-                                child: Text(
-                                  widget.currentCircle.imageAvailability ? "" : "No Image",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
-                                    color: Colors.white,
-                                    shadows: <Shadow>[
-                                      Shadow(
-                                        offset: Offset(1.0, 1.0),
-                                        blurRadius: 3.0,
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                      ),
-                                      Shadow(
-                                        offset: Offset(1.0, 1.0),
-                                        blurRadius: 8.0,
-                                        color: Color.fromARGB(125, 0, 0, 255),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              IgnorePointer(
-                                ignoring: !currentLoadingLargeImageStatus,
-                                child: AnimatedOpacity(
-                                    opacity: currentLoadingLargeImageStatus ? 1 : 0,
-                                    duration: Duration(milliseconds: 1),
-                                    child: Center(
-                                        child: Container(
-                                            // color: Colors.grey[300],
-                                            child: Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey[300],
-                                                      shape: BoxShape.circle
-                                                  ),
-                                                  // color: Colors.grey[300],
-                                                  child:
-                                                  //Center(child: Text(showLoader.toString()),)
-                                                  SpinKitChasingDots(
-                                                    color: Colors.blueAccent,
-                                                    size: 50.0,
-                                                  ),
-                                                )
-                                            )
-                                        )
-                                    )
-                                ),
-                              )
-                            ],
-                          ),
-
-                          // widget.circle.image,
-                          key: ValueKey<Circle>(widget.currentCircle),
-                        ),
-                    ),
-                  ),
-                ),
-              ),
+              currentCircleView(),
 
               Center(
                 child: TextButton(

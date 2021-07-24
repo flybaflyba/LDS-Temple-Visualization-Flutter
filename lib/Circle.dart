@@ -14,6 +14,10 @@ class Circle {
   bool imageAvailability;
   bool onScreen;
   Uint8List imageData = null;
+  String order;
+  Uint8List largeImageData;
+  bool largeImageDataLoadingStatus;
+
 
   Circle();
 

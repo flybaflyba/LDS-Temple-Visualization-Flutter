@@ -14,15 +14,17 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SingleView extends StatefulWidget{
 
-  SingleView({Key key, this.currentCircle}) : super(key: key);
+  SingleView({Key key, this.currentCircleFromWidget}) : super(key: key);
 
-  Circle currentCircle;
+  Circle currentCircleFromWidget;
 
   @override
   _SingleViewState createState() => _SingleViewState();
 }
 
 class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
+
+  Circle currentCircle;
 
   String currentInfo = '';
   Uint8List currentImageData;
@@ -41,7 +43,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   // print(circleIndex);
 
   void getCurrentFileData() async {
-    Circle circle = widget.currentCircle;
+    Circle circle = currentCircle;
     String infoFilePath = 'assets/infos/' + circle.name + '.txt';
     setState(() {
       currentLoadingInfoFileStatus = true;
@@ -54,12 +56,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   }
 
   void getCurrentLargeImage() async {
-    Circle circle = widget.currentCircle;
+    Circle circle = currentCircle;
     String imageFilePath;
     setState(() {
       currentLoadingLargeImageStatus = true;
     });
-    if(widget.currentCircle.imageAvailability) {
+    if(currentCircle.imageAvailability) {
       imageFilePath = 'assets/large_circles/' + circle.name + '_large.webp';
     } else {
       imageFilePath = 'assets/large_circles/' + 'no_image' + '_large.webp';
@@ -75,7 +77,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   }
 
   void getLastLargeImage() async {
-    Circle circle = circles[circles.indexOf(widget.currentCircle) - 1];
+    Circle circle = circles[circles.indexOf(currentCircle) - 1];
     String imageFilePath;
     setState(() {
       lastLoadingLargeImageStatus = true;
@@ -96,7 +98,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   }
 
   void getNextLargeImage() async {
-    Circle circle = circles[circles.indexOf(widget.currentCircle) + 1];
+    Circle circle = circles[circles.indexOf(currentCircle) + 1];
     String imageFilePath;
     setState(() {
       nextLoadingLargeImageStatus = true;
@@ -116,264 +118,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     print('next large image loaded');
   }
 
-  Padding currentCircleView() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Container(
-          // color: Colors.red,
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              constraints: BoxConstraints(
-                minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-              ),
-              child: Stack(
-                children: [
-                  currentLoadingLargeImageStatus
-                      ?
-                  Container()
-                      :
-                  Image.memory(currentImageData),
-
-                  Center(
-                    child: Text(
-                      widget.currentCircle.imageAvailability ? "" : "No Image",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
-                        color: Colors.white,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 3.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 8.0,
-                            color: Color.fromARGB(125, 0, 0, 255),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  IgnorePointer(
-                    ignoring: !currentLoadingLargeImageStatus,
-                    child: AnimatedOpacity(
-                        opacity: currentLoadingLargeImageStatus ? 1 : 0,
-                        duration: Duration(milliseconds: 1),
-                        child: Center(
-                            child: Container(
-                              // color: Colors.grey[300],
-                                child: Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          shape: BoxShape.circle
-                                      ),
-                                      // color: Colors.grey[300],
-                                      child:
-                                      //Center(child: Text(showLoader.toString()),)
-                                      SpinKitChasingDots(
-                                        color: Colors.blueAccent,
-                                        size: 50.0,
-                                      ),
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                  )
-                ],
-              ),
-
-              // widget.circle.image,
-              key: ValueKey<Circle>(widget.currentCircle),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding lastCircleView() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Container(
-          // color: Colors.red,
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              constraints: BoxConstraints(
-                minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-              ),
-              child: Stack(
-                children: [
-                  lastLoadingLargeImageStatus
-                      ?
-                  Container()
-                      :
-                  Image.memory(lastImageData),
-
-                  Center(
-                    child: Text(
-                      circles[circles.indexOf(widget.currentCircle) - 1].imageAvailability ? "" : "No Image",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
-                        color: Colors.white,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 3.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 8.0,
-                            color: Color.fromARGB(125, 0, 0, 255),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  IgnorePointer(
-                    ignoring: !lastLoadingLargeImageStatus,
-                    child: AnimatedOpacity(
-                        opacity: lastLoadingLargeImageStatus ? 1 : 0,
-                        duration: Duration(milliseconds: 1),
-                        child: Center(
-                            child: Container(
-                              // color: Colors.grey[300],
-                                child: Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          shape: BoxShape.circle
-                                      ),
-                                      // color: Colors.grey[300],
-                                      child:
-                                      //Center(child: Text(showLoader.toString()),)
-                                      SpinKitChasingDots(
-                                        color: Colors.blueAccent,
-                                        size: 50.0,
-                                      ),
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                  )
-                ],
-              ),
-
-              // widget.circle.image,
-              key: ValueKey<Circle>(widget.currentCircle),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding nextCircleView() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Container(
-          // color: Colors.red,
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              constraints: BoxConstraints(
-                minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-                maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
-              ),
-              child: Stack(
-                children: [
-                  nextLoadingLargeImageStatus
-                      ?
-                  Container()
-                      :
-                  Image.memory(nextImageData),
-
-                  Center(
-                    child: Text(
-                      circles[circles.indexOf(widget.currentCircle) + 1].imageAvailability ? "" : "No Image",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
-                        color: Colors.white,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 3.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 8.0,
-                            color: Color.fromARGB(125, 0, 0, 255),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  IgnorePointer(
-                    ignoring: !nextLoadingLargeImageStatus,
-                    child: AnimatedOpacity(
-                        opacity: nextLoadingLargeImageStatus ? 1 : 0,
-                        duration: Duration(milliseconds: 1),
-                        child: Center(
-                            child: Container(
-                              // color: Colors.grey[300],
-                                child: Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          shape: BoxShape.circle
-                                      ),
-                                      // color: Colors.grey[300],
-                                      child:
-                                      //Center(child: Text(showLoader.toString()),)
-                                      SpinKitChasingDots(
-                                        color: Colors.blueAccent,
-                                        size: 50.0,
-                                      ),
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                  )
-                ],
-              ),
-
-              // widget.circle.image,
-              key: ValueKey<Circle>(widget.currentCircle),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   void initState() {
     super.initState();
+
+    currentCircle = widget.currentCircleFromWidget;
 
     getCurrentFileData();
     getCurrentLargeImage();
@@ -388,7 +138,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.currentCircle.realName),
+        title: Text(currentCircle.realName),
         actions: [
           //
           // IconButton(
@@ -414,7 +164,88 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
           child: Wrap(
             children: [
 
-              nextCircleView(),
+          Padding(
+          padding: EdgeInsets.all(10),
+          child: Center(
+            child: Container(
+              // color: Colors.red,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: Container(
+                  constraints: BoxConstraints(
+                    minWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                    minHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                    maxWidth: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                    maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7,
+                  ),
+                  child: Stack(
+                    children: [
+                      currentLoadingLargeImageStatus
+                          ?
+                      Container()
+                          :
+                      Image.memory(currentImageData),
+
+                      Center(
+                        child: Text(
+                          currentCircle.imageAvailability ? "" : "No Image",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                            color: Colors.white,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 3.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 8.0,
+                                color: Color.fromARGB(125, 0, 0, 255),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      IgnorePointer(
+                        ignoring: !currentLoadingLargeImageStatus,
+                        child: AnimatedOpacity(
+                            opacity: currentLoadingLargeImageStatus ? 1 : 0,
+                            duration: Duration(milliseconds: 1),
+                            child: Center(
+                                child: Container(
+                                  // color: Colors.grey[300],
+                                    child: Center(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              shape: BoxShape.circle
+                                          ),
+                                          // color: Colors.grey[300],
+                                          child:
+                                          //Center(child: Text(showLoader.toString()),)
+                                          SpinKitChasingDots(
+                                            color: Colors.blueAccent,
+                                            size: 50.0,
+                                          ),
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                      )
+                    ],
+                  ),
+
+                  // widget.circle.image,
+                  key: ValueKey<Circle>(currentCircle),
+                ),
+              ),
+            ),
+          ),
+        ),
 
               Center(
                 child: TextButton(
@@ -425,14 +256,14 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
 
-                    String url = 'https://www.google.com/search?&tbm=isch&q=' + widget.currentCircle.realName + 'LDS';
+                    String url = 'https://www.google.com/search?&tbm=isch&q=' + currentCircle.realName + 'LDS';
 
                     print(url);
                     if(kIsWeb) {
                       launchInBrowser(url);
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                          WebViewPage(url: url, name: widget.currentCircle.realName,)
+                          WebViewPage(url: url, name: currentCircle.realName,)
                       ));
                     }
 
@@ -504,12 +335,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 iconSize: 80,
                                 tooltip: 'Last',
                                 onPressed: () {
-                                  int circleIndex = circles.indexOf(widget.currentCircle);
+                                  int circleIndex = circles.indexOf(currentCircle);
                                   if(circleIndex > 0) {
 
                                     if(!currentLoadingInfoFileStatus && !currentLoadingLargeImageStatus) {
                                       setState(() {
-                                        widget.currentCircle = circles[circleIndex - 1];
+                                        currentCircle = circles[circleIndex - 1];
                                         getCurrentLargeImage();
                                         // String path = 'assets/infos/' + widget.circle.name + '.txt';
                                         getCurrentFileData();
@@ -538,7 +369,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     Text(
                                       currentLoadingInfoFileStatus ? 'Loading...' : currentInfo,
                                       textAlign: TextAlign.center,
-                                      key: ValueKey<Circle>(widget.currentCircle),
+                                      key: ValueKey<Circle>(currentCircle),
                                     ),
 
                                   ),
@@ -555,11 +386,11 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 iconSize: 80,
                                 tooltip: 'Next',
                                 onPressed: () {
-                                  int circleIndex = circles.indexOf(widget.currentCircle);
+                                  int circleIndex = circles.indexOf(currentCircle);
                                   if(circleIndex < circles.length - 1) {
                                     if(!currentLoadingInfoFileStatus && !currentLoadingLargeImageStatus) {
                                       setState(() {
-                                        widget.currentCircle = circles[circleIndex + 1];
+                                        currentCircle = circles[circleIndex + 1];
                                         getCurrentLargeImage();
                                         // String path = 'assets/infos/' + widget.circle.name + '.txt';
                                         getCurrentFileData();

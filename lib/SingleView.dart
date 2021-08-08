@@ -24,13 +24,15 @@ class SingleView extends StatefulWidget{
 
 class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
-  Circle currentCircle;
-  Circle lastCircle;
-  Circle nextCircle;
+  // Circle currentCircle;
+  // Circle lastCircle;
+  // Circle nextCircle;
+
+  bool animationOn = false;
 
   int currentIndex;
-  int lastIndex;
-  int nextIndex;
+  // int lastIndex;
+  // int nextIndex;
 
   String currentInfo = '';
   // Uint8List currentImageData;
@@ -141,10 +143,15 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     if(c.order == 'before last' || c.order == 'after next') {
       return AnimatedPositioned(
         duration: Duration(milliseconds: 1500),
+        top: 0,
+        left: c.positionS,
         child: Container(),
       );
     }
     else {
+
+      // print(c.order + ' ' + c.realName);
+
       return AnimatedPositioned(
         duration: Duration(milliseconds: 1500),
         top: 0,
@@ -240,22 +247,33 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     super.initState();
 
     currentIndex = circles.indexOf(widget.currentCircleFromWidget);
-    lastIndex = currentIndex - 1;
-    nextIndex = currentIndex + 1;
+
+    // lastIndex = currentIndex - 1;
+    // nextIndex = currentIndex + 1;
 
     circles[currentIndex].order = 'current';
-    circles[lastIndex].order = 'last';
-    circles[nextIndex].order = 'next';
+    circles[currentIndex - 1].order = 'last';
+    circles[currentIndex + 1].order = 'next';
+
+    // for (Circle c in circles) {
+    //   int i = circles.indexOf(c);
+    //   // if (![currentIndex, lastIndex, nextIndex].contains(i)){
+    //   //   circles[i].order = null;
+    //   // }
+    //   if(i < lastIndex) {
+    //     circles[i].order = 'before last';
+    //   }
+    //   if(i > nextIndex) {
+    //     circles[i].order = 'after next';
+    //   }
+    // }
 
     for (Circle c in circles) {
       int i = circles.indexOf(c);
-      // if (![currentIndex, lastIndex, nextIndex].contains(i)){
-      //   circles[i].order = null;
-      // }
-      if(i < lastIndex) {
+      if(i < currentIndex - 1) {
         circles[i].order = 'before last';
       }
-      if(i > nextIndex) {
+      if(i > currentIndex + 1) {
         circles[i].order = 'after next';
       }
     }
@@ -263,14 +281,14 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     getCurrentFileData(currentIndex);
 
     getLargeImage(currentIndex);
-    getLargeImage(lastIndex);
-    getLargeImage(nextIndex);
+    getLargeImage(currentIndex - 1);
+    getLargeImage(currentIndex + 1);
 
   }
 
   Stack largeImages() {
 
-    print(TimeOfDay.now().toString() + ' 1');
+    // print(TimeOfDay.now().toString() + ' 1');
 
     List<AnimatedPositioned> l = [];
 
@@ -280,7 +298,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
       int i = circles.indexOf(c);
 
       if(c.order == 'before last' || c.order == 'after next') {
-        c.sizeS = 0.1;
+        c.sizeS = c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.00001;
       } else if(c.order == 'last' || c.order == 'next') {
         c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
       } else {
@@ -289,12 +307,10 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
       if( c.order == 'last' || c.order == 'before last') {
         c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5;
-      } else if (c.order == 'current') {
-        c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
       } else if (c.order == 'next' || c.order == 'after next') {
         c.positionS = MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
       } else {
-        c.positionS = 0;
+        c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
       }
 
       // print(i);
@@ -332,7 +348,8 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     //   // nextCircle.largeImageData = circles[nextIndex].largeImageData;
     // }
 
-    print(TimeOfDay.now().toString() + ' 2');
+    // print(TimeOfDay.now().toString() + ' 2');
+
 
     return Stack(
       children:
@@ -433,35 +450,40 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 onPressed: () {
                                   // int circleIndex = circles.indexOf(currentCircle);
                                   if(currentIndex > 0) {
-
-                                    currentIndex = currentIndex - 1;
-                                    lastIndex = currentIndex - 1;
-                                    nextIndex = currentIndex + 1;
-
                                     // if(!currentLoadingInfoFileStatus && !currentLoadingLargeImageStatus) {
-                                    if(!currentLoadingInfoFileStatus) {
+                                    if(!currentLoadingInfoFileStatus && !animationOn) {
+
+                                      // animationOn = true;
+                                      // Future.delayed(Duration(milliseconds: 1500), () {
+                                      //   animationOn = false;
+                                      // });
+
+                                      // circles[currentIndex + 1].order = 'after next';
+
+                                      currentIndex = currentIndex - 1;
+
+                                      circles[currentIndex].order = 'current';
+                                      circles[currentIndex - 1].order = 'last';
+                                      circles[currentIndex + 1].order = 'next';
+
+                                      for (Circle c in circles) {
+                                        int i = circles.indexOf(c);
+                                        if(i < currentIndex - 1) {
+                                          circles[i].order = 'before last';
+                                        }
+                                        if(i > currentIndex + 1) {
+                                          circles[i].order = 'after next';
+                                        }
+                                      }
+
                                       setState(() {
                                         getLargeImage(currentIndex);
                                         getCurrentFileData(currentIndex);
-
-                                        circles[currentIndex].order = 'current';
-                                        circles[lastIndex].order = 'last';
-                                        circles[nextIndex].order = 'next';
-
-                                        for (Circle c in circles) {
-                                          int i = circles.indexOf(c);
-                                          if(i < lastIndex) {
-                                            circles[i].order = 'before last';
-                                          }
-                                          if(i > nextIndex) {
-                                            circles[i].order = 'after next';
-                                          }
-                                        }
-                                        getLargeImage(lastIndex);
-                                        getLargeImage(nextIndex);
+                                        getLargeImage(currentIndex - 1);
+                                        getLargeImage(currentIndex + 1);
                                       });
                                     } else {
-                                      showToast('Loading in progress, please wait', true);
+                                      showToast('Work in progress, please wait', true);
                                     }
 
                                   } else {
@@ -469,6 +491,10 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                     showToast('This is the oldest temple', true);
                                   }
 
+                                  // print('-------------------------');
+                                  // for(Circle c in circles) {
+                                  //   print(circles.indexOf(c).toString() + ': ' + c.order.toString());
+                                  // }
                                 },
                               ),
 
@@ -497,44 +523,55 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                 tooltip: 'Next',
                                 onPressed: () {
                                   if(currentIndex < circles.length - 1) {
-                                    if(!currentLoadingInfoFileStatus) {
+                                    if(!currentLoadingInfoFileStatus && !animationOn) {
+
+                                      // animationOn = true;
+                                      // Future.delayed(Duration(milliseconds: 1500), () {
+                                      //   animationOn = false;
+                                      // });
+
+                                      // circles[currentIndex - 1].order = 'before last';
 
                                       currentIndex = currentIndex + 1;
-                                      lastIndex = currentIndex - 1;
-                                      nextIndex = currentIndex + 1;
+
+
+                                      circles[currentIndex].order = 'current';
+                                      circles[currentIndex - 1].order = 'last';
+                                      circles[currentIndex + 1].order = 'next';
+
+                                      for (Circle c in circles) {
+                                        int i = circles.indexOf(c);
+                                        if(i < currentIndex - 1) {
+                                          circles[i].order = 'before last';
+                                        }
+                                        if(i > currentIndex + 1) {
+                                          circles[i].order = 'after next';
+                                        }
+                                      }
 
                                       setState(() {
 
                                         getLargeImage(currentIndex);
                                         getCurrentFileData(currentIndex);
 
-
-                                        circles[currentIndex].order = 'current';
-                                        circles[lastIndex].order = 'last';
-                                        circles[nextIndex].order = 'next';
-
-                                        for (Circle c in circles) {
-                                          int i = circles.indexOf(c);
-                                          if(i < lastIndex) {
-                                            circles[i].order = 'before last';
-                                          }
-                                          if(i > nextIndex) {
-                                            circles[i].order = 'after next';
-                                          }
-                                        }
-
-                                        getLargeImage(lastIndex);
-                                        getLargeImage(nextIndex);
+                                        getLargeImage(currentIndex - 1);
+                                        getLargeImage(currentIndex + 1);
 
                                       });
                                     } else {
-                                      showToast('Loading in Progress, Please Wait', true);
+                                      showToast('Work in progress, please Wait', true);
                                     }
 
                                   } else {
                                     // show no more image
                                     showToast('This is the newest temple', true);
                                   }
+
+                                  // print('-------------------------');
+                                  // for(Circle c in circles) {
+                                  //   print(circles.indexOf(c).toString() + ': ' + c.order.toString());
+                                  // }
+
                                 },
                               ),
                             ],

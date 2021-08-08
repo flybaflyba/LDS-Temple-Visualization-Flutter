@@ -16,7 +16,7 @@ class Circle {
   Uint8List imageData = null;
   String order;
   Uint8List largeImageData;
-  bool largeImageDataLoadingStatus;
+  bool largeImageDataLoadingStatus = false;
 
 
   Circle();

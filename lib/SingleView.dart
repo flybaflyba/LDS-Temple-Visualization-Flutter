@@ -95,115 +95,143 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
     // Circle c = circles[index];
 
-    var size =
-    c.order == 'before last' || c.order == 'after next'
-        ?
-    min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0
-        :
-    min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
+    // if(c.order == 'before last' || c.order == 'after next') {
+    //   c.sizeS = 0;
+    // } else if(c.order == 'last' || c.order == 'next') {
+    //   c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.35;
+    // } else {
+    //   c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
+    // }
 
-    return AnimatedPositioned(
-      duration: Duration(milliseconds: 3000),
-      top: 0,
-      left:
-      c.order == 'last' || c.order == 'before last'
-          ?
-      MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5
-          :
-      c.order == 'current'
-          ?
-      MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5
-          :
-      c.order == 'next' || c.order == 'after next'
-          ?
-      MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5
-          :
-      0,
+    // var size =
+    // c.order == 'before last' || c.order == 'after next'
+    //     ?
+    // min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0
+    //     :
+    // min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
 
-      child: Center(
-        child: Container(
-          // color: Colors.red,
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              constraints: BoxConstraints(
-                minWidth: size,
-                minHeight: size,
-                maxWidth: size,
-                maxHeight: size,
-              ),
-              child: Stack(
-                children: [
-                  c.largeImageDataLoadingStatus
-                      ?
-                  Container()
-                      :
-                  c.largeImageData == null
-                      ?
-                  Container()
-                      :
-                  Image.memory(c.largeImageData),
+    // if( c.order == 'last' || c.order == 'before last') {
+    //   c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5;
+    // } else if (c.order == 'current') {
+    //   c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+    // } else if (c.order == 'next' || c.order == 'after next') {
+    //   c.positionS = MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+    // } else {
+    //   c.positionS = 0;
+    // }
 
-                  Center(
-                    child: Text(
-                      c.imageAvailability ? "" : "No Image",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
-                        color: Colors.white,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 3.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 8.0,
-                            color: Color.fromARGB(125, 0, 0, 255),
-                          ),
-                        ],
+    // var position =
+    // c.order == 'last' || c.order == 'before last'
+    //     ?
+    // MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5
+    //     :
+    // c.order == 'current'
+    //     ?
+    // MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5
+    //     :
+    // c.order == 'next' || c.order == 'after next'
+    //     ?
+    // MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5
+    //     :
+    // 0;
+
+    // print(c.realName);
+
+
+    if(c.order == 'before last' || c.order == 'after next') {
+      return AnimatedPositioned(
+        duration: Duration(milliseconds: 1500),
+        child: Container(),
+      );
+    }
+    else {
+      return AnimatedPositioned(
+        duration: Duration(milliseconds: 1500),
+        top: 0,
+        left: c.positionS,
+        child: Center(
+          child: Container(
+            // color: Colors.red,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: Container(
+                constraints: BoxConstraints(
+                  minWidth: c.sizeS,
+                  minHeight: c.sizeS,
+                  maxWidth: c.sizeS,
+                  maxHeight: c.sizeS,
+                ),
+                child: Stack(
+                  children: [
+                    c.largeImageDataLoadingStatus || c.largeImageData == null
+                        ?
+                    Container()
+                        :
+                    Image.memory(c.largeImageData),
+
+                    Center(
+                      child: Text(
+                        c.imageAvailability ? "" : "No Image",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.1,
+                          color: Colors.white,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(1.0, 1.0),
+                              blurRadius: 3.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                            Shadow(
+                              offset: Offset(1.0, 1.0),
+                              blurRadius: 8.0,
+                              color: Color.fromARGB(125, 0, 0, 255),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                  IgnorePointer(
-                    ignoring: !c.largeImageDataLoadingStatus,
-                    child: AnimatedOpacity(
-                        opacity: c.largeImageDataLoadingStatus ? 1 : 0,
-                        duration: Duration(milliseconds: 1),
-                        child: Center(
-                            child: Container(
-                              // color: Colors.grey[300],
-                                child: Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          shape: BoxShape.circle
-                                      ),
-                                      // color: Colors.grey[300],
-                                      child:
-                                      //Center(child: Text(showLoader.toString()),)
-                                      SpinKitChasingDots(
-                                        color: Colors.blueAccent,
-                                        size: 50.0,
-                                      ),
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                  )
-                ],
+                    IgnorePointer(
+                      ignoring: !c.largeImageDataLoadingStatus,
+                      child: AnimatedOpacity(
+                          opacity: c.largeImageDataLoadingStatus ? 1 : 0,
+                          duration: Duration(milliseconds: 1),
+                          child: Center(
+                              child: Container(
+                                // color: Colors.grey[300],
+                                  child: Center(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            shape: BoxShape.circle
+                                        ),
+                                        // color: Colors.grey[300],
+                                        child:
+                                        //Center(child: Text(showLoader.toString()),)
+                                        SpinKitChasingDots(
+                                          color: Colors.blueAccent,
+                                          size: 50.0,
+                                        ),
+                                      )
+                                  )
+                              )
+                          )
+                      ),
+                    )
+                  ],
+                ),
+
+                // widget.circle.image,
+                key: ValueKey<int>(currentIndex),
               ),
-
-              // widget.circle.image,
-              key: ValueKey<int>(currentIndex),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
+
+
   }
 
 
@@ -250,10 +278,29 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
     for (Circle c in circles) {
       int i = circles.indexOf(c);
-      // print(i);
-      if(i > currentIndex - 2 || i < currentIndex + 2) {
-        l.add(animatedPositionedCircle(c));
+
+      if(c.order == 'before last' || c.order == 'after next') {
+        c.sizeS = 0.1;
+      } else if(c.order == 'last' || c.order == 'next') {
+        c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
+      } else {
+        c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
       }
+
+      if( c.order == 'last' || c.order == 'before last') {
+        c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5;
+      } else if (c.order == 'current') {
+        c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+      } else if (c.order == 'next' || c.order == 'after next') {
+        c.positionS = MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+      } else {
+        c.positionS = 0;
+      }
+
+      // print(i);
+      // if(i > currentIndex - 30 && i < currentIndex + 30) {
+        l.add(animatedPositionedCircle(c));
+      // }
     }
 
     // currentCircle = circles[currentIndex];

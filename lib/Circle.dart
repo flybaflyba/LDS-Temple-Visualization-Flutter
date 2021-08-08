@@ -18,6 +18,9 @@ class Circle {
   Uint8List largeImageData;
   bool largeImageDataLoadingStatus = false;
 
+  double sizeS;
+  double positionS;
+
 
   Circle();
 

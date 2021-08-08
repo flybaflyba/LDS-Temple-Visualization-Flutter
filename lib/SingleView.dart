@@ -251,9 +251,27 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     // lastIndex = currentIndex - 1;
     // nextIndex = currentIndex + 1;
 
-    circles[currentIndex].order = 'current';
-    circles[currentIndex - 1].order = 'last';
-    circles[currentIndex + 1].order = 'next';
+    if(currentIndex == 0) {
+      circles[currentIndex].order = 'current';
+      // circles[currentIndex - 1].order = 'last';
+      circles[currentIndex + 1].order = 'next';
+      // getLargeImage(currentIndex - 1);
+      getLargeImage(currentIndex + 1);
+    } else if (currentIndex == circles.length - 1) {
+      circles[currentIndex].order = 'current';
+      circles[currentIndex - 1].order = 'last';
+      // circles[currentIndex + 1].order = 'next';
+      getLargeImage(currentIndex - 1);
+      // getLargeImage(currentIndex + 1);
+    } else {
+      circles[currentIndex].order = 'current';
+      circles[currentIndex - 1].order = 'last';
+      circles[currentIndex + 1].order = 'next';
+      getLargeImage(currentIndex - 1);
+      getLargeImage(currentIndex + 1);
+    }
+
+
 
     // for (Circle c in circles) {
     //   int i = circles.indexOf(c);
@@ -279,10 +297,9 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     }
 
     getCurrentFileData(currentIndex);
-
     getLargeImage(currentIndex);
-    getLargeImage(currentIndex - 1);
-    getLargeImage(currentIndex + 1);
+
+
 
   }
 
@@ -580,7 +597,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
                                         getLargeImage(currentIndex - 1);
 
-                                        if(currentIndex < circles.length - 1) {
+                                        if(currentIndex == circles.length - 1) {
 
                                         } else {
                                           getLargeImage(currentIndex + 1);

@@ -460,11 +460,23 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
                                       // circles[currentIndex + 1].order = 'after next';
 
+                                      // print(currentIndex);
+
                                       currentIndex = currentIndex - 1;
 
-                                      circles[currentIndex].order = 'current';
-                                      circles[currentIndex - 1].order = 'last';
-                                      circles[currentIndex + 1].order = 'next';
+                                      if(currentIndex == 0) {
+                                        circles[currentIndex].order = 'current';
+                                        // circles[currentIndex - 1].order = 'last';
+                                        circles[currentIndex + 1].order = 'next';
+                                      } else {
+                                        circles[currentIndex].order = 'current';
+                                        circles[currentIndex - 1].order = 'last';
+                                        circles[currentIndex + 1].order = 'next';
+                                      }
+
+                                      // circles[currentIndex].order = 'current';
+                                      // circles[currentIndex - 1].order = 'last';
+                                      // circles[currentIndex + 1].order = 'next';
 
                                       for (Circle c in circles) {
                                         int i = circles.indexOf(c);
@@ -479,7 +491,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                       setState(() {
                                         getLargeImage(currentIndex);
                                         getCurrentFileData(currentIndex);
-                                        getLargeImage(currentIndex - 1);
+
+                                        if(currentIndex == 0) {
+
+                                        } else {
+                                          getLargeImage(currentIndex - 1);
+                                        }
                                         getLargeImage(currentIndex + 1);
                                       });
                                     } else {
@@ -535,9 +552,16 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                       currentIndex = currentIndex + 1;
 
 
-                                      circles[currentIndex].order = 'current';
-                                      circles[currentIndex - 1].order = 'last';
-                                      circles[currentIndex + 1].order = 'next';
+                                      if(currentIndex  == circles.length - 1) {
+                                        circles[currentIndex].order = 'current';
+                                        circles[currentIndex - 1].order = 'last';
+                                        // circles[currentIndex + 1].order = 'next';
+                                      } else {
+                                        circles[currentIndex].order = 'current';
+                                        circles[currentIndex - 1].order = 'last';
+                                        circles[currentIndex + 1].order = 'next';
+                                      }
+
 
                                       for (Circle c in circles) {
                                         int i = circles.indexOf(c);
@@ -555,8 +579,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                                         getCurrentFileData(currentIndex);
 
                                         getLargeImage(currentIndex - 1);
-                                        getLargeImage(currentIndex + 1);
 
+                                        if(currentIndex < circles.length - 1) {
+
+                                        } else {
+                                          getLargeImage(currentIndex + 1);
+                                        }
                                       });
                                     } else {
                                       showToast('Work in progress, please Wait', true);

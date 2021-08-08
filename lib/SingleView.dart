@@ -322,10 +322,19 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
         c.sizeS = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7;
       }
 
+      // if( c.order == 'last' || c.order == 'before last') {
+      //   c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5;
+      // } else if (c.order == 'next' || c.order == 'after next') {
+      //   c.positionS = MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+      // } else {
+      //   c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+      // }
+
+
       if( c.order == 'last' || c.order == 'before last') {
-        c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1.5;
+        c.positionS = - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 1;
       } else if (c.order == 'next' || c.order == 'after next') {
-        c.positionS = MediaQuery.of(context).size.width * 0.5 + min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
+        c.positionS = MediaQuery.of(context).size.width;
       } else {
         c.positionS = MediaQuery.of(context).size.width * 0.5 - min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.7 * 0.5;
       }

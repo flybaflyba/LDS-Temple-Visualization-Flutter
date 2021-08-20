@@ -78,11 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
           count = count + 1;
         }
       }
-      if (noOfCircles != 1) {
-        loaded = count / noOfCircles;
-      } else {
-        loaded = 0.0;
-      }
+
+      setState(() {
+        if (noOfCircles != 1) {
+          loaded = count / noOfCircles;
+        } else {
+          loaded = 0.0;
+        }
+      });
 
       // print('update');
 

@@ -15,6 +15,8 @@ List<Circle> circles = [];
 
 int theta = 2240;
 
+int noOfCircles = 1;
+
 Future<void> launchInBrowser(String url) async {
   if (await canLaunch(url)) {
     await launch(

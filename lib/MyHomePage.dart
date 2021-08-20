@@ -71,9 +71,35 @@ class _MyHomePageState extends State<MyHomePage> {
         timer.cancel();
       }
       // print('update screen');
-      setState(() {
-        loaded = loaded; // (loaded - 0.0000000000001).abs();
-      });
+
+      int count = 0;
+      for(Circle c in circles) {
+        if (c.imageData != null) {
+          count = count + 1;
+        }
+      }
+      if (noOfCircles != 1) {
+        loaded = count / noOfCircles;
+      } else {
+        loaded = 0.0;
+      }
+
+      // print('update');
+
+      if(count == noOfCircles) {
+        print('finish loading assets');
+        setState(() {
+          loadingAssets = false;
+          placeCircles(theta);
+        });
+      }
+
+      // setState(() {
+      //
+      // });
+      // setState(() {
+      //   loaded = loaded; // (loaded - 0.0000000000001).abs();
+      // });
       // print(loaded);
 
     });
@@ -89,11 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     await loadImages(context);
 
-    print('finish loading assets');
-    setState(() {
-      loadingAssets = false;
-      placeCircles(theta);
-    });
   }
 
   bool showYearsRange = true;

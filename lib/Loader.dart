@@ -95,6 +95,7 @@ Future<void> loadCircles(BuildContext context) async {
   names = names.reversed.toList();
 
 
+  noOfCircles = circles.length;
 
   // return circles;
 
@@ -117,52 +118,28 @@ Future<void> loadImages(BuildContext context) async {
 
   for (Circle c in circles) {
 
-    String name = c.name;
-
-    String imagePath = 'assets/small_circles/' + name + '.webp';
-
-    Uint8List imageData;
-    // print(imagePath);
-    if(c.imageAvailability){
-
-      imageData = (await rootBundle.load(imagePath))
+    Future.delayed(Duration(milliseconds: 1), () async {
+      String name = c.name;
+      String imagePath = 'assets/small_circles/' + name + '.webp';
+      Uint8List imageData;
+      // print(imagePath);
+      if(c.imageAvailability){
+        imageData = (await rootBundle.load(imagePath))
           .buffer
           .asUint8List();
-
-      // print('we have this image');
-      // imageAvailability = true;
-      // image = Image.asset(
-      //   imagePath,
-      //   fit: BoxFit.fill,
-      //   filterQuality: FilterQuality.none,
-      //   frameBuilder: (BuildContext context, Widget child, int frame,
-      //       bool wasSynchronouslyLoaded) {
-      //     if (wasSynchronouslyLoaded) {
-      //       return child;
-      //     }
-      //     return AnimatedOpacity(
-      //       child: child,
-      //       opacity: frame == null ? 0 : 1,
-      //       duration: const Duration(seconds: 2),
-      //       curve: Curves.easeOut,
-      //     );
-      //   },
-      // );
-    } else {
-      // print('missing image');
-      // imageAvailability = false;
-      // image = Image.asset('assets/small_circles/' + 'no_image' + '.webp');
-
+      } else {
       imageData = (await rootBundle.load('assets/small_circles/' + 'no_image' + '.webp'))
           .buffer
           .asUint8List();
+      }
+      c.imageData = imageData;
 
-    }
+      // print('loaded image of ' + name);
+    });
 
-    c.imageData = imageData;
-    // c.imageAvailability = imageAvailability;
 
-    loaded = (circles.indexOf(c) + 1) / circles.length;
+
+    // loaded = (circles.indexOf(c) + 1) / circles.length;
   }
 
 

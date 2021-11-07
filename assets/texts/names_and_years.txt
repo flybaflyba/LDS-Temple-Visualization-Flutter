@@ -168,7 +168,7 @@ port_au_prince_haiti_temple 2019
 lisbon_portugal_temple 2019
 arequipa_peru_temple 2019
 durban_south_africa_temple 2020
-winnipeg_manitoba_temple 0000
+winnipeg_manitoba_temple 2021
 rio_de_janeiro_brazil_temple 0000
 abidjan_cote_divoire_temple 0000
 urdaneta_philippines_temple 0000

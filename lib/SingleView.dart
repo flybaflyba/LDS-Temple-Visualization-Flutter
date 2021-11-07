@@ -59,7 +59,14 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     setState(() {
       currentLoadingInfoFileStatus = true;
     });
-    currentInfo = await rootBundle.loadString(infoFilePath);
+
+    try {
+      currentInfo = await rootBundle.loadString(infoFilePath);
+    } catch (e) {
+      print("Getting info file error, if you are in development trying to add new temples, you need to add a info file under assets/info for this temple");
+      currentInfo = "No Info Found";
+    }
+
     setState(() {
       currentInfo = currentInfo;
       currentLoadingInfoFileStatus = false;

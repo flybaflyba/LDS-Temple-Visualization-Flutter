@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // var sampleW = 100.0;
 
+  var sliderMax = 2240.0;
 
 
   Future<void> prepareCircles() async {
@@ -95,6 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
           loadingAssets = false;
           placeCircles(theta);
         });
+        sliderMax = (2240 + 30 * noOfCircles).toDouble();
+        print(sliderMax);
       }
 
       // setState(() {
@@ -144,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void spin(int speed){
     setState(() {
-      if ((theta + speed * 0.5).toInt() >= 2240 && (theta + speed * 0.5).toInt() <= 9820) {
+      if ((theta + speed * 0.5).toInt() >= 2240 && (theta + speed * 0.5).toInt() <= sliderMax) {
         theta = (theta + speed * 0.5).toInt();
         placeCircles(theta);
       } else {
@@ -495,7 +498,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Slider(
                               value: theta.toDouble(),
                               min: 2240,
-                              max: 9820,
+                              max: sliderMax,
                               divisions: 9820 - 2240,
                               label: '$startYear - $endYear',
                               onChangeStart: (value) {
@@ -516,7 +519,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                 if(value == 2240) {
                                   showToast('Beginning of spiral', true);
-                                } else if(value == 9820) {
+                                } else if(value == sliderMax) {
                                   showToast('End of spiral', true);
                                 }
                               },
@@ -536,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               tooltip: 'Anticlockwise spinning',
                               onPressed: () {
                                 setState(() {
-                                  if(theta <= 9820 - 30) {
+                                  if(theta <= sliderMax - 30) {
                                     theta = theta + 30;
                                     placeCircles(theta);
                                   } else {

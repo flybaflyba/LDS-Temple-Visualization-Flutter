@@ -252,3 +252,16 @@ elko_nevada_temple 1111
 yorba_linda_california_temple 1111
 smithfield_utah_temple 1111
 ephraim_utah_temple 1111
+kaohsiung_taiwan_temple 1111
+tacloban_city_philippines_temple 1111
+monrovia_liberia_temple 1111
+kananga_democratic_republic_of_the_congo_temple 1111
+antananarivo_madagascar_temple 1111
+culiacan_mexico_temple 1111
+vitoria_brazil_temple 1111
+la_paz_bolivia_temple 1111
+santiago_chile_west_temple 1111
+fort_worth_texas_temple 1111
+cody_wyoming_temple 1111
+rexburg_idaho_north_temple 1111
+heber_valley_utah_temple 1111

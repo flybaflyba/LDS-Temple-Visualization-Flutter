@@ -38,4 +38,4 @@ Spiral Visualization for LDS temples - Flutter Version
    
 ### Adding new features or adding existing features
 
- - Welcome to modifying the code! Make sure you commit and push regularly if you ever need or want to revert back! 
+ - Welcome to modify the code! Make sure you commit and push regularly if you ever need or want to revert back! 

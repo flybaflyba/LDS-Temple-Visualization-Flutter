@@ -12,6 +12,8 @@ class _SearchByNameState extends State<SearchByName>{
 
   var typedName = "";
   TextEditingController typedNameTextEditingController = new TextEditingController();
+  List<dynamic> filteredNames = [];
+  List<Widget> list = [];
 
   Column listMatchedCourses(String enteredString) {
 
@@ -21,35 +23,29 @@ class _SearchByNameState extends State<SearchByName>{
       enteredString = ' ';
     }
 
-    List<dynamic> filteredNames = new List<dynamic>();
     setState(() {
-      for(var i = names.length - 1; i > -1; i--){
-        if (names[i].toLowerCase().contains(enteredString.toLowerCase())) {
-          if(enteredString != names[i]) {
-            filteredNames.add(names[i]);
-          }
-        }
-      }
+      filteredNames = names
+          .where((name) =>
+              name.toLowerCase().contains(enteredString.toLowerCase()))
+          .toList();
       if(filteredNames.length == 0 && !names.contains(enteredString)) {
         filteredNames.add("No Temple Found");
       }
 
     });
 
-
-
-    // print(filteredNames.length);
-    List<Widget> list = new List<Widget>();
+    list = [];
     if (enteredString != "") {
       for(var i = filteredNames.length - 1; i > -1; i--){
-        //list.add(new Text(strings[i]));
         String temp = filteredNames[i];
         list.add(
           Container(
             margin: EdgeInsets.all(5),
             child: Center(
-              child: FlatButton(
-                textColor: Colors.blueAccent,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.blueAccent,
+                ),
                 onPressed: () {
                   if (temp != "No Temple Found") {
                     setState(() {

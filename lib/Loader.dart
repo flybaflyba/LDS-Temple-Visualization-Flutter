@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -68,14 +66,14 @@ Future<void> loadCircles(BuildContext context) async {
 
 
 
-    Circle circle = new Circle();
-    circle.name = name;
-    circle.year = year;
-    circle.realName = realName;
-    // circle.image = image;
-    circle.imageAvailability = imageAvailability;
-    // circle.imageData = imageData;
-
+    // Create circle with proper initialization
+    Circle circle = new Circle(
+      name: name,
+      year: year,
+      realName: realName,
+      imageAvailability: imageAvailability
+    );
+    
     circles.add(circle);
 
     for(String i in years) {

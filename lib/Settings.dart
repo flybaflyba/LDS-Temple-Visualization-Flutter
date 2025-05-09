@@ -31,11 +31,13 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       goToWebPage(context, 'https://latterdaytemples.litianzhang.com/related-links-english/', 'App Page');
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -63,13 +65,15 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       String url = 'https://www.churchofjesuschrist.org/temples/list?lang=eng';
                       goToWebPage(context, url, 'Temple List');
 
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -97,13 +101,15 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       String url = 'https://www.churchofjesuschrist.org/temples/open-houses?lang=eng';
                       goToWebPage(context, url, 'Temple Open Houses and Dedications');
 
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -131,13 +137,15 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       String url = 'https://www.churchofjesuschrist.org/temples/photo-gallery?lang=eng';
                       goToWebPage(context, url, 'Official Gallery');
 
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -165,13 +173,15 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       String url = 'https://latterdaytemples.litianzhang.com/feedback-english/';
                       goToWebPage(context, url, 'Feedback');
 
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -199,12 +209,14 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       aboutShow(context);
 
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -236,11 +248,13 @@ class _SettingsState extends State<Settings>{
                     maxWidth: 400,
                   ),
                   padding: EdgeInsets.all(10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Share.share('Temples Timeline App \nSpiral Visualization for the temples of The Church of Jesus Christ of Latter-day Saints by students and professors at Brigham Young University Hawaii.\n Visit at https://latterdaytemples.litianzhang.com/');
                     },
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[

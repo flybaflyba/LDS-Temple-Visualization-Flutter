@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -12,11 +11,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 
-class SingleView extends StatefulWidget{
+class SingleView extends StatefulWidget {
+  final Circle currentCircleFromWidget;
 
-  SingleView({Key key, this.currentCircleFromWidget}) : super(key: key);
-
-  Circle currentCircleFromWidget;
+  const SingleView({Key? key, required this.currentCircleFromWidget}) : super(key: key);
 
   @override
   _SingleViewState createState() => _SingleViewState();
@@ -30,7 +28,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
 
   bool animationOn = false;
 
-  int currentIndex;
+  int currentIndex = 0;
   // int lastIndex;
   // int nextIndex;
 
@@ -51,10 +49,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
   // print(circleIndex);
 
   void getCurrentFileData(int index) async {
-
-    // Circle circle = currentCircle;
     Circle circle = circles[index];
-
     String infoFilePath = 'assets/infos/' + circle.name + '.txt';
     setState(() {
       currentLoadingInfoFileStatus = true;
@@ -68,15 +63,12 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
     }
 
     setState(() {
-      currentInfo = currentInfo;
       currentLoadingInfoFileStatus = false;
     });
   }
 
   void getLargeImage(int index) async {
-    // Circle c = circles[index];
-    if(circles[index].largeImageData == null) {
-
+    if(circles[index].largeImageData.isEmpty) {
       Future.delayed(Duration(milliseconds: 1), () async {
         String imageFilePath;
         setState(() {
@@ -87,17 +79,21 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
         } else {
           imageFilePath = 'assets/large_circles/' + 'no_image' + '_large.webp';
         }
-        circles[index].largeImageData = (await rootBundle.load(imageFilePath))
-            .buffer
-            .asUint8List();
-        setState(() {
-        circles[index].largeImageData = circles[index].largeImageData;
-        circles[index].largeImageDataLoadingStatus = false;
-        });
-        // print('current large image loaded: ' + circles[index].realName);
+        try {
+          circles[index].largeImageData = (await rootBundle.load(imageFilePath))
+              .buffer
+              .asUint8List();
+          setState(() {
+            circles[index].largeImageDataLoadingStatus = false;
+          });
+        } catch (e) {
+          print("Error loading large image: $e");
+          setState(() {
+            circles[index].largeImageDataLoadingStatus = false;
+          });
+        }
       });
     }
-
   }
 
   AnimatedPositioned animatedPositionedCircle(Circle c) {
@@ -177,7 +173,7 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                 ),
                 child: Stack(
                   children: [
-                    c.largeImageDataLoadingStatus || c.largeImageData == null
+                    c.largeImageDataLoadingStatus || c.largeImageData.isEmpty
                         ?
                     Container()
                         :
@@ -434,13 +430,10 @@ class _SingleViewState extends State<SingleView> with TickerProviderStateMixin {
                 child: TextButton(
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(10.0),
-                    primary: Colors.blue
-                    // textStyle: const TextStyle(fontSize: 20),
+                    foregroundColor: Colors.blue,
                   ),
                   onPressed: () {
-
                     String url = 'https://www.google.com/search?&tbm=isch&q=' + circles[currentIndex].realName + 'LDS';
-
                     print(url);
                     if(kIsWeb) {
                       launchInBrowser(url);
